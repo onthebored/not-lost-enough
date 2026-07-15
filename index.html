@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NOT LOST ENOUGH</title>
+  <style>
+    :root {
+      --bg: #0e0e0e;
+      --surface: #1a1a1a;
+      --text-primary: #e8e0d0;
+      --text-secondary: #8a8478;
+      --accent: #c8502a;
+      --border: #2e2e2e;
+      --font-heading: 'Menlo', monospace;
+      --font-data: 'Menlo', monospace;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text-primary);
+      font-family: var(--font-data);
+      min-height: 100vh;
+      padding: 24px 20px;
+    }
+
+    h1, h2, h3, label {
+      font-family: var(--font-heading);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    h1 { font-size: 1.8rem; letter-spacing: 0.15em; color: var(--text-primary); }
+    h2 { font-size: 1rem; color: var(--text-secondary); margin-bottom: 16px; }
+
+    .app-header {
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 16px;
+      margin-bottom: 32px;
+    }
+
+    .app-header p {
+      font-family: var(--font-data);
+      color: var(--text-secondary);
+      font-size: 0.75rem;
+      margin-top: 4px;
+      letter-spacing: 0.05em;
+    }
+
+    .screen { display: none; }
+    .screen.active { display: block; }
+
+    .btn {
+      font-family: var(--font-heading);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      font-size: 0.9rem;
+      padding: 14px 24px;
+      border: 1px solid var(--accent);
+      background: transparent;
+      color: var(--accent);
+      cursor: pointer;
+      width: 100%;
+      margin-top: 12px;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .btn:hover, .btn:active { background: var(--accent); color: var(--bg); }
+    .btn-secondary { border-color: var(--border); color: var(--text-secondary); }
+    .btn-secondary:hover, .btn-secondary:active { background: var(--surface); color: var(--text-primary); }
+
+    .field-block { margin-bottom: 24px; }
+
+    label {
+      display: block;
+      font-size: 0.7rem;
+      color: var(--text-secondary);
+      margin-bottom: 6px;
+    }
+
+    .data-value {
+      font-family: var(--font-data);
+      font-size: 1rem;
+      color: var(--text-primary);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 10px 12px;
+      width: 100%;
+    }
+
+    .status-line {
+      font-family: var(--font-data);
+      font-size: 0.72rem;
+      color: var(--text-secondary);
+      letter-spacing: 0.04em;
+      margin-top: 8px;
+    }
+
+    .divider { border: none; border-top: 1px solid var(--border); margin: 28px 0; }
+
+    .prompt-list-item {
+      border: 1px solid var(--border);
+      padding: 10px 12px;
+      margin-bottom: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .prompt-list-main { display: flex; flex-direction: column; gap: 2px; }
+    .prompt-list-id { font-size: 0.65rem; color: var(--text-secondary); }
+    .prompt-list-title { font-size: 0.9rem; color: var(--text-primary); }
+    .prompt-list-type { font-size: 0.65rem; color: var(--accent); }
+    .prompt-list-actions { display: flex; gap: 6px; flex-shrink: 0; }
+
+    .btn-inline {
+      font-family: var(--font-data);
+      font-size: 0.65rem;
+      padding: 4px 8px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text-secondary);
+      cursor: pointer;
+      letter-spacing: 0.05em;
+    }
+
+    .btn-inline:hover { border-color: var(--accent); color: var(--accent); }
+    .btn-inline-danger:hover { border-color: #8a2a2a; color: #8a2a2a; }
+
+    .toggle-btn {
+      font-family: var(--font-data);
+      font-size: 0.7rem;
+      padding: 6px 10px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text-secondary);
+      cursor: pointer;
+      letter-spacing: 0.04em;
+    }
+
+    .toggle-btn.active {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: rgba(200, 80, 42, 0.08);
+    }
+
+    .toggle-btn-sm { font-size: 0.62rem; padding: 4px 7px; }
+    .step-block { margin-bottom: 8px; }
+
+    input.data-value, textarea.data-value, select.data-value {
+      background: var(--surface);
+      color: var(--text-primary);
+      border: 1px solid var(--border);
+      font-family: var(--font-data);
+      font-size: 0.85rem;
+      padding: 10px 12px;
+      width: 100%;
+      outline: none;
+      resize: vertical;
+    }
+
+    input.data-value:focus, textarea.data-value:focus, select.data-value:focus {
+      border-color: var(--accent);
+    }
+
+    select.data-value option { background: var(--surface); }
+
+    .directional-conditions {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 6px;
+    }
+
+    .general-conditions-container {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 6px;
+      margin-bottom: 8px;
+    }
+
+    .condition-row {
+      display: grid;
+      gap: 4px;
+      align-items: center;
+    }
+
+    .dir-label {
+      font-size: 0.7rem;
+      color: var(--accent);
+      text-align: center;
+      padding-top: 4px;
+    }
+
+    .then-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4px;
+      margin-top: 2px;
+    }
+
+    .condition-block {
+      border: 1px solid var(--border);
+      padding: 8px;
+      margin-bottom: 4px;
+    }
+
+    .condition-block-header {
+      font-size: 0.65rem;
+      color: var(--accent);
+      margin-bottom: 6px;
+      letter-spacing: 0.05em;
+    }
+
+    .condition-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- SCREEN: HOME -->
+  <div id="screen-home" class="screen active">
+    <div class="app-header">
+      <h1>Not Lost Enough</h1>
+      <p>Field Research Application — v0.1</p>
+    </div>
+    <h2>Mission Control</h2>
+    <button class="btn" onclick="showScreen('screen-wander')">Initiate Wander</button>
+    <button class="btn btn-secondary" onclick="showScreen('screen-log')">View Field Log</button>
+    <button class="btn btn-secondary" onclick="showScreen('screen-prompts')">Prompt Library</button>
+  </div>
+
+  <!-- SCREEN: WANDER -->
+  <div id="screen-wander" class="screen">
+    <div class="app-header">
+      <h1>Wander</h1>
+      <p>Active Mission</p>
+    </div>
+    <p class="status-line">// wander engine — phase 3</p>
+    <hr class="divider">
+    <button class="btn btn-secondary" onclick="showScreen('screen-home')">Abort / Return Home</button>
+  </div>
+
+  <!-- SCREEN: LOG -->
+  <div id="screen-log" class="screen">
+    <div class="app-header">
+      <h1>Field Log</h1>
+      <p>Wander Records</p>
+    </div>
+    <p class="status-line">// logging system — phase 6</p>
+    <hr class="divider">
+    <button class="btn btn-secondary" onclick="showScreen('screen-home')">Return Home</button>
+  </div>
+
+  <!-- SCREEN: PROMPTS -->
+  <div id="screen-prompts" class="screen">
+    <div class="app-header">
+      <h1>Prompt Library</h1>
+      <p>Directive Database</p>
+    </div>
+
+    <div id="prompts-list-view">
+      <button class="btn" onclick="showPromptEditor()">+ New Prompt</button>
+      <hr class="divider">
+      <div id="prompt-list-container">
+        <p class="status-line">// no prompts loaded</p>
+      </div>
+      <hr class="divider">
+      <button class="btn btn-secondary" onclick="showScreen('screen-home')">Return Home</button>
+    </div>
+
+    <div id="prompts-editor-view" style="display:none;">
+      <h2 id="editor-title">New Prompt</h2>
+
+      <div class="field-block">
+        <label>Title</label>
+        <input class="data-value" type="text" id="p-title" placeholder="e.g. SOUND MIND">
+      </div>
+
+      <div class="field-block">
+        <label>Type</label>
+        <select class="data-value" id="p-type">
+          <option value="INITIATION">INITIATION</option>
+          <option value="SENSORY">SENSORY</option>
+          <option value="MOVEMENT">MOVEMENT</option>
+          <option value="ASSIGNMENT">ASSIGNMENT</option>
+          <option value="HYBRID">HYBRID</option>
+          <option value="SITUATIONAL">SITUATIONAL</option>
+          <option value="LOCATIONAL">LOCATIONAL</option>
+        </select>
+      </div>
+
+      <div class="field-block">
+        <label>Quote</label>
+        <input class="data-value" type="text" id="p-quote-text" placeholder="Quote text">
+        <input class="data-value" type="text" id="p-quote-author" placeholder="— Attribution" style="margin-top:6px;">
+      </div>
+
+      <hr class="divider">
+      <h2>Steps</h2>
+      <div id="steps-container"></div>
+      <button class="btn btn-secondary" onclick="addStep()">+ Add Step</button>
+
+      <hr class="divider">
+      <h2>Assignment Fields Triggered</h2>
+      <div class="field-block">
+        <label>Select all that apply</label>
+        <div id="assignment-fields" style="display:flex; flex-wrap:wrap; gap:8px; margin-top:8px;">
+          <button class="toggle-btn" data-field="medium" onclick="toggleField(this)">MEDIUM</button>
+          <button class="toggle-btn" data-field="subject" onclick="toggleField(this)">SUBJECT</button>
+          <button class="toggle-btn" data-field="mood" onclick="toggleField(this)">MOOD</button>
+          <button class="toggle-btn" data-field="physical" onclick="toggleField(this)">PHYSICAL</button>
+          <button class="toggle-btn" data-field="formal" onclick="toggleField(this)">FORMAL</button>
+          <button class="toggle-btn" data-field="wildcard" onclick="toggleField(this)">WILDCARD</button>
+        </div>
+      </div>
+
+      <hr class="divider">
+      <button class="btn" onclick="savePrompt()">Save Prompt</button>
+      <button class="btn btn-secondary" onclick="cancelPromptEditor()">Cancel</button>
+    </div>
+  </div>
+
+  <script>
+    // --- ASSIGNMENT DATA ---
+    const ASSIGNMENT_FIELDS = {
+      medium: {
+        type: 'select',
+        values: ['undetermined','painting','photography','sculpture','sound',
+                 'video','drawing','writing','sewing','installation','found object','conceptual']
+      },
+      subject: { type: 'text' },
+      mood:    { type: 'text' },
+      physical: {
+        type: 'select-dependent',
+        dependsOn: 'medium',
+        values: {
+          painting:     { surface: ['canvas','paper','wood','other'], size: ['small','medium','large','extra large'] },
+          photography:  { format: ['digital','film'], framing: ['close up','mid','wide','abstract'] },
+          sculpture:    { material: ['wood','metal','stone','fabric','found','mixed'], scale: ['small','medium','large','site specific'] },
+          sound:        { format: ['recorded','live','installation'], duration: ['short','medium','long','open'] },
+          video:        { format: ['handheld','fixed','found footage'], duration: ['short','medium','long'] },
+          drawing:      { surface: ['paper','other'], size: ['small','medium','large'], tool: ['pencil','ink','charcoal','mixed'] },
+          writing:      { form: ['poetry','prose','fragmentary','mixed'], length: ['short','medium','long'] },
+          sewing:       { scale: ['small','medium','large'], material: ['fabric','mixed','found'] },
+          installation: { scale: ['intimate','room','site specific'] },
+          'found object': { intervention: ['none','minimal','heavy'], context: ['indoor','outdoor','gallery'] },
+          conceptual:   {}
+        }
+      },
+      formal:   { type: 'text' },
+      wildcard: { type: 'text' }
+    };
+
+    // --- THEN BUILDER ---
+    function makeThenUI(prefix, existing = {}) {
+      const fieldOptions = Object.keys(ASSIGNMENT_FIELDS)
+        .map(f => `<option value="${f}" ${existing.field === f ? 'selected' : ''}>${f.toUpperCase()}</option>`)
+        .join('');
+
+      const selectedField = existing.field || 'medium';
+      const valueUI = buildValueUI(prefix, selectedField, existing.value);
+
+      return `
+        <div class="then-row">
+          <select class="data-value then-field" onchange="onThenFieldChange(this, '${prefix}')">
+            <option value="">— field —</option>
+            ${fieldOptions}
+          </select>
+          <div class="then-value-container" id="${prefix}-value-container">
+            ${valueUI}
+          </div>
+        </div>
+      `;
+    }
+
+    function buildValueUI(prefix, field, existing = '') {
+      if (!field || !ASSIGNMENT_FIELDS[field]) return '';
+      const def = ASSIGNMENT_FIELDS[field];
+
+      if (def.type === 'text') {
+        return `<input class="data-value then-value" type="text" placeholder="value..." value="${existing}">`;
+      }
+
+      if (def.type === 'select') {
+        const opts = def.values.map(v =>
+          `<option value="${v}" ${existing === v ? 'selected' : ''}>${v}</option>`
+        ).join('');
+        return `<select class="data-value then-value"><option value="">— value —</option>${opts}</select>`;
+      }
+
+      if (def.type === 'select-dependent') {
+        return `<input class="data-value then-value" type="text" placeholder="set medium first" value="${existing}" readonly>`;
+      }
+
+      return '';
+    }
+
+    function onThenFieldChange(select, prefix) {
+      const field = select.value;
+      const container = document.getElementById(`${prefix}-value-container`);
+      container.innerHTML = buildValueUI(prefix, field, '');
+    }
+
+    // --- CONDITION BUILDERS ---
+    function makeDirectionalCondition(dir, data = {}) {
+      const andVal = data.and || '';
+      const thenData = data.then || {};
+      const prefix = `dir-${dir}-${Date.now()}`;
+      return `
+        <div class="condition-block" data-dir="${dir}">
+          <div class="condition-block-header">${dir}</div>
+          <input class="data-value dir-and" type="text" placeholder="AND (optional)" value="${andVal}">
+          <div style="margin-top:4px;">
+            ${makeThenUI(prefix, thenData)}
+          </div>
+        </div>
+      `;
+    }
+
+    function makeGeneralCondition(data = {}) {
+      const prefix = `gen-${Date.now()}-${Math.random().toString(36).slice(2,6)}`;
+      return `
+        <div class="condition-block general-condition">
+          <div class="condition-grid">
+            <div>
+              <label>IF</label>
+              <input class="data-value gen-if" type="text" placeholder="observation..." value="${data.if || ''}">
+            </div>
+            <div>
+              <label>AND (optional)</label>
+              <input class="data-value gen-and" type="text" placeholder="additional..." value="${data.and || ''}">
+            </div>
+          </div>
+          <div style="margin-top:6px;">
+            <label>THEN</label>
+            ${makeThenUI(prefix, data.then || {})}
+          </div>
+          <button class="btn-inline" style="margin-top:6px; font-size:0.6rem;" onclick="this.closest('.general-condition').remove()">REMOVE</button>
+        </div>
+      `;
+    }
+
+    // --- STEP BUILDER ---
+    let stepCount = 0;
+
+    function addStep(data = null) {
+      stepCount++;
+      const id = `step-${stepCount}`;
+      const container = document.getElementById('steps-container');
+      const div = document.createElement('div');
+      div.className = 'step-block';
+      div.id = id;
+
+      const directions = ['N','NE','E','SE','S','SW','W','NW'];
+      const dirHTML = directions.map(dir => {
+        const existing = data?.directionalConditions?.[dir] || {};
+        return makeDirectionalCondition(dir, existing);
+      }).join('');
+
+      const generalHTML = data?.conditions?.length
+        ? data.conditions.map(c => makeGeneralCondition(c)).join('')
+        : makeGeneralCondition();
+
+      div.innerHTML = `
+        <label>Step ${stepCount}</label>
+        <textarea class="data-value step-text" placeholder="Directive text..." rows="3">${data?.text || ''}</textarea>
+
+        <label style="margin-top:8px;">Components</label>
+        <div style="display:flex; flex-wrap:wrap; gap:6px; margin-top:4px;">
+          ${['TIMER','MAP_PIN','DIRECTION_SELECT','COMPASS','CHOICE','CONFIRM','SILENT_LOG'].map(c => `
+            <button class="toggle-btn toggle-btn-sm ${data?.components?.includes(c) ? 'active' : ''}"
+              onclick="toggleComponent(this)">${c}</button>
+          `).join('')}
+        </div>
+
+        <label style="margin-top:8px;">Timer Duration (seconds)</label>
+        <input class="data-value step-timer" type="number" placeholder="e.g. 23" value="${data?.timerDuration || ''}">
+
+        <hr class="divider">
+        <label>Directional Conditions</label>
+        <div class="directional-conditions">${dirHTML}</div>
+
+        <hr class="divider">
+        <label>General Conditions</label>
+        <div class="general-conditions-container">${generalHTML}</div>
+        <button class="btn btn-secondary" style="font-size:0.75rem; padding:8px;" onclick="addGeneralConditionToStep(this)">+ Add Condition</button>
+
+        <label style="margin-top:12px;">Default (if no conditions met)</label>
+        <div id="${id}-default-then">
+          ${makeThenUI(`${id}-default`, data?.default || {})}
+        </div>
+
+        <button class="btn btn-secondary" style="margin-top:12px; font-size:0.75rem; padding:8px;" onclick="removeStep('${id}')">Remove Step</button>
+        <hr class="divider">
+      `;
+      container.appendChild(div);
+    }
+
+    function addGeneralConditionToStep(btn) {
+      const container = btn.previousElementSibling;
+      container.insertAdjacentHTML('beforeend', makeGeneralCondition());
+    }
+
+    function removeStep(id) { document.getElementById(id).remove(); }
+    function toggleComponent(btn) { btn.classList.toggle('active'); }
+    function toggleField(btn) { btn.classList.toggle('active'); }
+
+    // --- READ THEN VALUE ---
+    function readThenValue(container) {
+      const fieldEl = container.querySelector('.then-field');
+      const valueEl = container.querySelector('.then-value');
+      if (!fieldEl || !fieldEl.value) return {};
+      return {
+        field: fieldEl.value,
+        value: valueEl ? valueEl.value.trim() : ''
+      };
+    }
+
+    // --- SAVE PROMPT ---
+    function savePrompt() {
+      const title = document.getElementById('p-title').value.trim();
+      if (!title) { alert('Please enter a prompt title.'); return; }
+
+      const steps = [];
+      document.querySelectorAll('.step-block').forEach((block, i) => {
+        const components = [];
+        block.querySelectorAll('.toggle-btn-sm.active').forEach(b => components.push(b.textContent.trim()));
+
+        const directionalConditions = {};
+        block.querySelectorAll('.condition-block[data-dir]').forEach(cb => {
+          const dir = cb.dataset.dir;
+          directionalConditions[dir] = {
+            and: cb.querySelector('.dir-and').value.trim(),
+            then: readThenValue(cb)
+          };
+        });
+
+        const conditions = [];
+        block.querySelectorAll('.general-condition').forEach(cb => {
+          conditions.push({
+            if: cb.querySelector('.gen-if').value.trim(),
+            and: cb.querySelector('.gen-and').value.trim(),
+            then: readThenValue(cb)
+          });
+        });
+
+        const defaultContainer = block.querySelector(`[id$="-default-then"]`);
+        const defaultThen = defaultContainer ? readThenValue(defaultContainer) : {};
+
+        steps.push({
+          order: i + 1,
+          text: block.querySelector('.step-text').value.trim(),
+          components,
+          timerDuration: block.querySelector('.step-timer').value || null,
+          directionalConditions,
+          conditions,
+          default: defaultThen
+        });
+      });
+
+      const assignmentFields = [];
+      document.querySelectorAll('.toggle-btn[data-field].active').forEach(b => {
+        assignmentFields.push(b.dataset.field);
+      });
+
+      const prompt = {
+        id: editingPromptId || `NLE-${String(prompts.length + 1).padStart(3, '0')}`,
+        title: title.toUpperCase(),
+        type: document.getElementById('p-type').value,
+        quote: {
+          text: document.getElementById('p-quote-text').value.trim(),
+          author: document.getElementById('p-quote-author').value.trim()
+        },
+        steps,
+        assignmentFields,
+        createdAt: editingPromptId
+          ? prompts.find(p => p.id === editingPromptId)?.createdAt
+          : new Date().toISOString()
+      };
+
+      if (editingPromptId) {
+        const idx = prompts.findIndex(p => p.id === editingPromptId);
+        prompts[idx] = prompt;
+      } else {
+        prompts.push(prompt);
+      }
+
+      savePromptsToStorage();
+      cancelPromptEditor();
+      renderPromptList();
+    }
+
+    // --- SCREEN NAVIGATION ---
+    function showScreen(id) {
+      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+    }
+
+    // --- PROMPT STORAGE ---
+    let prompts = JSON.parse(localStorage.getItem('nle-prompts') || '[]');
+    let editingPromptId = null;
+
+    function savePromptsToStorage() {
+      localStorage.setItem('nle-prompts', JSON.stringify(prompts));
+    }
+
+    // --- PROMPT LIST ---
+    function renderPromptList() {
+      const container = document.getElementById('prompt-list-container');
+      if (prompts.length === 0) {
+        container.innerHTML = '<p class="status-line">// no prompts loaded</p>';
+        return;
+      }
+      container.innerHTML = prompts.map(p => `
+        <div class="prompt-list-item">
+          <div class="prompt-list-main">
+            <span class="prompt-list-id">${p.id}</span>
+            <span class="prompt-list-title">${p.title}</span>
+            <span class="prompt-list-type">${p.type}</span>
+          </div>
+          <div class="prompt-list-actions">
+            <button class="btn-inline" onclick="editPrompt('${p.id}')">EDIT</button>
+            <button class="btn-inline btn-inline-danger" onclick="deletePrompt('${p.id}')">DEL</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function showPromptEditor(promptId = null) {
+      editingPromptId = promptId;
+      stepCount = 0;
+      document.getElementById('steps-container').innerHTML = '';
+      document.getElementById('prompts-list-view').style.display = 'none';
+      document.getElementById('prompts-editor-view').style.display = 'block';
+
+      document.getElementById('p-title').value = '';
+      document.getElementById('p-type').value = 'SENSORY';
+      document.getElementById('p-quote-text').value = '';
+      document.getElementById('p-quote-author').value = '';
+      document.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
+
+      if (promptId) {
+        const p = prompts.find(x => x.id === promptId);
+        document.getElementById('editor-title').textContent = 'Edit Prompt';
+        document.getElementById('p-title').value = p.title;
+        document.getElementById('p-type').value = p.type;
+        document.getElementById('p-quote-text').value = p.quote?.text || '';
+        document.getElementById('p-quote-author').value = p.quote?.author || '';
+        p.assignmentFields?.forEach(f => {
+          const btn = document.querySelector(`.toggle-btn[data-field="${f}"]`);
+          if (btn) btn.classList.add('active');
+        });
+        p.steps?.forEach(s => addStep(s));
+      } else {
+        document.getElementById('editor-title').textContent = 'New Prompt';
+        addStep();
+      }
+    }
+
+    function editPrompt(id) { showPromptEditor(id); }
+
+    function deletePrompt(id) {
+      if (!confirm('Delete this prompt?')) return;
+      prompts = prompts.filter(p => p.id !== id);
+      savePromptsToStorage();
+      renderPromptList();
+    }
+
+    function cancelPromptEditor() {
+      document.getElementById('prompts-editor-view').style.display = 'none';
+      document.getElementById('prompts-list-view').style.display = 'block';
+    }
+
+    // --- INIT ---
+    renderPromptList();
+  </script>
+
+</body>
+</html>
