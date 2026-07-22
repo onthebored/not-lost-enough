@@ -259,9 +259,14 @@
       <p>Wander Records</p>
     </div>
     <p class="status-line">// logging system — phase 6</p>
-    <hr class="divider">
-    <button class="btn btn-secondary" onclick="showScreen('screen-home')">Return Home</button>
-  </div>
+   <hr class="divider">
+      <button class="btn btn-secondary" onclick="exportPrompts()">Export Library</button>
+      <button class="btn btn-secondary" onclick="document.getElementById('import-file').click()">Import Library</button>
+      <input type="file" id="import-file" accept=".json" style="display:none" onchange="importPrompts(event)">
+      <p class="status-line" id="io-status"></p>
+      <hr class="divider">
+      <button class="btn btn-secondary" onclick="showScreen('screen-home')">Return Home</button>
+    </div>
 
   <!-- SCREEN: PROMPTS -->
   <div id="screen-prompts" class="screen">
@@ -682,7 +687,73 @@
       document.getElementById('prompts-editor-view').style.display = 'none';
       document.getElementById('prompts-list-view').style.display = 'block';
     }
+// --- EXPORT / IMPORT ---
+    function ioStatus(msg) {
+      document.getElementById('io-status').textContent = '// ' + msg;
+    }
 
+    function exportPrompts() {
+      if (prompts.length === 0) { ioStatus('nothing to export'); return; }
+      const payload = {
+        format: 'NLE-PROMPT-LIBRARY',
+        version: 1,
+        exportedAt: new Date().toISOString(),
+        prompts: prompts
+      };
+      const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      const stamp = new Date().toISOString().slice(0,10);
+      a.href = url;
+      a.download = `nle-prompts-${stamp}.json`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      ioStatus(`exported ${prompts.length} prompt(s)`);
+    }
+
+    function importPrompts(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        try {
+          const data = JSON.parse(e.target.result);
+          const incoming = Array.isArray(data) ? data : data.prompts;
+          if (!Array.isArray(incoming)) throw new Error('unrecognized file structure');
+
+          const mode = confirm(
+            `Import ${incoming.length} prompt(s).\n\n` +
+            `OK = REPLACE entire library (current ${prompts.length} deleted)\n` +
+            `Cancel = MERGE into existing library`
+          );
+
+          if (mode) {
+            prompts = incoming;
+            ioStatus(`library replaced — ${prompts.length} prompt(s)`);
+          } else {
+            const existingIds = new Set(prompts.map(p => p.id));
+            let added = 0;
+            incoming.forEach(p => {
+              if (existingIds.has(p.id)) {
+                p.id = `NLE-${String(prompts.length + added + 1).padStart(3,'0')}-I`;
+              }
+              prompts.push(p);
+              added++;
+            });
+            ioStatus(`merged — ${added} added, ${prompts.length} total`);
+          }
+
+          savePromptsToStorage();
+          renderPromptList();
+        } catch (err) {
+          ioStatus('import failed — ' + err.message);
+        }
+        event.target.value = '';
+      };
+      reader.readAsText(file);
+    }
     // --- INIT ---
     renderPromptList();
   </script>
