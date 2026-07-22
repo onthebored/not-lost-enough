@@ -27,7 +27,7 @@
       color: var(--text-primary);
       font-family: var(--font-data);
       min-height: 100vh;
-      padding: 24px 20px;
+      padding: 24px 20px 60px;
     }
 
     h1, h2, h3, label {
@@ -172,32 +172,13 @@
 
     select.data-value option { background: var(--surface); }
 
-    .directional-conditions {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      margin-top: 6px;
-    }
-
+    .directional-conditions,
     .general-conditions-container {
       display: flex;
       flex-direction: column;
       gap: 8px;
       margin-top: 6px;
       margin-bottom: 8px;
-    }
-
-    .condition-row {
-      display: grid;
-      gap: 4px;
-      align-items: center;
-    }
-
-    .dir-label {
-      font-size: 0.7rem;
-      color: var(--accent);
-      text-align: center;
-      padding-top: 4px;
     }
 
     .then-row {
@@ -225,6 +206,165 @@
       grid-template-columns: 1fr 1fr;
       gap: 4px;
     }
+
+    /* --- WANDER ENGINE --- */
+    .wander-bar {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.68rem;
+      color: var(--text-secondary);
+      border: 1px solid var(--border);
+      padding: 8px 10px;
+      margin-bottom: 14px;
+      letter-spacing: 0.05em;
+    }
+
+    .wander-bar .sprint { color: var(--accent); }
+
+    .field-status {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      margin-bottom: 18px;
+    }
+
+    .field-chip {
+      font-size: 0.58rem;
+      letter-spacing: 0.05em;
+      padding: 3px 6px;
+      border: 1px solid var(--border);
+      color: var(--text-secondary);
+    }
+
+    .field-chip.filled {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .directive-quote {
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+      font-style: italic;
+      border-left: 2px solid var(--accent);
+      padding-left: 10px;
+      margin-bottom: 18px;
+      line-height: 1.5;
+    }
+
+    .directive-title {
+      font-size: 1.1rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 2px;
+    }
+
+    .directive-id {
+      font-size: 0.62rem;
+      color: var(--text-secondary);
+      margin-bottom: 16px;
+    }
+
+    .directive-text {
+      font-size: 0.98rem;
+      line-height: 1.6;
+      margin: 18px 0;
+      white-space: pre-wrap;
+    }
+
+    .step-counter {
+      font-size: 0.62rem;
+      color: var(--text-secondary);
+      letter-spacing: 0.08em;
+    }
+
+    .timer-display {
+      font-size: 2.6rem;
+      letter-spacing: 0.08em;
+      text-align: center;
+      color: var(--accent);
+      margin: 14px 0;
+    }
+
+    .compass-rose {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+      margin-top: 10px;
+    }
+
+    .compass-btn {
+      font-family: var(--font-data);
+      font-size: 0.8rem;
+      padding: 16px 0;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text-primary);
+      cursor: pointer;
+      letter-spacing: 0.08em;
+    }
+
+    .compass-btn:active { background: var(--accent); color: var(--bg); }
+    .compass-btn.empty { visibility: hidden; }
+    .compass-btn.unmapped { color: var(--border); border-color: #1c1c1c; }
+
+    .choice-btn {
+      display: block;
+      width: 100%;
+      text-align: left;
+      font-family: var(--font-data);
+      font-size: 0.85rem;
+      padding: 12px 14px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text-primary);
+      cursor: pointer;
+      margin-top: 6px;
+      line-height: 1.4;
+    }
+
+    .choice-btn:active { border-color: var(--accent); color: var(--accent); }
+
+    .telemetry {
+      font-size: 0.62rem;
+      color: var(--text-secondary);
+      letter-spacing: 0.05em;
+      margin-top: 20px;
+      border-top: 1px solid var(--border);
+      padding-top: 8px;
+      min-height: 18px;
+    }
+
+    .summary-row {
+      display: grid;
+      grid-template-columns: 96px 1fr;
+      gap: 8px;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.82rem;
+    }
+
+    .summary-key { color: var(--text-secondary); font-size: 0.65rem; letter-spacing: 0.06em; padding-top: 2px; }
+    .summary-val { color: var(--text-primary); line-height: 1.5; }
+    .summary-val.empty { color: var(--border); }
+
+    .log-entry {
+      font-size: 0.68rem;
+      color: var(--text-secondary);
+      padding: 4px 0;
+      line-height: 1.5;
+      border-bottom: 1px solid #1c1c1c;
+    }
+
+    .wander-list-item {
+      border: 1px solid var(--border);
+      padding: 10px 12px;
+      margin-bottom: 8px;
+      cursor: pointer;
+    }
+
+    .wander-list-item:active { border-color: var(--accent); }
+    .wander-list-date { font-size: 0.65rem; color: var(--text-secondary); }
+    .wander-list-summary { font-size: 0.85rem; margin-top: 3px; }
   </style>
 </head>
 <body>
@@ -233,40 +373,81 @@
   <div id="screen-home" class="screen active">
     <div class="app-header">
       <h1>Not Lost Enough</h1>
-      <p>Field Research Application — v0.1</p>
+      <p>Field Research Application — v0.3</p>
     </div>
     <h2>Mission Control</h2>
-    <button class="btn" onclick="showScreen('screen-wander')">Initiate Wander</button>
-    <button class="btn btn-secondary" onclick="showScreen('screen-log')">View Field Log</button>
+    <button class="btn" onclick="openWanderSetup()">Initiate Wander</button>
+    <button class="btn btn-secondary" onclick="openFieldLog()">View Field Log</button>
     <button class="btn btn-secondary" onclick="showScreen('screen-prompts')">Prompt Library</button>
   </div>
 
-  <!-- SCREEN: WANDER -->
-  <div id="screen-wander" class="screen">
+  <!-- SCREEN: WANDER SETUP -->
+  <div id="screen-wander-setup" class="screen">
     <div class="app-header">
       <h1>Wander</h1>
-      <p>Active Mission</p>
+      <p>Pre-Departure</p>
     </div>
-    <p class="status-line">// wander engine — phase 3</p>
+
+    <div class="field-block">
+      <label>Time Budget (minutes)</label>
+      <input class="data-value" type="number" id="w-time-budget" value="90" min="5" step="5">
+    </div>
+
+    <p class="status-line" id="setup-status"></p>
+
     <hr class="divider">
-    <button class="btn btn-secondary" onclick="showScreen('screen-home')">Abort / Return Home</button>
+    <button class="btn" onclick="startWander()">Begin</button>
+    <button class="btn btn-secondary" onclick="showScreen('screen-home')">Return Home</button>
   </div>
 
-  <!-- SCREEN: LOG -->
+  <!-- SCREEN: WANDER ACTIVE -->
+  <div id="screen-wander" class="screen">
+    <div class="wander-bar">
+      <span id="wb-elapsed">00:00</span>
+      <span id="wb-mode"></span>
+      <span id="wb-remaining">--:--</span>
+    </div>
+
+    <div class="field-status" id="field-status"></div>
+
+    <div id="directive-container"></div>
+
+    <div class="telemetry" id="telemetry">// standing by</div>
+
+    <hr class="divider">
+    <button class="btn btn-secondary" onclick="abortWander()">Abort Wander</button>
+  </div>
+
+  <!-- SCREEN: WANDER SUMMARY -->
+  <div id="screen-summary" class="screen">
+    <div class="app-header">
+      <h1>Assignment</h1>
+      <p id="summary-subtitle">Wander Complete</p>
+    </div>
+
+    <div id="summary-fields"></div>
+
+    <hr class="divider">
+    <h2>Decision Record</h2>
+    <div id="summary-log"></div>
+
+    <hr class="divider">
+    <button class="btn btn-secondary" onclick="showScreen('screen-home')">Return Home</button>
+  </div>
+
+  <!-- SCREEN: FIELD LOG -->
   <div id="screen-log" class="screen">
     <div class="app-header">
       <h1>Field Log</h1>
       <p>Wander Records</p>
     </div>
-    <p class="status-line">// logging system — phase 6</p>
-   <hr class="divider">
-      <button class="btn btn-secondary" onclick="exportPrompts()">Export Library</button>
-      <button class="btn btn-secondary" onclick="document.getElementById('import-file').click()">Import Library</button>
-      <input type="file" id="import-file" accept=".json" style="display:none" onchange="importPrompts(event)">
-      <p class="status-line" id="io-status"></p>
-      <hr class="divider">
-      <button class="btn btn-secondary" onclick="showScreen('screen-home')">Return Home</button>
-    </div>
+    <div id="wander-list-container"></div>
+    <hr class="divider">
+    <button class="btn btn-secondary" onclick="exportWanders()">Export Log</button>
+    <p class="status-line" id="log-io-status"></p>
+    <hr class="divider">
+    <button class="btn btn-secondary" onclick="showScreen('screen-home')">Return Home</button>
+  </div>
 
   <!-- SCREEN: PROMPTS -->
   <div id="screen-prompts" class="screen">
@@ -281,6 +462,11 @@
       <div id="prompt-list-container">
         <p class="status-line">// no prompts loaded</p>
       </div>
+      <hr class="divider">
+      <button class="btn btn-secondary" onclick="exportPrompts()">Export Library</button>
+      <button class="btn btn-secondary" onclick="document.getElementById('import-file').click()">Import Library</button>
+      <input type="file" id="import-file" accept=".json,application/json" style="display:none" onchange="importPrompts(event)">
+      <p class="status-line" id="io-status"></p>
       <hr class="divider">
       <button class="btn btn-secondary" onclick="showScreen('screen-home')">Return Home</button>
     </div>
@@ -328,6 +514,7 @@
           <button class="toggle-btn" data-field="physical" onclick="toggleField(this)">PHYSICAL</button>
           <button class="toggle-btn" data-field="formal" onclick="toggleField(this)">FORMAL</button>
           <button class="toggle-btn" data-field="wildcard" onclick="toggleField(this)">WILDCARD</button>
+          <button class="toggle-btn" data-field="worktime" onclick="toggleField(this)">WORK TIME</button>
         </div>
       </div>
 
@@ -338,126 +525,137 @@
   </div>
 
   <script>
-    // --- ASSIGNMENT DATA ---
+    // ============================================================
+    // ASSIGNMENT MODEL
+    // ============================================================
     const ASSIGNMENT_FIELDS = {
       medium: {
+        label: 'MEDIUM',
         type: 'select',
         values: ['undetermined','painting','photography','sculpture','sound',
                  'video','drawing','writing','sewing','installation','found object','conceptual']
       },
-      subject: { type: 'text' },
-      mood:    { type: 'text' },
+      subject:  { label: 'SUBJECT',  type: 'text' },
+      mood:     { label: 'MOOD',     type: 'text' },
       physical: {
+        label: 'PHYSICAL',
         type: 'select-dependent',
         dependsOn: 'medium',
         values: {
-          painting:     { surface: ['canvas','paper','wood','other'], size: ['small','medium','large','extra large'] },
-          photography:  { format: ['digital','film'], framing: ['close up','mid','wide','abstract'] },
-          sculpture:    { material: ['wood','metal','stone','fabric','found','mixed'], scale: ['small','medium','large','site specific'] },
-          sound:        { format: ['recorded','live','installation'], duration: ['short','medium','long','open'] },
-          video:        { format: ['handheld','fixed','found footage'], duration: ['short','medium','long'] },
-          drawing:      { surface: ['paper','other'], size: ['small','medium','large'], tool: ['pencil','ink','charcoal','mixed'] },
-          writing:      { form: ['poetry','prose','fragmentary','mixed'], length: ['short','medium','long'] },
-          sewing:       { scale: ['small','medium','large'], material: ['fabric','mixed','found'] },
-          installation: { scale: ['intimate','room','site specific'] },
+          painting:       { surface: ['canvas','paper','wood','other'], size: ['small','medium','large','extra large'] },
+          photography:    { format: ['digital','film'], framing: ['close up','mid','wide','abstract'] },
+          sculpture:      { material: ['wood','metal','stone','fabric','found','mixed'], scale: ['small','medium','large','site specific'] },
+          sound:          { format: ['recorded','live','installation'], duration: ['short','medium','long','open'] },
+          video:          { format: ['handheld','fixed','found footage'], duration: ['short','medium','long'] },
+          drawing:        { surface: ['paper','other'], size: ['small','medium','large'], tool: ['pencil','ink','charcoal','mixed'] },
+          writing:        { form: ['poetry','prose','fragmentary','mixed'], length: ['short','medium','long'] },
+          sewing:         { scale: ['small','medium','large'], material: ['fabric','mixed','found'] },
+          installation:   { scale: ['intimate','room','site specific'] },
           'found object': { intervention: ['none','minimal','heavy'], context: ['indoor','outdoor','gallery'] },
-          conceptual:   {}
+          conceptual:     {}
         }
       },
-      formal:   { type: 'text' },
-      wildcard: { type: 'text' }
+      formal:   { label: 'FORMAL',    type: 'text' },
+      wildcard: { label: 'WILDCARD',  type: 'text' },
+      worktime: { label: 'WORK TIME', type: 'text' }
     };
 
-    // --- THEN BUILDER ---
+    const FIELD_KEYS = Object.keys(ASSIGNMENT_FIELDS);
+
+    // ============================================================
+    // STORAGE
+    // ============================================================
+    let prompts = JSON.parse(localStorage.getItem('nle-prompts') || '[]');
+    let wanders = JSON.parse(localStorage.getItem('nle-wanders') || '[]');
+    let editingPromptId = null;
+
+    function savePromptsToStorage() {
+      localStorage.setItem('nle-prompts', JSON.stringify(prompts));
+    }
+    function saveWandersToStorage() {
+      localStorage.setItem('nle-wanders', JSON.stringify(wanders));
+    }
+
+    // ============================================================
+    // NAVIGATION
+    // ============================================================
+    function showScreen(id) {
+      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      window.scrollTo(0, 0);
+    }
+
+    // ============================================================
+    // PROMPT EDITOR  (Phase 2)
+    // ============================================================
     function makeThenUI(prefix, existing = {}) {
-      const fieldOptions = Object.keys(ASSIGNMENT_FIELDS)
-        .map(f => `<option value="${f}" ${existing.field === f ? 'selected' : ''}>${f.toUpperCase()}</option>`)
+      const fieldOptions = FIELD_KEYS
+        .map(f => `<option value="${f}" ${existing.field === f ? 'selected' : ''}>${ASSIGNMENT_FIELDS[f].label}</option>`)
         .join('');
-
-      const selectedField = existing.field || 'medium';
-      const valueUI = buildValueUI(prefix, selectedField, existing.value);
-
+      const valueUI = existing.field ? buildValueUI(existing.field, existing.value) : '';
       return `
-        <div class="then-row">
-          <select class="data-value then-field" onchange="onThenFieldChange(this, '${prefix}')">
+        <div class="then-row" data-then-prefix="${prefix}">
+          <select class="data-value then-field" onchange="onThenFieldChange(this)">
             <option value="">— field —</option>
             ${fieldOptions}
           </select>
-          <div class="then-value-container" id="${prefix}-value-container">
-            ${valueUI}
-          </div>
+          <div class="then-value-container">${valueUI}</div>
         </div>
       `;
     }
 
-    function buildValueUI(prefix, field, existing = '') {
+    function buildValueUI(field, existing = '') {
       if (!field || !ASSIGNMENT_FIELDS[field]) return '';
       const def = ASSIGNMENT_FIELDS[field];
-
-      if (def.type === 'text') {
-        return `<input class="data-value then-value" type="text" placeholder="value..." value="${existing}">`;
-      }
-
       if (def.type === 'select') {
         const opts = def.values.map(v =>
-          `<option value="${v}" ${existing === v ? 'selected' : ''}>${v}</option>`
-        ).join('');
+          `<option value="${v}" ${existing === v ? 'selected' : ''}>${v}</option>`).join('');
         return `<select class="data-value then-value"><option value="">— value —</option>${opts}</select>`;
       }
-
-      if (def.type === 'select-dependent') {
-        return `<input class="data-value then-value" type="text" placeholder="set medium first" value="${existing}" readonly>`;
-      }
-
-      return '';
+      return `<input class="data-value then-value" type="text" placeholder="value..." value="${escapeAttr(existing)}">`;
     }
 
-    function onThenFieldChange(select, prefix) {
-      const field = select.value;
-      const container = document.getElementById(`${prefix}-value-container`);
-      container.innerHTML = buildValueUI(prefix, field, '');
+    function onThenFieldChange(select) {
+      const container = select.closest('.then-row').querySelector('.then-value-container');
+      container.innerHTML = buildValueUI(select.value, '');
     }
 
-    // --- CONDITION BUILDERS ---
+    function escapeAttr(s) {
+      return String(s == null ? '' : s).replace(/"/g, '&quot;');
+    }
+
     function makeDirectionalCondition(dir, data = {}) {
-      const andVal = data.and || '';
-      const thenData = data.then || {};
-      const prefix = `dir-${dir}-${Date.now()}`;
       return `
         <div class="condition-block" data-dir="${dir}">
           <div class="condition-block-header">${dir}</div>
-          <input class="data-value dir-and" type="text" placeholder="AND (optional)" value="${andVal}">
-          <div style="margin-top:4px;">
-            ${makeThenUI(prefix, thenData)}
-          </div>
+          <input class="data-value dir-and" type="text" placeholder="AND (optional)" value="${escapeAttr(data.and)}">
+          <div style="margin-top:4px;">${makeThenUI('dir-' + dir, data.then || {})}</div>
         </div>
       `;
     }
 
     function makeGeneralCondition(data = {}) {
-      const prefix = `gen-${Date.now()}-${Math.random().toString(36).slice(2,6)}`;
       return `
         <div class="condition-block general-condition">
           <div class="condition-grid">
             <div>
               <label>IF</label>
-              <input class="data-value gen-if" type="text" placeholder="observation..." value="${data.if || ''}">
+              <input class="data-value gen-if" type="text" placeholder="observation..." value="${escapeAttr(data.if)}">
             </div>
             <div>
               <label>AND (optional)</label>
-              <input class="data-value gen-and" type="text" placeholder="additional..." value="${data.and || ''}">
+              <input class="data-value gen-and" type="text" placeholder="additional..." value="${escapeAttr(data.and)}">
             </div>
           </div>
           <div style="margin-top:6px;">
             <label>THEN</label>
-            ${makeThenUI(prefix, data.then || {})}
+            ${makeThenUI('gen', data.then || {})}
           </div>
           <button class="btn-inline" style="margin-top:6px; font-size:0.6rem;" onclick="this.closest('.general-condition').remove()">REMOVE</button>
         </div>
       `;
     }
 
-    // --- STEP BUILDER ---
     let stepCount = 0;
 
     function addStep(data = null) {
@@ -469,10 +667,8 @@
       div.id = id;
 
       const directions = ['N','NE','E','SE','S','SW','W','NW'];
-      const dirHTML = directions.map(dir => {
-        const existing = data?.directionalConditions?.[dir] || {};
-        return makeDirectionalCondition(dir, existing);
-      }).join('');
+      const dirHTML = directions.map(dir =>
+        makeDirectionalCondition(dir, data?.directionalConditions?.[dir] || {})).join('');
 
       const generalHTML = data?.conditions?.length
         ? data.conditions.map(c => makeGeneralCondition(c)).join('')
@@ -503,9 +699,7 @@
         <button class="btn btn-secondary" style="font-size:0.75rem; padding:8px;" onclick="addGeneralConditionToStep(this)">+ Add Condition</button>
 
         <label style="margin-top:12px;">Default (if no conditions met)</label>
-        <div id="${id}-default-then">
-          ${makeThenUI(`${id}-default`, data?.default || {})}
-        </div>
+        <div class="step-default-then">${makeThenUI('default', data?.default || {})}</div>
 
         <button class="btn btn-secondary" style="margin-top:12px; font-size:0.75rem; padding:8px;" onclick="removeStep('${id}')">Remove Step</button>
         <hr class="divider">
@@ -514,26 +708,22 @@
     }
 
     function addGeneralConditionToStep(btn) {
-      const container = btn.previousElementSibling;
-      container.insertAdjacentHTML('beforeend', makeGeneralCondition());
+      btn.previousElementSibling.insertAdjacentHTML('beforeend', makeGeneralCondition());
     }
 
     function removeStep(id) { document.getElementById(id).remove(); }
     function toggleComponent(btn) { btn.classList.toggle('active'); }
     function toggleField(btn) { btn.classList.toggle('active'); }
 
-    // --- READ THEN VALUE ---
     function readThenValue(container) {
-      const fieldEl = container.querySelector('.then-field');
-      const valueEl = container.querySelector('.then-value');
+      const row = container.querySelector('.then-row');
+      if (!row) return {};
+      const fieldEl = row.querySelector('.then-field');
+      const valueEl = row.querySelector('.then-value');
       if (!fieldEl || !fieldEl.value) return {};
-      return {
-        field: fieldEl.value,
-        value: valueEl ? valueEl.value.trim() : ''
-      };
+      return { field: fieldEl.value, value: valueEl ? valueEl.value.trim() : '' };
     }
 
-    // --- SAVE PROMPT ---
     function savePrompt() {
       const title = document.getElementById('p-title').value.trim();
       if (!title) { alert('Please enter a prompt title.'); return; }
@@ -545,8 +735,7 @@
 
         const directionalConditions = {};
         block.querySelectorAll('.condition-block[data-dir]').forEach(cb => {
-          const dir = cb.dataset.dir;
-          directionalConditions[dir] = {
+          directionalConditions[cb.dataset.dir] = {
             and: cb.querySelector('.dir-and').value.trim(),
             then: readThenValue(cb)
           };
@@ -561,9 +750,7 @@
           });
         });
 
-        const defaultContainer = block.querySelector(`[id$="-default-then"]`);
-        const defaultThen = defaultContainer ? readThenValue(defaultContainer) : {};
-
+        const defaultContainer = block.querySelector('.step-default-then');
         steps.push({
           order: i + 1,
           text: block.querySelector('.step-text').value.trim(),
@@ -571,7 +758,7 @@
           timerDuration: block.querySelector('.step-timer').value || null,
           directionalConditions,
           conditions,
-          default: defaultThen
+          default: defaultContainer ? readThenValue(defaultContainer) : {}
         });
       });
 
@@ -596,8 +783,7 @@
       };
 
       if (editingPromptId) {
-        const idx = prompts.findIndex(p => p.id === editingPromptId);
-        prompts[idx] = prompt;
+        prompts[prompts.findIndex(p => p.id === editingPromptId)] = prompt;
       } else {
         prompts.push(prompt);
       }
@@ -607,21 +793,6 @@
       renderPromptList();
     }
 
-    // --- SCREEN NAVIGATION ---
-    function showScreen(id) {
-      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-      document.getElementById(id).classList.add('active');
-    }
-
-    // --- PROMPT STORAGE ---
-    let prompts = JSON.parse(localStorage.getItem('nle-prompts') || '[]');
-    let editingPromptId = null;
-
-    function savePromptsToStorage() {
-      localStorage.setItem('nle-prompts', JSON.stringify(prompts));
-    }
-
-    // --- PROMPT LIST ---
     function renderPromptList() {
       const container = document.getElementById('prompt-list-container');
       if (prompts.length === 0) {
@@ -654,7 +825,7 @@
       document.getElementById('p-type').value = 'SENSORY';
       document.getElementById('p-quote-text').value = '';
       document.getElementById('p-quote-author').value = '';
-      document.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.toggle-btn[data-field]').forEach(b => b.classList.remove('active'));
 
       if (promptId) {
         const p = prompts.find(x => x.id === promptId);
@@ -672,6 +843,7 @@
         document.getElementById('editor-title').textContent = 'New Prompt';
         addStep();
       }
+      window.scrollTo(0, 0);
     }
 
     function editPrompt(id) { showPromptEditor(id); }
@@ -687,30 +859,38 @@
       document.getElementById('prompts-editor-view').style.display = 'none';
       document.getElementById('prompts-list-view').style.display = 'block';
     }
-// --- EXPORT / IMPORT ---
-    function ioStatus(msg) {
-      document.getElementById('io-status').textContent = '// ' + msg;
+
+    // ============================================================
+    // EXPORT / IMPORT  (Phase 2.5)
+    // ============================================================
+    function ioStatus(msg) { document.getElementById('io-status').textContent = '// ' + msg; }
+
+    function downloadJSON(payload, filename) {
+      const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = filename;
+      document.body.appendChild(a); a.click(); document.body.removeChild(a);
+      URL.revokeObjectURL(url);
     }
 
     function exportPrompts() {
       if (prompts.length === 0) { ioStatus('nothing to export'); return; }
-      const payload = {
-        format: 'NLE-PROMPT-LIBRARY',
-        version: 1,
-        exportedAt: new Date().toISOString(),
-        prompts: prompts
-      };
-      const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      const stamp = new Date().toISOString().slice(0,10);
-      a.href = url;
-      a.download = `nle-prompts-${stamp}.json`;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
+      downloadJSON({
+        format: 'NLE-PROMPT-LIBRARY', version: 2,
+        exportedAt: new Date().toISOString(), prompts
+      }, `nle-prompts-${new Date().toISOString().slice(0,10)}.json`);
       ioStatus(`exported ${prompts.length} prompt(s)`);
+    }
+
+    function exportWanders() {
+      const el = document.getElementById('log-io-status');
+      if (wanders.length === 0) { el.textContent = '// nothing to export'; return; }
+      downloadJSON({
+        format: 'NLE-FIELD-LOG', version: 1,
+        exportedAt: new Date().toISOString(), wanders
+      }, `nle-log-${new Date().toISOString().slice(0,10)}.json`);
+      el.textContent = `// exported ${wanders.length} wander(s)`;
     }
 
     function importPrompts(event) {
@@ -723,13 +903,13 @@
           const incoming = Array.isArray(data) ? data : data.prompts;
           if (!Array.isArray(incoming)) throw new Error('unrecognized file structure');
 
-          const mode = confirm(
+          const replace = confirm(
             `Import ${incoming.length} prompt(s).\n\n` +
             `OK = REPLACE entire library (current ${prompts.length} deleted)\n` +
             `Cancel = MERGE into existing library`
           );
 
-          if (mode) {
+          if (replace) {
             prompts = incoming;
             ioStatus(`library replaced — ${prompts.length} prompt(s)`);
           } else {
@@ -739,12 +919,10 @@
               if (existingIds.has(p.id)) {
                 p.id = `NLE-${String(prompts.length + added + 1).padStart(3,'0')}-I`;
               }
-              prompts.push(p);
-              added++;
+              prompts.push(p); added++;
             });
             ioStatus(`merged — ${added} added, ${prompts.length} total`);
           }
-
           savePromptsToStorage();
           renderPromptList();
         } catch (err) {
@@ -754,7 +932,422 @@
       };
       reader.readAsText(file);
     }
-    // --- INIT ---
+
+    // ============================================================
+    // WANDER ENGINE  (Phase 3)
+    // ============================================================
+    let wander = null;
+    let clockInterval = null;
+    let timerInterval = null;
+
+    function emptyAssignment() {
+      const a = {};
+      FIELD_KEYS.forEach(k => a[k] = []);
+      return a;
+    }
+
+    function openWanderSetup() {
+      const status = document.getElementById('setup-status');
+      status.textContent = prompts.length === 0
+        ? '// warning: prompt library empty'
+        : `// ${prompts.length} directive(s) available`;
+      showScreen('screen-wander-setup');
+    }
+
+    function startWander() {
+      if (prompts.length === 0) {
+        document.getElementById('setup-status').textContent = '// cannot begin — no directives in library';
+        return;
+      }
+      const budget = parseInt(document.getElementById('w-time-budget').value, 10) || 90;
+
+      wander = {
+        id: 'W-' + Date.now(),
+        startedAt: new Date().toISOString(),
+        timeBudgetMin: budget,
+        assignment: emptyAssignment(),
+        usedPromptIds: [],
+        log: [],
+        sprint: false,
+        completeOffered: false,
+        endedAt: null,
+        endReason: null
+      };
+
+      showScreen('screen-wander');
+      startClock();
+      nextDirective();
+    }
+
+    function startClock() {
+      stopClock();
+      clockInterval = setInterval(updateClock, 1000);
+      updateClock();
+    }
+    function stopClock() {
+      if (clockInterval) clearInterval(clockInterval);
+      clockInterval = null;
+    }
+
+    function fmtMS(totalSec) {
+      const s = Math.max(0, Math.floor(totalSec));
+      const m = Math.floor(s / 60);
+      return String(m).padStart(2,'0') + ':' + String(s % 60).padStart(2,'0');
+    }
+
+    function updateClock() {
+      if (!wander) return;
+      const elapsedSec = (Date.now() - new Date(wander.startedAt).getTime()) / 1000;
+      const remainingSec = wander.timeBudgetMin * 60 - elapsedSec;
+      document.getElementById('wb-elapsed').textContent = fmtMS(elapsedSec);
+      document.getElementById('wb-remaining').textContent = remainingSec > 0 ? fmtMS(remainingSec) : '00:00';
+
+      if (remainingSec <= 0 && !wander.sprint) {
+        wander.sprint = true;
+        telemetry('time budget expired — prioritizing unresolved criteria');
+      }
+      document.getElementById('wb-mode').textContent = wander.sprint ? 'SPRINT' : '';
+      document.getElementById('wb-mode').className = wander.sprint ? 'sprint' : '';
+    }
+
+    function telemetry(msg) {
+      document.getElementById('telemetry').textContent = '// ' + msg;
+    }
+
+    function emptyFields() {
+      return FIELD_KEYS.filter(k => wander.assignment[k].length === 0);
+    }
+
+    function renderFieldStatus() {
+      const el = document.getElementById('field-status');
+      el.innerHTML = FIELD_KEYS.map(k => {
+        const filled = wander.assignment[k].length > 0;
+        return `<span class="field-chip ${filled ? 'filled' : ''}">${ASSIGNMENT_FIELDS[k].label}</span>`;
+      }).join('');
+    }
+
+    // --- selection ---
+    function selectNextPrompt() {
+      const unused = prompts.filter(p => !wander.usedPromptIds.includes(p.id));
+      if (unused.length === 0) return null;
+
+      // First directive: prefer INITIATION
+      if (wander.usedPromptIds.length === 0) {
+        const inits = unused.filter(p => p.type === 'INITIATION');
+        if (inits.length) return pickRandom(inits);
+      }
+
+      const empty = emptyFields();
+      const scored = unused.map(p => {
+        const fields = p.assignmentFields || [];
+        const useful = fields.filter(f => empty.includes(f)).length;
+        return { p, useful };
+      });
+
+      const maxUseful = Math.max(...scored.map(s => s.useful));
+
+      // Sprint mode: only prompts that resolve something outstanding
+      if (wander.sprint) {
+        const useful = scored.filter(s => s.useful > 0);
+        if (useful.length === 0) return null;
+        return pickRandom(useful.filter(s => s.useful === maxUseful).map(s => s.p));
+      }
+
+      // Weighted: prompts that fill empty fields are far likelier, but not exclusive
+      const pool = [];
+      scored.forEach(s => {
+        const weight = 1 + s.useful * 4;
+        for (let i = 0; i < weight; i++) pool.push(s.p);
+      });
+      return pickRandom(pool);
+    }
+
+    function pickRandom(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+
+    // --- directive runner ---
+    let current = null; // {prompt, stepIndex}
+
+    function nextDirective() {
+      renderFieldStatus();
+
+      if (emptyFields().length === 0 && !wander.completeOffered) {
+        wander.completeOffered = true;
+        return renderCompletionChoice();
+      }
+
+      const p = selectNextPrompt();
+      if (!p) {
+        return renderExhausted();
+      }
+      wander.usedPromptIds.push(p.id);
+      current = { prompt: p, stepIndex: 0 };
+      renderStep();
+    }
+
+    function renderCompletionChoice() {
+      const c = document.getElementById('directive-container');
+      c.innerHTML = `
+        <div class="directive-title">Criteria Satisfied</div>
+        <div class="directive-id">all seven fields resolved</div>
+        <div class="directive-text">Every criterion for this assignment has been answered. You may close the wander now, or continue and let further directives layer onto the work.</div>
+        <button class="btn" onclick="endWander('complete')">End Wander</button>
+        <button class="btn btn-secondary" onclick="continueWander()">Continue Wandering</button>
+      `;
+      telemetry('assignment complete');
+    }
+
+    function continueWander() {
+      wander.completeOffered = false;
+      nextDirective();
+    }
+
+    function renderExhausted() {
+      const c = document.getElementById('directive-container');
+      const remaining = emptyFields();
+      c.innerHTML = `
+        <div class="directive-title">Directives Exhausted</div>
+        <div class="directive-id">no further prompts available</div>
+        <div class="directive-text">${remaining.length
+          ? 'Unresolved criteria will be logged as wildcard: ' + remaining.map(f => ASSIGNMENT_FIELDS[f].label).join(', ')
+          : 'All criteria resolved.'}</div>
+        <button class="btn" onclick="endWander('exhausted')">End Wander</button>
+      `;
+      telemetry('directive pool empty');
+    }
+
+    function renderStep() {
+      const { prompt, stepIndex } = current;
+      const step = prompt.steps[stepIndex];
+      const c = document.getElementById('directive-container');
+
+      if (!step) { nextDirective(); return; }
+
+      const quoteHTML = prompt.quote?.text
+        ? `<div class="directive-quote">${prompt.quote.text}${prompt.quote.author ? '<br>— ' + prompt.quote.author : ''}</div>`
+        : '';
+
+      c.innerHTML = `
+        <div class="directive-title">${prompt.title}</div>
+        <div class="directive-id">${prompt.id} // ${prompt.type} // step ${stepIndex + 1} of ${prompt.steps.length}</div>
+        ${stepIndex === 0 ? quoteHTML : ''}
+        <div class="directive-text">${step.text || '—'}</div>
+        <div id="step-action"></div>
+      `;
+
+      if (step.components?.includes('TIMER') && step.timerDuration) {
+        renderTimer(parseInt(step.timerDuration, 10));
+      } else {
+        renderResolution();
+      }
+      window.scrollTo(0, 0);
+    }
+
+    function renderTimer(seconds) {
+      const a = document.getElementById('step-action');
+      a.innerHTML = `
+        <div class="timer-display" id="timer-display">${fmtMS(seconds)}</div>
+        <button class="btn" id="timer-btn" onclick="runTimer(${seconds})">Start Timer</button>
+      `;
+    }
+
+    function runTimer(seconds) {
+      const display = document.getElementById('timer-display');
+      const btn = document.getElementById('timer-btn');
+      btn.disabled = true;
+      btn.textContent = 'Observing…';
+      let left = seconds;
+      display.textContent = fmtMS(left);
+      if (timerInterval) clearInterval(timerInterval);
+      timerInterval = setInterval(() => {
+        left--;
+        display.textContent = fmtMS(left);
+        if (left <= 0) {
+          clearInterval(timerInterval);
+          timerInterval = null;
+          display.textContent = '00:00';
+          renderResolution();
+        }
+      }, 1000);
+    }
+
+    function renderResolution() {
+      const step = current.prompt.steps[current.stepIndex];
+      const a = document.getElementById('step-action');
+
+      const dirEntries = Object.entries(step.directionalConditions || {})
+        .filter(([, v]) => v?.then?.field);
+
+      const genConditions = (step.conditions || []).filter(c => c.if || c.then?.field);
+
+      let html = '';
+
+      if (dirEntries.length) {
+        const mapped = Object.fromEntries(dirEntries);
+        const grid = ['NW','N','NE','W',null,'E','SW','S','SE'];
+        html += `<label style="margin-top:14px;">Select Direction</label><div class="compass-rose">` +
+          grid.map(d => {
+            if (!d) return `<button class="compass-btn empty"></button>`;
+            const has = !!mapped[d];
+            const andNote = has && mapped[d].and ? `<br><span style="font-size:0.55rem">${mapped[d].and}</span>` : '';
+            return `<button class="compass-btn ${has ? '' : 'unmapped'}" onclick="resolveDirection('${d}')">${d}${andNote}</button>`;
+          }).join('') + `</div>`;
+      }
+
+      if (genConditions.length) {
+        html += `<label style="margin-top:16px;">Which is true?</label>`;
+        genConditions.forEach((c, i) => {
+          const label = [c.if, c.and].filter(Boolean).join(' + ') || '(unlabeled condition)';
+          html += `<button class="choice-btn" onclick="resolveGeneral(${i})">${label}</button>`;
+        });
+      }
+
+      if (step.default?.field) {
+        html += `<button class="choice-btn" onclick="resolveDefault()">None of these / default</button>`;
+      }
+
+      if (!html) {
+        html = `<button class="btn" onclick="advanceStep()">Continue</button>`;
+      } else {
+        html += `<button class="btn btn-secondary" onclick="advanceStep()">Skip / No Outcome</button>`;
+      }
+
+      a.innerHTML = html;
+    }
+
+    function applyThen(then, source) {
+      if (!then?.field) return;
+      const key = then.field;
+      const value = then.value || '(unspecified)';
+      if (!wander.assignment[key].includes(value)) {
+        wander.assignment[key].push(value);
+      }
+      wander.log.push({
+        at: new Date().toISOString(),
+        prompt: current.prompt.id,
+        promptTitle: current.prompt.title,
+        step: current.stepIndex + 1,
+        source,
+        field: key,
+        value
+      });
+      telemetry('decision tree updated');
+      renderFieldStatus();
+    }
+
+    function resolveDirection(dir) {
+      const step = current.prompt.steps[current.stepIndex];
+      const cond = step.directionalConditions?.[dir];
+      applyThen(cond?.then, 'direction ' + dir);
+      advanceStep();
+    }
+
+    function resolveGeneral(index) {
+      const step = current.prompt.steps[current.stepIndex];
+      const conds = (step.conditions || []).filter(c => c.if || c.then?.field);
+      applyThen(conds[index]?.then, 'condition: ' + (conds[index]?.if || 'unlabeled'));
+      advanceStep();
+    }
+
+    function resolveDefault() {
+      const step = current.prompt.steps[current.stepIndex];
+      applyThen(step.default, 'default');
+      advanceStep();
+    }
+
+    function advanceStep() {
+      current.stepIndex++;
+      if (current.stepIndex >= current.prompt.steps.length) {
+        nextDirective();
+      } else {
+        renderStep();
+      }
+    }
+
+    function abortWander() {
+      if (!confirm('Abort this wander? The partial assignment will still be logged.')) return;
+      endWander('aborted');
+    }
+
+    function endWander(reason) {
+      stopClock();
+      if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
+
+      // unresolved criteria become wildcard
+      const unresolved = emptyFields();
+      unresolved.forEach(f => {
+        if (f !== 'wildcard') wander.assignment[f].push('wildcard — unresolved');
+      });
+      if (wander.assignment.wildcard.length === 0) {
+        wander.assignment.wildcard.push('wildcard — unresolved');
+      }
+
+      wander.endedAt = new Date().toISOString();
+      wander.endReason = reason;
+      wanders.unshift(wander);
+      saveWandersToStorage();
+
+      renderSummary(wander);
+      showScreen('screen-summary');
+    }
+
+    function renderSummary(w) {
+      const reasonLabel = {
+        complete: 'Criteria Satisfied',
+        exhausted: 'Directives Exhausted',
+        aborted: 'Aborted'
+      }[w.endReason] || 'Complete';
+
+      const started = new Date(w.startedAt);
+      const mins = Math.round((new Date(w.endedAt) - started) / 60000);
+      document.getElementById('summary-subtitle').textContent =
+        `${started.toLocaleString()} — ${mins} min — ${reasonLabel}`;
+
+      document.getElementById('summary-fields').innerHTML = FIELD_KEYS.map(k => {
+        const vals = w.assignment[k];
+        const empty = vals.length === 0;
+        return `
+          <div class="summary-row">
+            <div class="summary-key">${ASSIGNMENT_FIELDS[k].label}</div>
+            <div class="summary-val ${empty ? 'empty' : ''}">${empty ? '—' : vals.join(' / ')}</div>
+          </div>`;
+      }).join('');
+
+      document.getElementById('summary-log').innerHTML = w.log.length
+        ? w.log.map(e =>
+            `<div class="log-entry">${new Date(e.at).toLocaleTimeString()} — ${e.promptTitle} step ${e.step} — ${e.source} → ${ASSIGNMENT_FIELDS[e.field].label} = ${e.value}</div>`
+          ).join('')
+        : '<p class="status-line">// no decisions recorded</p>';
+    }
+
+    // ============================================================
+    // FIELD LOG
+    // ============================================================
+    function openFieldLog() {
+      const c = document.getElementById('wander-list-container');
+      if (wanders.length === 0) {
+        c.innerHTML = '<p class="status-line">// no wanders recorded</p>';
+      } else {
+        c.innerHTML = wanders.map((w, i) => {
+          const medium = w.assignment.medium?.join(' / ') || '—';
+          return `
+            <div class="wander-list-item" onclick="viewWander(${i})">
+              <div class="wander-list-date">${new Date(w.startedAt).toLocaleString()} // ${w.id}</div>
+              <div class="wander-list-summary">${medium}</div>
+            </div>`;
+        }).join('');
+      }
+      document.getElementById('log-io-status').textContent = '';
+      showScreen('screen-log');
+    }
+
+    function viewWander(index) {
+      renderSummary(wanders[index]);
+      showScreen('screen-summary');
+    }
+
+    // ============================================================
+    // INIT
+    // ============================================================
     renderPromptList();
   </script>
 
