@@ -1,38 +1,3 @@
-Claude
-chadbook, Connected
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Index · HTML
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -53,9 +18,9 @@ Index · HTML
       --border: #2e2e2e;
       --font: 'Menlo', monospace;
     }
- 
+
     * { margin: 0; padding: 0; box-sizing: border-box; }
- 
+
     body {
       background-color: var(--bg);
       color: var(--text-primary);
@@ -64,16 +29,16 @@ Index · HTML
       padding: 28px 20px 60px;
       -webkit-text-size-adjust: 100%;
     }
- 
+
     h1 { font-size: 1.7rem; letter-spacing: 0.15em; text-transform: uppercase; }
- 
+
     .sub { color: var(--text-secondary); font-size: 0.72rem; margin-top: 4px; letter-spacing: 0.05em; }
- 
+
     .app-header { border-bottom: 1px solid var(--border); padding-bottom: 16px; margin-bottom: 28px; }
- 
+
     .screen { display: none; }
     .screen.active { display: block; }
- 
+
     label {
       display: block;
       font-size: 0.68rem;
@@ -82,7 +47,7 @@ Index · HTML
       letter-spacing: 0.08em;
       text-transform: uppercase;
     }
- 
+
     input.field, textarea.field {
       font-family: var(--font);
       font-size: 1.1rem;
@@ -101,7 +66,7 @@ Index · HTML
       opacity: 1;
       border-color: var(--accent);
     }
- 
+
     .btn {
       font-family: var(--font);
       text-transform: uppercase;
@@ -117,25 +82,25 @@ Index · HTML
     }
     .btn:active { background: var(--accent); color: var(--bg); }
     .btn:disabled { opacity: 0.3; cursor: default; }
- 
+
     .btn-secondary { border-color: var(--border); color: var(--text-secondary); }
     .btn-secondary:active { background: var(--surface); color: var(--text-primary); }
- 
+
     .btn-small {
       font-size: 0.72rem;
       padding: 10px;
       letter-spacing: 0.08em;
     }
- 
+
     .divider { border: none; border-top: 1px solid var(--border); margin: 26px 0; }
- 
+
     .roll-group { margin-bottom: 24px; }
     .roll-group.locked-wait { opacity: 0.35; pointer-events: none; }
- 
+
     .resolve-line { font-size: 1.1rem; margin-top: 12px; letter-spacing: 0.04em; }
     .resolve-arrow { color: var(--text-secondary); }
     .resolve-val { color: var(--accent); text-transform: uppercase; }
- 
+
     .choose-btn {
       display: block; width: 100%; text-align: left;
       font-family: var(--font); font-size: 1rem; padding: 14px;
@@ -143,18 +108,18 @@ Index · HTML
       color: var(--text-primary); cursor: pointer; margin-top: 8px;
     }
     .choose-btn:active { border-color: var(--accent); color: var(--accent); }
- 
+
     .seed-line { font-size: 0.62rem; color: var(--text-secondary); letter-spacing: 0.06em; margin-bottom: 14px; }
     .seed-line b { color: var(--accent); font-weight: normal; }
- 
+
     .resume-note { font-size: 0.6rem; color: var(--text-secondary); letter-spacing: 0.06em; margin-bottom: 14px; }
- 
+
     .step-counter { font-size: 0.62rem; color: var(--text-secondary); letter-spacing: 0.1em; margin-bottom: 18px; }
- 
+
     .directive { font-size: 1.35rem; line-height: 1.5; margin: 10px 0 24px; }
- 
+
     .timer-display { font-size: 3rem; text-align: center; color: var(--accent); letter-spacing: 0.08em; margin: 16px 0; }
- 
+
     .compass-rose { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 10px; }
     .compass-btn {
       font-family: var(--font); font-size: 0.95rem; padding: 20px 0;
@@ -164,14 +129,14 @@ Index · HTML
     .compass-btn:active { background: var(--accent); color: var(--bg); }
     .compass-btn.empty { visibility: hidden; }
     .compass-btn.selected { background: var(--accent); color: var(--bg); }
- 
+
     .gps-readout {
       font-size: 1rem; color: var(--accent); text-align: center;
       padding: 16px; border: 1px solid var(--border); margin: 10px 0;
       letter-spacing: 0.04em; min-height: 56px;
       display: flex; align-items: center; justify-content: center;
     }
- 
+
     .wp-display {
       display: flex; gap: 16px; justify-content: center; align-items: center;
       min-height: 72px; border: 1px solid var(--border); padding: 12px; margin-bottom: 18px;
@@ -184,7 +149,7 @@ Index · HTML
     }
     .wp-btn.selected { background: var(--accent); color: var(--bg); border-color: var(--accent); }
     .wp-btn:disabled { opacity: 0.4; }
- 
+
     .review-block {
       white-space: pre-wrap;
       border: 1px solid var(--border);
@@ -195,7 +160,7 @@ Index · HTML
       line-height: 1.5;
       color: var(--text-primary);
     }
- 
+
     .abort-wrap { margin-top: 48px; text-align: center; }
     .btn-abort {
       font-family: var(--font);
@@ -209,7 +174,7 @@ Index · HTML
       cursor: pointer;
     }
     .btn-abort:active { background: var(--surface); color: var(--text-primary); }
- 
+
     .photo-zone { margin-top: 14px; }
     .photo-thumb {
       margin-top: 10px;
@@ -221,7 +186,7 @@ Index · HTML
       display: block;
     }
     .photo-meta { font-size: 0.6rem; color: var(--text-secondary); margin-top: 4px; letter-spacing: 0.05em; }
- 
+
     /* summary + log */
     .summary-row {
       display: grid; grid-template-columns: 110px 1fr; gap: 10px;
@@ -230,41 +195,41 @@ Index · HTML
     .summary-key { color: var(--text-secondary); font-size: 0.62rem; letter-spacing: 0.06em; padding-top: 3px; text-transform: uppercase; }
     .summary-val { color: var(--text-primary); line-height: 1.5; }
     .summary-val.empty { color: var(--border); }
- 
+
     .summary-photo { margin: 8px 0 18px; }
     .summary-photo img { width: 100%; max-height: 300px; object-fit: contain; border: 1px solid var(--border); background: var(--surface); }
     .summary-photo .cap { font-size: 0.6rem; color: var(--text-secondary); margin-top: 4px; letter-spacing: 0.06em; text-transform: uppercase; }
- 
+
     .path-plot { border: 1px solid var(--border); background: var(--surface); margin-top: 10px; width: 100%; }
     .path-empty { font-size: 0.68rem; color: var(--text-secondary); margin-top: 10px; }
- 
+
     .log-entry { font-size: 0.72rem; color: var(--text-secondary); padding: 6px 0; line-height: 1.5; border-bottom: 1px solid #1c1c1c; }
     .log-entry b { color: var(--text-primary); font-weight: normal; }
- 
+
     .record-item { border: 1px solid var(--border); padding: 12px 14px; margin-bottom: 8px; cursor: pointer; }
     .record-item:active { border-color: var(--accent); }
     .record-date { font-size: 0.65rem; color: var(--text-secondary); }
     .record-summary { font-size: 0.9rem; margin-top: 4px; }
     .record-summary .accent { color: var(--accent); }
- 
+
     .status-line { font-size: 0.7rem; color: var(--text-secondary); margin-top: 10px; letter-spacing: 0.04em; }
- 
+
     .hidden-file { display: none; }
   </style>
 </head>
 <body>
- 
+
   <!-- HOME -->
   <div id="screen-home" class="screen active">
     <div class="app-header">
       <h1>Not Lost Enough</h1>
-      <div class="sub">Field Research Application — v0.9.2</div>
+      <div class="sub">Field Research Application — v0.9.1</div>
     </div>
     <button class="btn" onclick="beginSession()">Initiate Wander</button>
     <button class="btn btn-secondary" onclick="openRecords()">Field Log</button>
     <div id="home-resume"></div>
   </div>
- 
+
   <!-- ROLL (single) -->
   <div id="screen-rolls" class="screen">
     <div class="app-header">
@@ -278,7 +243,7 @@ Index · HTML
     <button class="btn" id="roll-btn" onclick="resolveRoll()">OK</button>
     <button class="btn btn-secondary btn-small" onclick="cancelToHome()">Cancel</button>
   </div>
- 
+
   <!-- WANDER -->
   <div id="screen-wander" class="screen">
     <div id="wander-resume-note"></div>
@@ -290,7 +255,7 @@ Index · HTML
     <button class="btn btn-secondary btn-small" id="wander-back" onclick="goBack()">← Back</button>
     <div class="abort-wrap"><button class="btn-abort" onclick="abortWander()">abort wander</button></div>
   </div>
- 
+
   <!-- SUMMARY -->
   <div id="screen-summary" class="screen">
     <div class="app-header">
@@ -310,7 +275,7 @@ Index · HTML
     <div class="divider"></div>
     <button class="btn btn-secondary" onclick="showScreen('screen-home')">Return Home</button>
   </div>
- 
+
   <!-- RECORDS -->
   <div id="screen-records" class="screen">
     <div class="app-header">
@@ -324,11 +289,11 @@ Index · HTML
     <div class="divider"></div>
     <button class="btn btn-secondary" onclick="showScreen('screen-home')">Return Home</button>
   </div>
- 
+
   <!-- shared hidden file inputs for photos -->
   <input type="file" id="photo-input" class="hidden-file" accept="image/*">
   <input type="file" id="camera-input" class="hidden-file" accept="image/*" capture="environment">
- 
+
   <script>
     // ============================================================
     // STATIC TABLES
@@ -336,7 +301,7 @@ Index · HTML
     const PRACTICE_TABLE = { 1:'drawing', 2:'painting', 3:'sculpture', 4:'writing', 5:'sewing', 6:'wild card' };
     const LOCATION_TABLE = { 1:'Home', 2:'Belle Isle', 3:'CHOOSE', 4:'Tenacity Brewery', 5:'Detroit Library', 6:'DMOCA / Downtown' };
     const CHOOSE_OPTIONS = ['Home','Belle Isle','Tenacity Brewery','Detroit Library','DMOCA / Downtown'];
- 
+
     // ============================================================
     // SCRIPTS  (drawing only, for now)
     // action: here | done | text | timer | poem | direction | gps
@@ -344,7 +309,6 @@ Index · HTML
     // ============================================================
     const SCRIPTS = {
       drawing: [
-        { text: 'From home, head {{dir}} and walk somewhere that feels new or not part of daily life. Focus on nature, the city, the people, and whatever else your senses may notice.', action: 'here', button: "I'm Here" },
         { text: 'Continue walking and find a place to sit comfortably.', action: 'here' },
         { text: 'Write a poem of at least 33 words in the next 3:33.', action: 'poem', seconds: 213, minWords: 33, photoField: 'poemPhoto' },
         { text: 'Name the poem.', action: 'text', field: 'poemName', placeholder: 'poem title…', show: 'poemText', showLabel: 'Your poem' },
@@ -360,9 +324,9 @@ Index · HTML
         { text: 'Upon arrival home, be sure to log your return.', action: 'arrive' }
       ]
     };
- 
+
     const PHOTO_LABELS = { poemPhoto: 'Poem', treePhoto: 'Tree', sketchPhoto: 'Sketch' };
- 
+
     // ============================================================
     // INDEXEDDB (photos)
     // ============================================================
@@ -397,33 +361,33 @@ Index · HTML
         r.onerror = e => reject(e.target.error);
       });
     }
- 
+
     // ============================================================
     // STORAGE (records + active session)
     // ============================================================
     let records = JSON.parse(localStorage.getItem('nle-records') || '[]');
     function saveRecords() { localStorage.setItem('nle-records', JSON.stringify(records)); }
- 
+
     let session = null;
     let timerInterval = null;
     let poemTimer = null, poemGrace = null, poemBlink = null;
     let ttTimer = null;
- 
+
     function saveActive() {
       if (session) localStorage.setItem('nle-active', JSON.stringify(session));
     }
     function clearActive() { localStorage.removeItem('nle-active'); }
- 
+
     function showScreen(id) {
       document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
       document.getElementById(id).classList.add('active');
       window.scrollTo(0, 0);
     }
- 
+
     function logEvent(type, detail) {
       session.log.push({ at: new Date().toISOString(), type, ...detail });
     }
- 
+
     // ============================================================
     // SESSION START + ROLLS
     // ============================================================
@@ -443,7 +407,7 @@ Index · HTML
       b.textContent = 'OK'; b.disabled = false; b.onclick = resolveRoll;
       showScreen('screen-rolls');
     }
- 
+
     function resolveRoll() {
       const input = document.getElementById('roll-input');
       const n = parseInt(input.value, 10);
@@ -454,29 +418,31 @@ Index · HTML
       logEvent('roll', { roll: 'direction', value: n, result: dir });
       document.getElementById('roll-resolved').innerHTML =
         `<div class="resolve-line"><span class="resolve-arrow">= </span><span class="resolve-val">${dir}</span></div>`;
+      document.getElementById('roll-heading').innerHTML =
+        `<div class="review-block" style="margin-top:16px;">From home, head ${dir.toLowerCase()} and walk somewhere that feels new or not part of daily life. Focus on nature, the city, the people, and whatever else your senses may notice.</div>`;
       const b = document.getElementById('roll-btn');
       b.textContent = 'Begin Wander';
       b.onclick = startWander;
       saveActive();
     }
- 
+
     function cancelToHome() {
       session = null;
       clearActive();
       showScreen('screen-home');
     }
- 
+
     // ============================================================
     // WANDER RUNNER
     // ============================================================
     let stepSnaps = {};
- 
+
     function startWander() {
       session.stepIndex = 0;
       session.phase = 'wander';
       stepSnaps = {};
       saveActive();
- 
+
       if (!SCRIPTS[session.practice]) {
         showScreen('screen-wander');
         document.getElementById('wander-resume-note').innerHTML = '';
@@ -488,38 +454,34 @@ Index · HTML
           `<button class="btn btn-secondary" onclick="cancelToHome()">Return Home</button>`;
         return;
       }
- 
+
       captureBreadcrumb('start'); // triggers the one-time permission prompt
       showScreen('screen-wander');
       renderStep();
     }
- 
+
     function currentScript() { return SCRIPTS[session.practice]; }
-    function fillText(t) {
-      return t
-        .replace('{{poem}}', session.inputs.poemName || '…')
-        .replace('{{dir}}', (session.inputs.initialDirection || '').toLowerCase());
-    }
+    function fillText(t) { return t.replace('{{poem}}', session.inputs.poemName || '…'); }
     function fmtMS(total) { const s = Math.max(0, Math.floor(total)); return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0'); }
- 
+
     function renderStep(isResume, isBack) {
       const script = currentScript();
       const step = script[session.stepIndex];
- 
+
       if (!isResume && !isBack) stepSnaps[session.stepIndex] = JSON.stringify(session);
- 
+
       const backBtn = document.getElementById('wander-back');
       if (backBtn) backBtn.disabled = (session.stepIndex === 0);
- 
+
       document.getElementById('wander-resume-note').innerHTML =
         isResume ? '<div class="resume-note">// session resumed</div>' : '';
       document.getElementById('wander-seed').innerHTML = `<b>${session.practice}</b> · heading ${session.inputs.initialDirection || '—'}`;
       document.getElementById('wander-counter').textContent = `STEP ${session.stepIndex + 1} / ${script.length}`;
       document.getElementById('wander-directive').textContent = fillText(step.text);
- 
+
       const action = document.getElementById('wander-action');
       action.innerHTML = '';
- 
+
       switch (step.action) {
         case 'here':
           action.innerHTML = `<button class="btn" onclick="completeStep()">${step.button || "I'm Here"}</button>`;
@@ -573,14 +535,14 @@ Index · HTML
           renderArrive(step);
           break;
       }
- 
+
       // optional photo attachment on any step (capture steps render their own)
       if (step.photoField && step.action !== 'capture') renderPhotoZone(step.photoField);
- 
+
       window.scrollTo(0, 0);
       saveActive();
     }
- 
+
     // ---- ESCALATING POEM STEP ----
     function renderPoemStep(step) {
       session._poemReq = step.minWords || 33;
@@ -595,16 +557,16 @@ Index · HTML
       updatePoemCount();
       startPoemTimer(step.seconds);
     }
- 
+
     function escapeHtml(s) {
       return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
     }
- 
+
     function countWords(s) {
       s = (s || '').trim();
       return s ? s.split(/\s+/).filter(Boolean).length : 0;
     }
- 
+
     function updatePoemCount() {
       const ta = document.getElementById('poem-text-input');
       const countEl = document.getElementById('poem-count');
@@ -614,13 +576,13 @@ Index · HTML
       countEl.textContent = `${words} / ${session._poemReq} words`;
       doneBtn.disabled = words < session._poemReq;
     }
- 
+
     function onPoemInput() {
       const el = document.getElementById('poem-text-input');
       if (el) { session.inputs.poemText = el.value; saveActive(); }
       updatePoemCount();
     }
- 
+
     function clearPoemTimers() {
       if (poemTimer) { clearInterval(poemTimer); poemTimer = null; }
       if (poemGrace) { clearInterval(poemGrace); poemGrace = null; }
@@ -628,7 +590,7 @@ Index · HTML
       const d = document.getElementById('timer-display');
       if (d) d.style.visibility = 'visible';
     }
- 
+
     function startPoemTimer(seconds) {
       const display = document.getElementById('timer-display');
       if (!display) return;
@@ -648,7 +610,7 @@ Index · HTML
         }
       }, 1000);
     }
- 
+
     function startPoemGrace() {
       const display = document.getElementById('timer-display');
       let g = 5;
@@ -662,7 +624,7 @@ Index · HTML
         }
       }, 1000);
     }
- 
+
     function escalatePoem() {
       session._poemEsc = (session._poemEsc || 0) + 1;
       session._poemReq = Math.min((session._poemReq || 33) + 10, 200);
@@ -686,13 +648,13 @@ Index · HTML
         }
       }, 500);
     }
- 
+
     function completeStep() {
       const step = currentScript()[session.stepIndex];
       logEvent('step', { index: session.stepIndex + 1, text: fillText(step.text), action: step.action });
       advance();
     }
- 
+
     function completeTextStep(field) {
       const val = document.getElementById('step-text-input').value.trim();
       session.inputs[field] = val;
@@ -700,10 +662,10 @@ Index · HTML
       logEvent('input', { index: session.stepIndex + 1, field, value: val, text: fillText(step.text) });
       advance();
     }
- 
+
     // ---- TIMED TEXT (step 6) ----
     function clearTt() { if (ttTimer) { clearInterval(ttTimer); ttTimer = null; } }
- 
+
     function renderTimedText(step) {
       const action = document.getElementById('wander-action');
       action.innerHTML = `
@@ -715,7 +677,7 @@ Index · HTML
       startTtTimer(step.seconds, step.field);
       setTimeout(() => { const el = document.getElementById('tt-input'); if (el) el.focus(); }, 120);
     }
- 
+
     function updateTtCount(exact) {
       const ta = document.getElementById('tt-input');
       const countEl = document.getElementById('tt-count');
@@ -725,7 +687,7 @@ Index · HTML
       countEl.textContent = `${words} / ${exact} words (exactly)`;
       doneBtn.disabled = words !== exact;
     }
- 
+
     function startTtTimer(seconds, field) {
       const display = document.getElementById('timer-display');
       if (!display) return;
@@ -751,7 +713,7 @@ Index · HTML
         }
       }, 1000);
     }
- 
+
     function completeTimedText(field, exact) {
       const ta = document.getElementById('tt-input');
       const words = countWords(ta ? ta.value : '');
@@ -761,7 +723,7 @@ Index · HTML
       logEvent('input', { index: session.stepIndex + 1, field, value: session.inputs[field] });
       advance();
     }
- 
+
     function completePoemStep() {
       clearPoemTimers();
       const el = document.getElementById('poem-text-input');
@@ -769,7 +731,7 @@ Index · HTML
       logEvent('input', { index: session.stepIndex + 1, field: 'poemText', value: session.inputs.poemText || '', req: session._poemReq, esc: session._poemEsc || 0 });
       advance();
     }
- 
+
     function startTimer(seconds, label) {
       const display = document.getElementById('timer-display');
       if (!display) return;
@@ -786,12 +748,12 @@ Index · HTML
         }
       }, 1000);
     }
- 
+
     function cardinalFromHeading(deg) {
       const dirs = ['N','NE','E','SE','S','SW','W','NW'];
       return dirs[Math.round(((deg % 360) / 45)) % 8];
     }
- 
+
     function renderDirection() {
       const step = currentScript()[session.stepIndex];
       session._dirField = step.field || 'direction';
@@ -802,7 +764,7 @@ Index · HTML
         <button class="btn btn-secondary btn-small" onclick="manualDirection()">Choose manually instead</button>`;
       session._heading = null;
     }
- 
+
     function onOrient(e) {
       let heading = null;
       if (typeof e.webkitCompassHeading === 'number') heading = e.webkitCompassHeading;
@@ -812,7 +774,7 @@ Index · HTML
       const el = document.getElementById('compass-readout');
       if (el) el.textContent = `${cardinalFromHeading(heading)} · ${Math.round(heading)}°`;
     }
- 
+
     function enableCompass() {
       const start = () => {
         window.addEventListener('deviceorientation', onOrient, true);
@@ -832,7 +794,7 @@ Index · HTML
         manualDirection('no compass on this device');
       }
     }
- 
+
     function confirmCompass() {
       if (session._heading == null) return;
       const card = cardinalFromHeading(session._heading);
@@ -842,7 +804,7 @@ Index · HTML
       session._heading = null;
       advance();
     }
- 
+
     function manualDirection(reason) {
       window.removeEventListener('deviceorientation', onOrient, true);
       const grid = ['NW','N','NE','W',null,'E','SW','S','SE'];
@@ -868,10 +830,10 @@ Index · HTML
       session._pendingDir = null;
       advance();
     }
- 
+
     // ---- WORD PAIRING ----
     const WP_RESULTS = ['choose','photography','painting','installation','music','found objects','sculpture','intervention','drawing','sewing','light/tech'];
- 
+
     function renderWordPair(step) {
       const raw = (session.inputs[step.sourceField] || '').trim();
       const words = raw
@@ -897,7 +859,7 @@ Index · HTML
         <button class="btn" id="wp-done" onclick="doneWordPick()" disabled>Done</button>
         <div id="wp-result"></div>`;
     }
- 
+
     function toggleWordPick(i) {
       const sel = session._wpSel;
       const pos = sel.indexOf(i);
@@ -911,14 +873,14 @@ Index · HTML
       }
       renderWpDisplay();
     }
- 
+
     function renderWpDisplay() {
       const sel = session._wpSel, words = session._wpWords;
       document.getElementById('wp-0').textContent = sel[0] != null ? words[sel[0]] : '—';
       document.getElementById('wp-1').textContent = sel[1] != null ? words[sel[1]] : '—';
       document.getElementById('wp-done').disabled = sel.length !== 2;
     }
- 
+
     function clearWordPick() {
       session._wpSel.forEach(i => {
         const b = document.getElementById('wp-btn-' + i);
@@ -927,7 +889,7 @@ Index · HTML
       session._wpSel = [];
       renderWpDisplay();
     }
- 
+
     function doneWordPick() {
       const sel = session._wpSel, words = session._wpWords;
       if (sel.length !== 2) return;
@@ -937,11 +899,11 @@ Index · HTML
       const result = WP_RESULTS[idx];
       session.inputs.wordPair = { words: pair, vowels, index: idx, result };
       logEvent('wordpair', { index: session.stepIndex + 1, words: pair, vowels, result });
- 
+
       document.querySelectorAll('.wp-btn').forEach(b => b.disabled = true);
       const dn = document.getElementById('wp-done'); if (dn) dn.disabled = true;
       const resultEl = document.getElementById('wp-result');
- 
+
       if (result === 'choose') {
         resultEl.innerHTML = `
           <div class="resolve-line" style="margin-top:16px;"><span class="resolve-arrow">${vowels} vowels = </span><span class="resolve-val">choose</span></div>
@@ -956,7 +918,7 @@ Index · HTML
           <button class="btn" onclick="advance()">Next</button>`;
       }
     }
- 
+
     function confirmWordChoose() {
       const val = document.getElementById('wp-choose').value;
       session.inputs.wordPair.result = val;
@@ -964,7 +926,7 @@ Index · HTML
       logEvent('wordpair-choose', { index: session.stepIndex + 1, value: val });
       advance();
     }
- 
+
     // ---- TEXT + CAPTURE (step 10) ----
     function renderTextCapture(step) {
       const action = document.getElementById('wander-action');
@@ -976,14 +938,14 @@ Index · HTML
         <button class="btn" onclick="completeTextCaptureStep('${step.field}')">Done</button>`;
       if (session.inputs[step.photoField]) showPhotoPreview(step.photoField);
     }
- 
+
     function completeTextCaptureStep(field) {
       const el = document.getElementById('step-text-input');
       session.inputs[field] = el ? el.value.trim() : '';
       logEvent('input', { index: session.stepIndex + 1, field, value: session.inputs[field] });
       advance();
     }
- 
+
     // ---- MULTI TEXT (step 13 — sky observations) ----
     function renderMultiText(step) {
       const action = document.getElementById('wander-action');
@@ -993,7 +955,7 @@ Index · HTML
         ).join('') +
         `<button class="btn" onclick="completeMultiText()">Done</button>`;
     }
- 
+
     function completeMultiText() {
       const step = currentScript()[session.stepIndex];
       step.fields.forEach((f, i) => {
@@ -1003,14 +965,14 @@ Index · HTML
       logEvent('multitext', { index: session.stepIndex + 1, fields: step.fields.map(f => ({ field: f, value: session.inputs[f] })) });
       advance();
     }
- 
+
     // ---- ARRIVE HOME (final step) ----
     function renderArrive(step) {
       document.getElementById('wander-action').innerHTML = `
         <div class="gps-readout" id="arrive-readout">— — —</div>
         <button class="btn" id="arrive-btn" onclick="captureArrival()">I'm Home</button>`;
     }
- 
+
     function captureArrival() {
       const readout = document.getElementById('arrive-readout');
       const btn = document.getElementById('arrive-btn');
@@ -1040,7 +1002,7 @@ Index · HTML
         { enableHighAccuracy: true, timeout: 10000 }
       );
     }
- 
+
     function renderGPS() {
       document.getElementById('wander-action').innerHTML = `
         <div class="gps-readout" id="gps-readout">— — —</div>
@@ -1071,7 +1033,7 @@ Index · HTML
       );
     }
     function skipGPS() { logEvent('gps', { index: session.stepIndex + 1, skipped: true }); advance(); }
- 
+
     // passive breadcrumb — best effort, non-blocking
     function captureBreadcrumb(tag) {
       if (!navigator.geolocation) return;
@@ -1087,7 +1049,7 @@ Index · HTML
         () => {}, { enableHighAccuracy: true, timeout: 8000, maximumAge: 5000 }
       );
     }
- 
+
     // ---- PHOTO ----
     function renderPhotoZone(field) {
       const action = document.getElementById('wander-action');
@@ -1101,7 +1063,7 @@ Index · HTML
       action.appendChild(zone);
       if (has) showPhotoPreview(field);
     }
- 
+
     async function storePhoto(field, file) {
       const key = session.id + ':' + field;
       try {
@@ -1116,21 +1078,21 @@ Index · HTML
         alert('Could not save photo: ' + e.message);
       }
     }
- 
+
     function triggerPhoto(field) {
       const input = document.getElementById('photo-input');
       input.value = '';
       input.onchange = () => { if (input.files[0]) storePhoto(field, input.files[0]); };
       input.click();
     }
- 
+
     function triggerCamera(field) {
       const input = document.getElementById('camera-input');
       input.value = '';
       input.onchange = () => { if (input.files[0]) storePhoto(field, input.files[0]); };
       input.click();
     }
- 
+
     async function showPhotoPreview(field) {
       const meta = session.inputs[field];
       if (!meta) return;
@@ -1141,7 +1103,7 @@ Index · HTML
       const url = URL.createObjectURL(blob);
       preview.innerHTML = `<img class="photo-thumb" src="${url}"><div class="photo-meta">${(meta.size/1024).toFixed(0)} KB</div>`;
     }
- 
+
     function advance() {
       if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
       clearPoemTimers();
@@ -1152,7 +1114,7 @@ Index · HTML
       if (session.stepIndex >= currentScript().length) endWander();
       else { renderStep(); saveActive(); }
     }
- 
+
     function goBack() {
       if (!session || session.stepIndex === 0) return;
       if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
@@ -1165,12 +1127,12 @@ Index · HTML
       renderStep(false, true);
       saveActive();
     }
- 
+
     function abortWander() {
       if (!confirm('Abort this wander? Progress so far will still be saved to the log.')) return;
       endWander(true);
     }
- 
+
     // ============================================================
     // END + SUMMARY
     // ============================================================
@@ -1188,13 +1150,13 @@ Index · HTML
       renderSummary(finished);
       showScreen('screen-summary');
     }
- 
+
     function renderSummary(s) {
       const start = new Date(s.startedAt);
       const mins = s.endedAt ? Math.round((new Date(s.endedAt) - start) / 60000) : 0;
       document.getElementById('summary-sub').textContent =
         `${start.toLocaleString()} — ${mins} min${s.aborted ? ' — aborted' : ''}`;
- 
+
       const wp = s.inputs.wordPair;
       const sky = ['skyNote1', 'skyNote2', 'skyNote3'].map(f => s.inputs[f]).filter(Boolean);
       const arrival = s.inputs.arrivalTime
@@ -1220,12 +1182,12 @@ Index · HTML
           <div class="summary-key">${k}</div>
           <div class="summary-val ${v ? '' : 'empty'}">${v ? String(v).replace(/</g,'&lt;') : '—'}</div>
         </div>`).join('');
- 
+
       document.getElementById('summary-path').innerHTML = renderPathPlot(s.path);
- 
+
       // photos
       renderSummaryPhotos(s);
- 
+
       document.getElementById('summary-log').innerHTML = s.log.map(e => {
         const t = new Date(e.at).toLocaleTimeString();
         let line = '';
@@ -1248,7 +1210,7 @@ Index · HTML
         return `<div class="log-entry">${t} — ${line}</div>`;
       }).join('');
     }
- 
+
     async function renderSummaryPhotos(s) {
       const container = document.getElementById('summary-photos');
       const fields = Object.keys(PHOTO_LABELS).filter(f => s.inputs[f]);
@@ -1267,7 +1229,7 @@ Index · HTML
         container.appendChild(div);
       }
     }
- 
+
     function renderPathPlot(path) {
       if (!path || path.length < 2) return '<div class="path-empty">// insufficient points for a path</div>';
       const W = 320, H = 220, PAD = 24;
@@ -1285,7 +1247,7 @@ Index · HTML
         ${dots}
       </svg><div class="photo-meta">${path.length} points · start = pale dot · north up</div>`;
     }
- 
+
     // ============================================================
     // RECORDS
     // ============================================================
@@ -1301,7 +1263,7 @@ Index · HTML
       showScreen('screen-records');
     }
     function viewRecord(i) { renderSummary(records[i]); showScreen('screen-summary'); }
- 
+
     function exportRecords() {
       const status = document.getElementById('records-status');
       if (records.length === 0) { status.textContent = '// nothing to export'; return; }
@@ -1314,7 +1276,7 @@ Index · HTML
       URL.revokeObjectURL(url);
       status.textContent = `// exported ${records.length} record(s)`;
     }
- 
+
     // ============================================================
     // INIT + RESUME
     // ============================================================
@@ -1333,8 +1295,6 @@ Index · HTML
       }
     })();
   </script>
- 
+
 </body>
 </html>
- 
-Claude finished the response
