@@ -1,3 +1,38 @@
+Claude
+chadbook, Connected
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Index · HTML
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,9 +53,9 @@
       --border: #2e2e2e;
       --font: 'Menlo', monospace;
     }
-
+ 
     * { margin: 0; padding: 0; box-sizing: border-box; }
-
+ 
     body {
       background-color: var(--bg);
       color: var(--text-primary);
@@ -29,29 +64,16 @@
       padding: 28px 20px 60px;
       -webkit-text-size-adjust: 100%;
     }
-
-    h1 {
-      font-size: 1.7rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-    }
-
-    .sub {
-      color: var(--text-secondary);
-      font-size: 0.72rem;
-      margin-top: 4px;
-      letter-spacing: 0.05em;
-    }
-
-    .app-header {
-      border-bottom: 1px solid var(--border);
-      padding-bottom: 16px;
-      margin-bottom: 28px;
-    }
-
+ 
+    h1 { font-size: 1.7rem; letter-spacing: 0.15em; text-transform: uppercase; }
+ 
+    .sub { color: var(--text-secondary); font-size: 0.72rem; margin-top: 4px; letter-spacing: 0.05em; }
+ 
+    .app-header { border-bottom: 1px solid var(--border); padding-bottom: 16px; margin-bottom: 28px; }
+ 
     .screen { display: none; }
     .screen.active { display: block; }
-
+ 
     label {
       display: block;
       font-size: 0.68rem;
@@ -60,7 +82,7 @@
       letter-spacing: 0.08em;
       text-transform: uppercase;
     }
-
+ 
     input.field, textarea.field {
       font-family: var(--font);
       font-size: 1.1rem;
@@ -72,7 +94,6 @@
       outline: none;
       resize: vertical;
     }
-
     input.field:focus, textarea.field:focus { border-color: var(--accent); }
     input.field:disabled {
       color: var(--accent);
@@ -80,7 +101,7 @@
       opacity: 1;
       border-color: var(--accent);
     }
-
+ 
     .btn {
       font-family: var(--font);
       text-transform: uppercase;
@@ -94,189 +115,182 @@
       width: 100%;
       margin-top: 14px;
     }
-
     .btn:active { background: var(--accent); color: var(--bg); }
     .btn:disabled { opacity: 0.3; cursor: default; }
-
+ 
     .btn-secondary { border-color: var(--border); color: var(--text-secondary); }
     .btn-secondary:active { background: var(--surface); color: var(--text-primary); }
-
-    .divider { border: none; border-top: 1px solid var(--border); margin: 26px 0; }
-
-    /* dice resolve */
-    .resolve-line {
-      font-size: 1.15rem;
-      margin-top: 16px;
-      letter-spacing: 0.04em;
+ 
+    .btn-small {
+      font-size: 0.72rem;
+      padding: 10px;
+      letter-spacing: 0.08em;
     }
+ 
+    .divider { border: none; border-top: 1px solid var(--border); margin: 26px 0; }
+ 
+    .roll-group { margin-bottom: 24px; }
+    .roll-group.locked-wait { opacity: 0.35; pointer-events: none; }
+ 
+    .resolve-line { font-size: 1.1rem; margin-top: 12px; letter-spacing: 0.04em; }
     .resolve-arrow { color: var(--text-secondary); }
     .resolve-val { color: var(--accent); text-transform: uppercase; }
-
-    /* choose list */
+ 
     .choose-btn {
-      display: block;
-      width: 100%;
-      text-align: left;
-      font-family: var(--font);
-      font-size: 1rem;
-      padding: 14px;
-      border: 1px solid var(--border);
-      background: transparent;
-      color: var(--text-primary);
-      cursor: pointer;
-      margin-top: 8px;
+      display: block; width: 100%; text-align: left;
+      font-family: var(--font); font-size: 1rem; padding: 14px;
+      border: 1px solid var(--border); background: transparent;
+      color: var(--text-primary); cursor: pointer; margin-top: 8px;
     }
     .choose-btn:active { border-color: var(--accent); color: var(--accent); }
-
-    /* wander step */
-    .step-counter {
-      font-size: 0.62rem;
-      color: var(--text-secondary);
-      letter-spacing: 0.1em;
-      margin-bottom: 18px;
-    }
-    .seed-line {
-      font-size: 0.62rem;
-      color: var(--text-secondary);
-      letter-spacing: 0.06em;
-      margin-bottom: 18px;
-    }
+ 
+    .seed-line { font-size: 0.62rem; color: var(--text-secondary); letter-spacing: 0.06em; margin-bottom: 14px; }
     .seed-line b { color: var(--accent); font-weight: normal; }
-
-    .directive {
-      font-size: 1.35rem;
-      line-height: 1.5;
-      margin: 10px 0 28px;
-    }
-
-    .timer-display {
-      font-size: 3rem;
-      text-align: center;
-      color: var(--accent);
-      letter-spacing: 0.08em;
-      margin: 20px 0;
-    }
-
-    .compass-rose {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 8px;
-      margin-top: 10px;
-    }
+ 
+    .resume-note { font-size: 0.6rem; color: var(--text-secondary); letter-spacing: 0.06em; margin-bottom: 14px; }
+ 
+    .step-counter { font-size: 0.62rem; color: var(--text-secondary); letter-spacing: 0.1em; margin-bottom: 18px; }
+ 
+    .directive { font-size: 1.35rem; line-height: 1.5; margin: 10px 0 24px; }
+ 
+    .timer-display { font-size: 3rem; text-align: center; color: var(--accent); letter-spacing: 0.08em; margin: 16px 0; }
+ 
+    .compass-rose { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 10px; }
     .compass-btn {
-      font-family: var(--font);
-      font-size: 0.95rem;
-      padding: 20px 0;
-      border: 1px solid var(--border);
-      background: transparent;
-      color: var(--text-primary);
-      cursor: pointer;
-      letter-spacing: 0.08em;
+      font-family: var(--font); font-size: 0.95rem; padding: 20px 0;
+      border: 1px solid var(--border); background: transparent;
+      color: var(--text-primary); cursor: pointer; letter-spacing: 0.08em;
     }
     .compass-btn:active { background: var(--accent); color: var(--bg); }
     .compass-btn.empty { visibility: hidden; }
     .compass-btn.selected { background: var(--accent); color: var(--bg); }
-
+ 
     .gps-readout {
-      font-size: 1rem;
-      color: var(--accent);
-      text-align: center;
-      padding: 16px;
-      border: 1px solid var(--border);
-      margin: 10px 0;
-      letter-spacing: 0.04em;
-      min-height: 56px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      font-size: 1rem; color: var(--accent); text-align: center;
+      padding: 16px; border: 1px solid var(--border); margin: 10px 0;
+      letter-spacing: 0.04em; min-height: 56px;
+      display: flex; align-items: center; justify-content: center;
     }
-
+ 
+    .wp-display {
+      display: flex; gap: 16px; justify-content: center; align-items: center;
+      min-height: 72px; border: 1px solid var(--border); padding: 12px; margin-bottom: 18px;
+    }
+    .wp-slot { font-size: 1.6rem; color: var(--accent); letter-spacing: 0.03em; text-align: center; }
+    .wp-buttons { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 8px; }
+    .wp-btn {
+      font-family: var(--font); font-size: 0.95rem; padding: 12px 14px;
+      border: 1px solid var(--border); background: transparent; color: var(--text-primary); cursor: pointer;
+    }
+    .wp-btn.selected { background: var(--accent); color: var(--bg); border-color: var(--accent); }
+    .wp-btn:disabled { opacity: 0.4; }
+ 
+    .review-block {
+      white-space: pre-wrap;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      padding: 12px 14px;
+      margin-top: 8px;
+      font-size: 0.95rem;
+      line-height: 1.5;
+      color: var(--text-primary);
+    }
+ 
+    .abort-wrap { margin-top: 48px; text-align: center; }
+    .btn-abort {
+      font-family: var(--font);
+      font-size: 0.6rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-secondary);
+      padding: 6px 14px;
+      cursor: pointer;
+    }
+    .btn-abort:active { background: var(--surface); color: var(--text-primary); }
+ 
+    .photo-zone { margin-top: 14px; }
+    .photo-thumb {
+      margin-top: 10px;
+      border: 1px solid var(--border);
+      width: 100%;
+      max-height: 240px;
+      object-fit: contain;
+      background: var(--surface);
+      display: block;
+    }
+    .photo-meta { font-size: 0.6rem; color: var(--text-secondary); margin-top: 4px; letter-spacing: 0.05em; }
+ 
     /* summary + log */
     .summary-row {
-      display: grid;
-      grid-template-columns: 110px 1fr;
-      gap: 10px;
-      padding: 10px 0;
-      border-bottom: 1px solid var(--border);
-      font-size: 0.85rem;
+      display: grid; grid-template-columns: 110px 1fr; gap: 10px;
+      padding: 10px 0; border-bottom: 1px solid var(--border); font-size: 0.85rem;
     }
     .summary-key { color: var(--text-secondary); font-size: 0.62rem; letter-spacing: 0.06em; padding-top: 3px; text-transform: uppercase; }
     .summary-val { color: var(--text-primary); line-height: 1.5; }
     .summary-val.empty { color: var(--border); }
-
-    .log-entry {
-      font-size: 0.72rem;
-      color: var(--text-secondary);
-      padding: 6px 0;
-      line-height: 1.5;
-      border-bottom: 1px solid #1c1c1c;
-    }
+ 
+    .summary-photo { margin: 8px 0 18px; }
+    .summary-photo img { width: 100%; max-height: 300px; object-fit: contain; border: 1px solid var(--border); background: var(--surface); }
+    .summary-photo .cap { font-size: 0.6rem; color: var(--text-secondary); margin-top: 4px; letter-spacing: 0.06em; text-transform: uppercase; }
+ 
+    .path-plot { border: 1px solid var(--border); background: var(--surface); margin-top: 10px; width: 100%; }
+    .path-empty { font-size: 0.68rem; color: var(--text-secondary); margin-top: 10px; }
+ 
+    .log-entry { font-size: 0.72rem; color: var(--text-secondary); padding: 6px 0; line-height: 1.5; border-bottom: 1px solid #1c1c1c; }
     .log-entry b { color: var(--text-primary); font-weight: normal; }
-
-    .record-item {
-      border: 1px solid var(--border);
-      padding: 12px 14px;
-      margin-bottom: 8px;
-      cursor: pointer;
-    }
+ 
+    .record-item { border: 1px solid var(--border); padding: 12px 14px; margin-bottom: 8px; cursor: pointer; }
     .record-item:active { border-color: var(--accent); }
     .record-date { font-size: 0.65rem; color: var(--text-secondary); }
     .record-summary { font-size: 0.9rem; margin-top: 4px; }
     .record-summary .accent { color: var(--accent); }
-
-    .status-line {
-      font-size: 0.7rem;
-      color: var(--text-secondary);
-      margin-top: 10px;
-      letter-spacing: 0.04em;
-    }
+ 
+    .status-line { font-size: 0.7rem; color: var(--text-secondary); margin-top: 10px; letter-spacing: 0.04em; }
+ 
+    .hidden-file { display: none; }
   </style>
 </head>
 <body>
-
+ 
   <!-- HOME -->
   <div id="screen-home" class="screen active">
     <div class="app-header">
       <h1>Not Lost Enough</h1>
-      <div class="sub">Field Research Application — v0.4</div>
+      <div class="sub">Field Research Application — v0.9.2</div>
     </div>
     <button class="btn" onclick="beginSession()">Initiate Wander</button>
     <button class="btn btn-secondary" onclick="openRecords()">Field Log</button>
+    <div id="home-resume"></div>
   </div>
-
-  <!-- ROLL 1: PRACTICE -->
-  <div id="screen-roll-practice" class="screen">
+ 
+  <!-- ROLL (single) -->
+  <div id="screen-rolls" class="screen">
     <div class="app-header">
-      <h1>Roll I</h1>
-      <div class="sub">Determine Practice</div>
+      <h1>Roll</h1>
+      <div class="sub">Initial Direction</div>
     </div>
-    <label>Roll 1 die, input outcome</label>
-    <input class="field" type="number" id="roll-practice-input" min="1" max="6" inputmode="numeric">
-    <div id="roll-practice-resolved"></div>
-    <button class="btn" id="roll-practice-btn" onclick="resolvePractice()">Enter</button>
+    <label>Roll a die to discover initial direction.</label>
+    <input class="field" type="number" id="roll-input" min="1" max="6" inputmode="numeric" placeholder="1–6">
+    <div id="roll-resolved"></div>
+    <div id="roll-heading"></div>
+    <button class="btn" id="roll-btn" onclick="resolveRoll()">OK</button>
+    <button class="btn btn-secondary btn-small" onclick="cancelToHome()">Cancel</button>
   </div>
-
-  <!-- ROLL 2: LOCATION -->
-  <div id="screen-roll-location" class="screen">
-    <div class="app-header">
-      <h1>Roll II</h1>
-      <div class="sub">Determine Start Point</div>
-    </div>
-    <label>Roll again, input outcome</label>
-    <input class="field" type="number" id="roll-location-input" min="1" max="6" inputmode="numeric">
-    <div id="roll-location-resolved"></div>
-    <div id="choose-location-list"></div>
-    <button class="btn" id="roll-location-btn" onclick="resolveLocation()">Enter</button>
-  </div>
-
+ 
   <!-- WANDER -->
   <div id="screen-wander" class="screen">
+    <div id="wander-resume-note"></div>
     <div class="seed-line" id="wander-seed"></div>
     <div class="step-counter" id="wander-counter"></div>
     <div class="directive" id="wander-directive"></div>
     <div id="wander-action"></div>
+    <div class="divider"></div>
+    <button class="btn btn-secondary btn-small" id="wander-back" onclick="goBack()">← Back</button>
+    <div class="abort-wrap"><button class="btn-abort" onclick="abortWander()">abort wander</button></div>
   </div>
-
+ 
   <!-- SUMMARY -->
   <div id="screen-summary" class="screen">
     <div class="app-header">
@@ -285,12 +299,18 @@
     </div>
     <div id="summary-fields"></div>
     <div class="divider"></div>
+    <label>Path</label>
+    <div id="summary-path"></div>
+    <div class="divider"></div>
+    <label>Captures</label>
+    <div id="summary-photos"></div>
+    <div class="divider"></div>
     <label>Full Log</label>
     <div id="summary-log"></div>
     <div class="divider"></div>
     <button class="btn btn-secondary" onclick="showScreen('screen-home')">Return Home</button>
   </div>
-
+ 
   <!-- RECORDS -->
   <div id="screen-records" class="screen">
     <div class="app-header">
@@ -304,258 +324,375 @@
     <div class="divider"></div>
     <button class="btn btn-secondary" onclick="showScreen('screen-home')">Return Home</button>
   </div>
-
+ 
+  <!-- shared hidden file inputs for photos -->
+  <input type="file" id="photo-input" class="hidden-file" accept="image/*">
+  <input type="file" id="camera-input" class="hidden-file" accept="image/*" capture="environment">
+ 
   <script>
     // ============================================================
     // STATIC TABLES
     // ============================================================
-    const PRACTICE_TABLE = {
-      1: 'drawing',
-      2: 'painting',
-      3: 'sculpture',
-      4: 'writing',
-      5: 'sewing',
-      6: 'wild card'
-    };
-
-    const LOCATION_TABLE = {
-      1: 'Home',
-      2: 'Belle Isle',
-      3: 'CHOOSE',
-      4: 'Tenacity Brewery',
-      5: 'Detroit Library',
-      6: 'DMOCA / Downtown'
-    };
-
-    const CHOOSE_OPTIONS = ['Home', 'Belle Isle', 'Tenacity Brewery', 'Detroit Library', 'DMOCA / Downtown'];
-
+    const PRACTICE_TABLE = { 1:'drawing', 2:'painting', 3:'sculpture', 4:'writing', 5:'sewing', 6:'wild card' };
+    const LOCATION_TABLE = { 1:'Home', 2:'Belle Isle', 3:'CHOOSE', 4:'Tenacity Brewery', 5:'Detroit Library', 6:'DMOCA / Downtown' };
+    const CHOOSE_OPTIONS = ['Home','Belle Isle','Tenacity Brewery','Detroit Library','DMOCA / Downtown'];
+ 
     // ============================================================
-    // SCRIPTS  (only drawing complete for v0.4)
-    // Each step: { text, action, ...opts }
-    // action: 'here' | 'done' | 'text' | 'timer' | 'direction' | 'gps'
-    // {{poem}} in text is replaced live with the named poem
+    // SCRIPTS  (drawing only, for now)
+    // action: here | done | text | timer | poem | direction | gps
+    // photoField: optional string → adds an Add Photo button to the step
     // ============================================================
     const SCRIPTS = {
       drawing: [
-        { text: 'From your start point, walk to an area that feels entirely new.', action: 'here' },
+        { text: 'From home, head {{dir}} and walk somewhere that feels new or not part of daily life. Focus on nature, the city, the people, and whatever else your senses may notice.', action: 'here', button: "I'm Here" },
         { text: 'Continue walking and find a place to sit comfortably.', action: 'here' },
-        { text: 'Write a short poem or word piece in the next 10 minutes, based on your surroundings.', action: 'timer', seconds: 600, label: 'poem' },
-        { text: 'Name the poem.', action: 'text', field: 'poemName', placeholder: 'poem title…' },
-        { text: "Study the sun's position in the sky, its direction, and how its light is affecting your surroundings.", action: 'done' },
-        { text: 'Choose a direction to follow based on these observations.', action: 'direction' },
-        { text: 'Head in that direction by way of sidewalks. Walk for 7 minutes.', action: 'timer', seconds: 420, label: 'walk' },
-        { text: 'Find a tree that suits the name of your poem: “{{poem}}”.', action: 'here' },
-        { text: 'Sketch the tree.', action: 'done' },
-        { text: 'Give the tree a mood or emotion.', action: 'text', field: 'treeMood', placeholder: 'mood or emotion…' },
-        { text: 'Logging coordinates.', action: 'gps' },
-        { text: 'Head home.', action: 'done' }
+        { text: 'Write a poem of at least 33 words in the next 3:33.', action: 'poem', seconds: 213, minWords: 33, photoField: 'poemPhoto' },
+        { text: 'Name the poem.', action: 'text', field: 'poemName', placeholder: 'poem title…', show: 'poemText', showLabel: 'Your poem' },
+        { text: "Study the sun's position, its direction, and how its light affects your surroundings — then choose a direction to follow based on these observations.", action: 'direction', field: 'direction' },
+        { text: 'Explain why this direction was chosen, as detailed as you can, in exactly 7 words.', action: 'timedtext', field: 'directionReason', placeholder: 'exactly 7 words…', seconds: 33, exactWords: 7, clearOnExpire: true },
+        { text: 'Head in the selected direction. Search for a tree that suits the title of your poem: “{{poem}}”.', action: 'here', button: 'Found It' },
+        { text: 'Take a picture of the tree and add it to the log.', action: 'capture', photoField: 'treePhoto' },
+        { text: 'Sketch the tree in the next 23 minutes.', action: 'timer', seconds: 1380, label: 'sketch', button: 'Done' },
+        { text: 'Give the sketch a mood or emotion, then take a pic and add to the log.', action: 'textcapture', field: 'sketchMood', placeholder: 'mood or emotion…', photoField: 'sketchPhoto' },
+        { text: 'Choose the best word pairing.', action: 'wordpair', sourceField: 'directionReason' },
+        { text: 'Which way is home?', action: 'direction', field: 'homeDirection', button: 'This Way' },
+        { text: 'Head home, paying close attention to the mood of the sky, including color, clouds, birds, buildings, and how they interact. Find at least one interesting dynamic or insight and report below before reaching home.', action: 'multitext', fields: ['skyNote1', 'skyNote2', 'skyNote3'] },
+        { text: 'Upon arrival home, be sure to log your return.', action: 'arrive' }
       ]
     };
-
-    const SCRIPT_READY = Object.keys(SCRIPTS);
-
+ 
+    const PHOTO_LABELS = { poemPhoto: 'Poem', treePhoto: 'Tree', sketchPhoto: 'Sketch' };
+ 
     // ============================================================
-    // STORAGE
+    // INDEXEDDB (photos)
+    // ============================================================
+    let _db = null;
+    function openDB() {
+      return new Promise((resolve, reject) => {
+        if (_db) return resolve(_db);
+        const req = indexedDB.open('nle-photos', 1);
+        req.onupgradeneeded = e => {
+          const db = e.target.result;
+          if (!db.objectStoreNames.contains('photos')) db.createObjectStore('photos');
+        };
+        req.onsuccess = e => { _db = e.target.result; resolve(_db); };
+        req.onerror = e => reject(e.target.error);
+      });
+    }
+    async function idbPut(key, blob) {
+      const db = await openDB();
+      return new Promise((resolve, reject) => {
+        const tx = db.transaction('photos', 'readwrite');
+        tx.objectStore('photos').put(blob, key);
+        tx.oncomplete = () => resolve();
+        tx.onerror = e => reject(e.target.error);
+      });
+    }
+    async function idbGet(key) {
+      const db = await openDB();
+      return new Promise((resolve, reject) => {
+        const tx = db.transaction('photos', 'readonly');
+        const r = tx.objectStore('photos').get(key);
+        r.onsuccess = () => resolve(r.result || null);
+        r.onerror = e => reject(e.target.error);
+      });
+    }
+ 
+    // ============================================================
+    // STORAGE (records + active session)
     // ============================================================
     let records = JSON.parse(localStorage.getItem('nle-records') || '[]');
     function saveRecords() { localStorage.setItem('nle-records', JSON.stringify(records)); }
-
-    // ============================================================
-    // SESSION STATE
-    // ============================================================
+ 
     let session = null;
     let timerInterval = null;
-
+    let poemTimer = null, poemGrace = null, poemBlink = null;
+    let ttTimer = null;
+ 
+    function saveActive() {
+      if (session) localStorage.setItem('nle-active', JSON.stringify(session));
+    }
+    function clearActive() { localStorage.removeItem('nle-active'); }
+ 
     function showScreen(id) {
       document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
       document.getElementById(id).classList.add('active');
       window.scrollTo(0, 0);
     }
-
+ 
     function logEvent(type, detail) {
       session.log.push({ at: new Date().toISOString(), type, ...detail });
     }
-
+ 
     // ============================================================
-    // ROLL 1 — PRACTICE
+    // SESSION START + ROLLS
     // ============================================================
     function beginSession() {
       session = {
         id: 'W-' + Date.now(),
         startedAt: new Date().toISOString(),
-        practice: null,
-        location: null,
-        stepIndex: 0,
-        inputs: {},
-        log: []
+        practice: 'drawing', location: 'Home',
+        stepIndex: 0, inputs: {}, path: [], log: [],
+        endedAt: null
       };
-      document.getElementById('roll-practice-input').value = '';
-      document.getElementById('roll-practice-input').disabled = false;
-      document.getElementById('roll-practice-resolved').innerHTML = '';
-      const btn = document.getElementById('roll-practice-btn');
-      btn.textContent = 'Enter';
-      btn.onclick = resolvePractice;
-      showScreen('screen-roll-practice');
+      const r = document.getElementById('roll-input');
+      r.value = ''; r.disabled = false;
+      document.getElementById('roll-resolved').innerHTML = '';
+      document.getElementById('roll-heading').innerHTML = '';
+      const b = document.getElementById('roll-btn');
+      b.textContent = 'OK'; b.disabled = false; b.onclick = resolveRoll;
+      showScreen('screen-rolls');
     }
-
-    function resolvePractice() {
-      const input = document.getElementById('roll-practice-input');
+ 
+    function resolveRoll() {
+      const input = document.getElementById('roll-input');
       const n = parseInt(input.value, 10);
       if (!(n >= 1 && n <= 6)) { input.focus(); return; }
-
       input.disabled = true;
-      session.practice = PRACTICE_TABLE[n];
-      logEvent('roll', { roll: 'practice', value: n, result: session.practice });
-
-      document.getElementById('roll-practice-resolved').innerHTML =
-        `<div class="resolve-line"><span class="resolve-arrow">= </span><span class="resolve-val">${session.practice}</span></div>`;
-
-      const btn = document.getElementById('roll-practice-btn');
-      btn.textContent = 'Continue';
-      btn.onclick = goToLocationRoll;
+      const dir = (n <= 3) ? 'WEST' : 'EAST';
+      session.inputs.initialDirection = dir;
+      logEvent('roll', { roll: 'direction', value: n, result: dir });
+      document.getElementById('roll-resolved').innerHTML =
+        `<div class="resolve-line"><span class="resolve-arrow">= </span><span class="resolve-val">${dir}</span></div>`;
+      const b = document.getElementById('roll-btn');
+      b.textContent = 'Begin Wander';
+      b.onclick = startWander;
+      saveActive();
     }
-
-    function goToLocationRoll() {
-      document.getElementById('roll-location-input').value = '';
-      document.getElementById('roll-location-input').disabled = false;
-      document.getElementById('roll-location-input').style.display = 'block';
-      document.getElementById('roll-location-resolved').innerHTML = '';
-      document.getElementById('choose-location-list').innerHTML = '';
-      const btn = document.getElementById('roll-location-btn');
-      btn.textContent = 'Enter';
-      btn.style.display = 'block';
-      btn.onclick = resolveLocation;
-      showScreen('screen-roll-location');
+ 
+    function cancelToHome() {
+      session = null;
+      clearActive();
+      showScreen('screen-home');
     }
-
-    // ============================================================
-    // ROLL 2 — LOCATION
-    // ============================================================
-    function resolveLocation() {
-      const input = document.getElementById('roll-location-input');
-      const n = parseInt(input.value, 10);
-      if (!(n >= 1 && n <= 6)) { input.focus(); return; }
-
-      input.disabled = true;
-      const result = LOCATION_TABLE[n];
-      logEvent('roll', { roll: 'location', value: n, result });
-
-      if (result === 'CHOOSE') {
-        document.getElementById('roll-location-resolved').innerHTML =
-          `<div class="resolve-line"><span class="resolve-arrow">= </span><span class="resolve-val">choose</span></div>`;
-        const list = document.getElementById('choose-location-list');
-        list.innerHTML = '<label style="margin-top:20px;">Select start point</label>' +
-          CHOOSE_OPTIONS.map(o => `<button class="choose-btn" onclick="pickLocation('${o.replace(/'/g, "\\'")}')">${o}</button>`).join('');
-        document.getElementById('roll-location-btn').style.display = 'none';
-      } else {
-        session.location = result;
-        document.getElementById('roll-location-resolved').innerHTML =
-          `<div class="resolve-line"><span class="resolve-arrow">= </span><span class="resolve-val">${result}</span></div>`;
-        const btn = document.getElementById('roll-location-btn');
-        btn.textContent = 'Begin Wander';
-        btn.onclick = startWander;
-      }
-    }
-
-    function pickLocation(name) {
-      session.location = name;
-      logEvent('choose', { field: 'location', value: name });
-      document.getElementById('choose-location-list').innerHTML =
-        `<div class="resolve-line" style="margin-top:20px;"><span class="resolve-arrow">start = </span><span class="resolve-val">${name}</span></div>`;
-      const btn = document.getElementById('roll-location-btn');
-      btn.style.display = 'block';
-      btn.textContent = 'Begin Wander';
-      btn.onclick = startWander;
-    }
-
+ 
     // ============================================================
     // WANDER RUNNER
     // ============================================================
+    let stepSnaps = {};
+ 
     function startWander() {
       session.stepIndex = 0;
-
+      session.phase = 'wander';
+      stepSnaps = {};
+      saveActive();
+ 
       if (!SCRIPTS[session.practice]) {
-        // practice rolled but no script yet
         showScreen('screen-wander');
-        document.getElementById('wander-seed').innerHTML =
-          `<b>${session.practice}</b> · ${session.location}`;
+        document.getElementById('wander-resume-note').innerHTML = '';
+        document.getElementById('wander-seed').innerHTML = `<b>${session.practice}</b> · heading ${session.inputs.initialDirection || '—'}`;
         document.getElementById('wander-counter').textContent = '';
         document.getElementById('wander-directive').textContent =
-          `No script written yet for "${session.practice}". Only Drawing is ready in this test build.`;
+          `No script written yet for "${session.practice}". Only Drawing is ready in this build.`;
         document.getElementById('wander-action').innerHTML =
-          `<button class="btn btn-secondary" onclick="showScreen('screen-home')">Return Home</button>`;
-        logEvent('abort', { reason: 'no-script', practice: session.practice });
+          `<button class="btn btn-secondary" onclick="cancelToHome()">Return Home</button>`;
         return;
       }
-
+ 
+      captureBreadcrumb('start'); // triggers the one-time permission prompt
       showScreen('screen-wander');
       renderStep();
     }
-
+ 
     function currentScript() { return SCRIPTS[session.practice]; }
-
-    function fillText(text) {
-      return text.replace('{{poem}}', session.inputs.poemName || '…');
+    function fillText(t) {
+      return t
+        .replace('{{poem}}', session.inputs.poemName || '…')
+        .replace('{{dir}}', (session.inputs.initialDirection || '').toLowerCase());
     }
-
-    function fmtMS(total) {
-      const s = Math.max(0, Math.floor(total));
-      return String(Math.floor(s / 60)).padStart(2, '0') + ':' + String(s % 60).padStart(2, '0');
-    }
-
-    function renderStep() {
+    function fmtMS(total) { const s = Math.max(0, Math.floor(total)); return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0'); }
+ 
+    function renderStep(isResume, isBack) {
       const script = currentScript();
       const step = script[session.stepIndex];
-
-      document.getElementById('wander-seed').innerHTML =
-        `<b>${session.practice}</b> · ${session.location}`;
-      document.getElementById('wander-counter').textContent =
-        `STEP ${session.stepIndex + 1} / ${script.length}`;
+ 
+      if (!isResume && !isBack) stepSnaps[session.stepIndex] = JSON.stringify(session);
+ 
+      const backBtn = document.getElementById('wander-back');
+      if (backBtn) backBtn.disabled = (session.stepIndex === 0);
+ 
+      document.getElementById('wander-resume-note').innerHTML =
+        isResume ? '<div class="resume-note">// session resumed</div>' : '';
+      document.getElementById('wander-seed').innerHTML = `<b>${session.practice}</b> · heading ${session.inputs.initialDirection || '—'}`;
+      document.getElementById('wander-counter').textContent = `STEP ${session.stepIndex + 1} / ${script.length}`;
       document.getElementById('wander-directive').textContent = fillText(step.text);
-
+ 
       const action = document.getElementById('wander-action');
       action.innerHTML = '';
-
+ 
       switch (step.action) {
         case 'here':
-          action.innerHTML = `<button class="btn" onclick="completeStep()">I'm Here</button>`;
+          action.innerHTML = `<button class="btn" onclick="completeStep()">${step.button || "I'm Here"}</button>`;
           break;
-
         case 'done':
-          action.innerHTML = `<button class="btn" onclick="completeStep()">Done</button>`;
+          action.innerHTML = `<button class="btn" onclick="completeStep()">${step.button || 'Done'}</button>`;
           break;
-
+        case 'capture':
+          action.innerHTML = `
+            <button class="btn" onclick="triggerCamera('${step.photoField}')">Open Camera</button>
+            <button class="btn btn-secondary btn-small" onclick="triggerPhoto('${step.photoField}')">Choose from Library</button>
+            <div id="photo-preview"></div>
+            <button class="btn" onclick="completeStep()">Next</button>`;
+          if (session.inputs[step.photoField]) showPhotoPreview(step.photoField);
+          break;
         case 'text':
           action.innerHTML = `
             <textarea class="field" id="step-text-input" rows="3" placeholder="${step.placeholder || ''}"></textarea>
-            <button class="btn" onclick="completeTextStep('${step.field}')">Done</button>`;
-          setTimeout(() => document.getElementById('step-text-input').focus(), 100);
+            <button class="btn" onclick="completeTextStep('${step.field}')">Done</button>
+            ${step.show ? `<label style="margin-top:18px;">${step.showLabel || 'Review'}</label><div class="review-block">${escapeHtml(session.inputs[step.show] || '(empty)')}</div>` : ''}`;
+          setTimeout(() => { const el = document.getElementById('step-text-input'); if (el) el.focus(); }, 100);
           break;
-
+        case 'timedtext':
+          renderTimedText(step);
+          break;
+        case 'poem':
+          renderPoemStep(step);
+          break;
         case 'timer':
           action.innerHTML = `
             <div class="timer-display" id="timer-display">${fmtMS(step.seconds)}</div>
-            <button class="btn" id="timer-start" onclick="startTimer(${step.seconds}, '${step.label}')">Start</button>
-            <button class="btn btn-secondary" onclick="completeStep()">Skip / Done Early</button>`;
+            <button class="btn" onclick="completeStep()">${step.button || 'Next'}</button>`;
+          setTimeout(() => startTimer(step.seconds, step.label || 'timer'), 300);
           break;
-
         case 'direction':
           renderDirection();
           break;
-
         case 'gps':
           renderGPS();
           break;
+        case 'wordpair':
+          renderWordPair(step);
+          break;
+        case 'textcapture':
+          renderTextCapture(step);
+          break;
+        case 'multitext':
+          renderMultiText(step);
+          break;
+        case 'arrive':
+          renderArrive(step);
+          break;
       }
+ 
+      // optional photo attachment on any step (capture steps render their own)
+      if (step.photoField && step.action !== 'capture') renderPhotoZone(step.photoField);
+ 
       window.scrollTo(0, 0);
+      saveActive();
     }
-
+ 
+    // ---- ESCALATING POEM STEP ----
+    function renderPoemStep(step) {
+      session._poemReq = step.minWords || 33;
+      session._poemEsc = 0;
+      const action = document.getElementById('wander-action');
+      action.innerHTML = `
+        <div class="timer-display" id="timer-display">${fmtMS(step.seconds)}</div>
+        <label style="margin-top:18px;">Type the poem (or photograph it below)</label>
+        <textarea class="field" id="poem-text-input" rows="6" placeholder="type here…" oninput="onPoemInput()">${session.inputs.poemText || ''}</textarea>
+        <div class="photo-meta" id="poem-count">0 / ${session._poemReq} words</div>
+        <button class="btn" id="poem-done" onclick="completePoemStep()" disabled>Done</button>`;
+      updatePoemCount();
+      startPoemTimer(step.seconds);
+    }
+ 
+    function escapeHtml(s) {
+      return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+ 
+    function countWords(s) {
+      s = (s || '').trim();
+      return s ? s.split(/\s+/).filter(Boolean).length : 0;
+    }
+ 
+    function updatePoemCount() {
+      const ta = document.getElementById('poem-text-input');
+      const countEl = document.getElementById('poem-count');
+      const doneBtn = document.getElementById('poem-done');
+      if (!ta || !countEl || !doneBtn) return;
+      const words = countWords(ta.value);
+      countEl.textContent = `${words} / ${session._poemReq} words`;
+      doneBtn.disabled = words < session._poemReq;
+    }
+ 
+    function onPoemInput() {
+      const el = document.getElementById('poem-text-input');
+      if (el) { session.inputs.poemText = el.value; saveActive(); }
+      updatePoemCount();
+    }
+ 
+    function clearPoemTimers() {
+      if (poemTimer) { clearInterval(poemTimer); poemTimer = null; }
+      if (poemGrace) { clearInterval(poemGrace); poemGrace = null; }
+      if (poemBlink) { clearInterval(poemBlink); poemBlink = null; }
+      const d = document.getElementById('timer-display');
+      if (d) d.style.visibility = 'visible';
+    }
+ 
+    function startPoemTimer(seconds) {
+      const display = document.getElementById('timer-display');
+      if (!display) return;
+      clearPoemTimers();
+      display.style.visibility = 'visible';
+      let left = seconds;
+      display.textContent = fmtMS(left);
+      logEvent('timer-start', { index: session.stepIndex + 1, label: 'poem', seconds, req: session._poemReq });
+      poemTimer = setInterval(() => {
+        left--;
+        if (left > 0) display.textContent = fmtMS(left);
+        else {
+          clearInterval(poemTimer); poemTimer = null;
+          display.textContent = 'TIME';
+          if (navigator.vibrate) navigator.vibrate(400);
+          startPoemGrace();
+        }
+      }, 1000);
+    }
+ 
+    function startPoemGrace() {
+      const display = document.getElementById('timer-display');
+      let g = 5;
+      if (display) display.textContent = 'GRACE 0:0' + g;
+      poemGrace = setInterval(() => {
+        g--;
+        if (g > 0) { if (display) display.textContent = 'GRACE 0:0' + g; }
+        else {
+          clearInterval(poemGrace); poemGrace = null;
+          escalatePoem();
+        }
+      }, 1000);
+    }
+ 
+    function escalatePoem() {
+      session._poemEsc = (session._poemEsc || 0) + 1;
+      session._poemReq = Math.min((session._poemReq || 33) + 10, 200);
+      logEvent('poem-escalate', { index: session.stepIndex + 1, esc: session._poemEsc, req: session._poemReq });
+      updatePoemCount();
+      const display = document.getElementById('timer-display');
+      const newSeconds = 71 * session._poemEsc; // 1:11, 2:22, 3:33, ...
+      if (!display) { startPoemTimer(newSeconds); return; }
+      display.textContent = fmtMS(newSeconds);
+      let visibleReturns = 0, on = true;
+      poemBlink = setInterval(() => {
+        on = !on;
+        display.style.visibility = on ? 'visible' : 'hidden';
+        if (on) {
+          visibleReturns++;
+          if (visibleReturns >= 3) {
+            clearInterval(poemBlink); poemBlink = null;
+            display.style.visibility = 'visible';
+            startPoemTimer(newSeconds);
+          }
+        }
+      }, 500);
+    }
+ 
     function completeStep() {
       const step = currentScript()[session.stepIndex];
       logEvent('step', { index: session.stepIndex + 1, text: fillText(step.text), action: step.action });
       advance();
     }
-
+ 
     function completeTextStep(field) {
       const val = document.getElementById('step-text-input').value.trim();
       session.inputs[field] = val;
@@ -563,199 +700,641 @@
       logEvent('input', { index: session.stepIndex + 1, field, value: val, text: fillText(step.text) });
       advance();
     }
-
-    function startTimer(seconds, label) {
+ 
+    // ---- TIMED TEXT (step 6) ----
+    function clearTt() { if (ttTimer) { clearInterval(ttTimer); ttTimer = null; } }
+ 
+    function renderTimedText(step) {
+      const action = document.getElementById('wander-action');
+      action.innerHTML = `
+        <div class="timer-display" id="timer-display">${fmtMS(step.seconds)}</div>
+        <textarea class="field" id="tt-input" rows="3" placeholder="${step.placeholder || ''}" oninput="updateTtCount(${step.exactWords})">${session.inputs[step.field] || ''}</textarea>
+        <div class="photo-meta" id="tt-count">0 / ${step.exactWords} words</div>
+        <button class="btn" id="tt-done" onclick="completeTimedText('${step.field}', ${step.exactWords})" disabled>Done</button>`;
+      updateTtCount(step.exactWords);
+      startTtTimer(step.seconds, step.field);
+      setTimeout(() => { const el = document.getElementById('tt-input'); if (el) el.focus(); }, 120);
+    }
+ 
+    function updateTtCount(exact) {
+      const ta = document.getElementById('tt-input');
+      const countEl = document.getElementById('tt-count');
+      const doneBtn = document.getElementById('tt-done');
+      if (!ta || !countEl || !doneBtn) return;
+      const words = countWords(ta.value);
+      countEl.textContent = `${words} / ${exact} words (exactly)`;
+      doneBtn.disabled = words !== exact;
+    }
+ 
+    function startTtTimer(seconds, field) {
       const display = document.getElementById('timer-display');
-      const btn = document.getElementById('timer-start');
-      btn.disabled = true;
-      btn.textContent = 'Running…';
-      logEvent('timer-start', { index: session.stepIndex + 1, label, seconds });
+      if (!display) return;
+      clearTt();
       let left = seconds;
-      if (timerInterval) clearInterval(timerInterval);
-      timerInterval = setInterval(() => {
+      display.textContent = fmtMS(left);
+      logEvent('timer-start', { index: session.stepIndex + 1, label: 'reason', seconds });
+      ttTimer = setInterval(() => {
         left--;
-        display.textContent = fmtMS(left);
-        if (left <= 0) {
-          clearInterval(timerInterval);
-          timerInterval = null;
-          display.textContent = '00:00';
+        if (left > 0) { display.textContent = fmtMS(left); }
+        else {
+          clearInterval(ttTimer); ttTimer = null;
+          display.textContent = 'TIME';
           if (navigator.vibrate) navigator.vibrate(400);
-          btn.disabled = false;
-          btn.textContent = 'Continue';
-          btn.onclick = function () {
-            logEvent('timer-end', { index: session.stepIndex + 1, label });
-            advance();
-          };
+          const ta = document.getElementById('tt-input');
+          const cleared = ta ? ta.value : '';
+          if (ta) ta.value = '';
+          session.inputs[field] = '';
+          logEvent('reason-clear', { index: session.stepIndex + 1, field, cleared });
+          const step = currentScript()[session.stepIndex];
+          updateTtCount(step.exactWords);
+          saveActive();
         }
       }, 1000);
     }
-
+ 
+    function completeTimedText(field, exact) {
+      const ta = document.getElementById('tt-input');
+      const words = countWords(ta ? ta.value : '');
+      if (words !== exact) return;
+      clearTt();
+      session.inputs[field] = ta.value.trim();
+      logEvent('input', { index: session.stepIndex + 1, field, value: session.inputs[field] });
+      advance();
+    }
+ 
+    function completePoemStep() {
+      clearPoemTimers();
+      const el = document.getElementById('poem-text-input');
+      if (el) session.inputs.poemText = el.value;
+      logEvent('input', { index: session.stepIndex + 1, field: 'poemText', value: session.inputs.poemText || '', req: session._poemReq, esc: session._poemEsc || 0 });
+      advance();
+    }
+ 
+    function startTimer(seconds, label) {
+      const display = document.getElementById('timer-display');
+      if (!display) return;
+      logEvent('timer-start', { index: session.stepIndex + 1, label, seconds });
+      let left = seconds;
+      display.textContent = fmtMS(left);
+      if (timerInterval) clearInterval(timerInterval);
+      timerInterval = setInterval(() => {
+        left--;
+        display.textContent = left > 0 ? fmtMS(left) : 'TIME';
+        if (left <= 0) {
+          clearInterval(timerInterval); timerInterval = null;
+          if (navigator.vibrate) navigator.vibrate(400);
+        }
+      }, 1000);
+    }
+ 
+    function cardinalFromHeading(deg) {
+      const dirs = ['N','NE','E','SE','S','SW','W','NW'];
+      return dirs[Math.round(((deg % 360) / 45)) % 8];
+    }
+ 
     function renderDirection() {
-      const grid = ['NW', 'N', 'NE', 'W', null, 'E', 'SW', 'S', 'SE'];
-      const action = document.getElementById('wander-action');
-      action.innerHTML = `<div class="compass-rose">` +
+      const step = currentScript()[session.stepIndex];
+      session._dirField = step.field || 'direction';
+      session._dirBtn = step.button || 'Confirm Direction';
+      document.getElementById('wander-action').innerHTML = `
+        <div class="gps-readout" id="compass-readout">compass idle</div>
+        <button class="btn" id="compass-enable" onclick="enableCompass()">Enable Compass</button>
+        <button class="btn btn-secondary btn-small" onclick="manualDirection()">Choose manually instead</button>`;
+      session._heading = null;
+    }
+ 
+    function onOrient(e) {
+      let heading = null;
+      if (typeof e.webkitCompassHeading === 'number') heading = e.webkitCompassHeading;
+      else if (typeof e.alpha === 'number') heading = (360 - e.alpha) % 360;
+      if (heading == null || isNaN(heading)) return;
+      session._heading = heading;
+      const el = document.getElementById('compass-readout');
+      if (el) el.textContent = `${cardinalFromHeading(heading)} · ${Math.round(heading)}°`;
+    }
+ 
+    function enableCompass() {
+      const start = () => {
+        window.addEventListener('deviceorientation', onOrient, true);
+        const el = document.getElementById('compass-readout');
+        if (el) el.textContent = 'calibrating… (wave phone in a figure-8)';
+        const btn = document.getElementById('compass-enable');
+        btn.textContent = session._dirBtn || 'Confirm Direction';
+        btn.onclick = confirmCompass;
+      };
+      if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
+        DeviceOrientationEvent.requestPermission()
+          .then(res => res === 'granted' ? start() : manualDirection('compass permission denied'))
+          .catch(() => manualDirection('compass unavailable'));
+      } else if (typeof DeviceOrientationEvent !== 'undefined') {
+        start();
+      } else {
+        manualDirection('no compass on this device');
+      }
+    }
+ 
+    function confirmCompass() {
+      if (session._heading == null) return;
+      const card = cardinalFromHeading(session._heading);
+      session.inputs[session._dirField] = card;
+      logEvent('direction', { index: session.stepIndex + 1, field: session._dirField, value: card, heading: Math.round(session._heading), source: 'compass' });
+      window.removeEventListener('deviceorientation', onOrient, true);
+      session._heading = null;
+      advance();
+    }
+ 
+    function manualDirection(reason) {
+      window.removeEventListener('deviceorientation', onOrient, true);
+      const grid = ['NW','N','NE','W',null,'E','SW','S','SE'];
+      document.getElementById('wander-action').innerHTML =
+        (reason ? `<div class="photo-meta">// ${reason}</div>` : '') +
+        `<div class="compass-rose">` +
         grid.map(d => d
           ? `<button class="compass-btn" onclick="pickDirection(this,'${d}')">${d}</button>`
-          : `<button class="compass-btn empty"></button>`
-        ).join('') + `</div>
-        <button class="btn" id="dir-confirm" onclick="confirmDirection()" disabled>Confirm</button>`;
+          : `<button class="compass-btn empty"></button>`).join('') +
+        `</div><button class="btn" id="dir-confirm" onclick="confirmDirection()" disabled>${session._dirBtn || 'Confirm'}</button>`;
       session._pendingDir = null;
     }
-
     function pickDirection(btn, dir) {
       document.querySelectorAll('.compass-btn').forEach(b => b.classList.remove('selected'));
       btn.classList.add('selected');
       session._pendingDir = dir;
       document.getElementById('dir-confirm').disabled = false;
     }
-
     function confirmDirection() {
       if (!session._pendingDir) return;
-      session.inputs.direction = session._pendingDir;
-      logEvent('direction', { index: session.stepIndex + 1, value: session._pendingDir });
+      session.inputs[session._dirField] = session._pendingDir;
+      logEvent('direction', { index: session.stepIndex + 1, field: session._dirField, value: session._pendingDir, source: 'manual' });
       session._pendingDir = null;
       advance();
     }
-
-    function renderGPS() {
+ 
+    // ---- WORD PAIRING ----
+    const WP_RESULTS = ['choose','photography','painting','installation','music','found objects','sculpture','intervention','drawing','sewing','light/tech'];
+ 
+    function renderWordPair(step) {
+      const raw = (session.inputs[step.sourceField] || '').trim();
+      const words = raw
+        ? raw.split(/\s+/).map(w => w.replace(/^[^A-Za-z]+|[^A-Za-z]+$/g, '')).filter(Boolean)
+        : [];
+      const action = document.getElementById('wander-action');
+      if (words.length < 2) {
+        action.innerHTML = `<div class="photo-meta">// not enough words from step 6 to form a pair</div>
+          <button class="btn" onclick="completeStep()">Next</button>`;
+        return;
+      }
+      session._wpWords = words;
+      session._wpSel = [];
+      action.innerHTML = `
+        <div class="wp-display">
+          <span class="wp-slot" id="wp-0">—</span>
+          <span class="wp-slot" id="wp-1">—</span>
+        </div>
+        <div class="wp-buttons">
+          ${words.map((w, i) => `<button class="wp-btn" id="wp-btn-${i}" onclick="toggleWordPick(${i})">${w}</button>`).join('')}
+        </div>
+        <button class="btn btn-secondary btn-small" onclick="clearWordPick()">Clear</button>
+        <button class="btn" id="wp-done" onclick="doneWordPick()" disabled>Done</button>
+        <div id="wp-result"></div>`;
+    }
+ 
+    function toggleWordPick(i) {
+      const sel = session._wpSel;
+      const pos = sel.indexOf(i);
+      if (pos >= 0) {
+        sel.splice(pos, 1);
+        document.getElementById('wp-btn-' + i).classList.remove('selected');
+      } else {
+        if (sel.length >= 2) return; // third tap does nothing
+        sel.push(i);
+        document.getElementById('wp-btn-' + i).classList.add('selected');
+      }
+      renderWpDisplay();
+    }
+ 
+    function renderWpDisplay() {
+      const sel = session._wpSel, words = session._wpWords;
+      document.getElementById('wp-0').textContent = sel[0] != null ? words[sel[0]] : '—';
+      document.getElementById('wp-1').textContent = sel[1] != null ? words[sel[1]] : '—';
+      document.getElementById('wp-done').disabled = sel.length !== 2;
+    }
+ 
+    function clearWordPick() {
+      session._wpSel.forEach(i => {
+        const b = document.getElementById('wp-btn-' + i);
+        if (b) b.classList.remove('selected');
+      });
+      session._wpSel = [];
+      renderWpDisplay();
+    }
+ 
+    function doneWordPick() {
+      const sel = session._wpSel, words = session._wpWords;
+      if (sel.length !== 2) return;
+      const pair = [words[sel[0]], words[sel[1]]];
+      const vowels = (pair.join('').match(/[aeiou]/gi) || []).length;
+      const idx = vowels % 11;
+      const result = WP_RESULTS[idx];
+      session.inputs.wordPair = { words: pair, vowels, index: idx, result };
+      logEvent('wordpair', { index: session.stepIndex + 1, words: pair, vowels, result });
+ 
+      document.querySelectorAll('.wp-btn').forEach(b => b.disabled = true);
+      const dn = document.getElementById('wp-done'); if (dn) dn.disabled = true;
+      const resultEl = document.getElementById('wp-result');
+ 
+      if (result === 'choose') {
+        resultEl.innerHTML = `
+          <div class="resolve-line" style="margin-top:16px;"><span class="resolve-arrow">${vowels} vowels = </span><span class="resolve-val">choose</span></div>
+          <label style="margin-top:12px;">Choose a result</label>
+          <select class="field" id="wp-choose">
+            ${WP_RESULTS.filter(r => r !== 'choose').map(r => `<option value="${r}">${r}</option>`).join('')}
+          </select>
+          <button class="btn" onclick="confirmWordChoose()">Confirm</button>`;
+      } else {
+        resultEl.innerHTML = `
+          <div class="resolve-line" style="margin-top:16px;"><span class="resolve-arrow">${vowels} vowels = </span><span class="resolve-val">${idx} · ${result}</span></div>
+          <button class="btn" onclick="advance()">Next</button>`;
+      }
+    }
+ 
+    function confirmWordChoose() {
+      const val = document.getElementById('wp-choose').value;
+      session.inputs.wordPair.result = val;
+      session.inputs.wordPair.chosen = true;
+      logEvent('wordpair-choose', { index: session.stepIndex + 1, value: val });
+      advance();
+    }
+ 
+    // ---- TEXT + CAPTURE (step 10) ----
+    function renderTextCapture(step) {
       const action = document.getElementById('wander-action');
       action.innerHTML = `
+        <textarea class="field" id="step-text-input" rows="3" placeholder="${step.placeholder || ''}">${escapeHtml(session.inputs[step.field] || '')}</textarea>
+        <button class="btn btn-secondary btn-small" onclick="triggerCamera('${step.photoField}')">Open Camera</button>
+        <button class="btn btn-secondary btn-small" onclick="triggerPhoto('${step.photoField}')">Choose from Library</button>
+        <div id="photo-preview"></div>
+        <button class="btn" onclick="completeTextCaptureStep('${step.field}')">Done</button>`;
+      if (session.inputs[step.photoField]) showPhotoPreview(step.photoField);
+    }
+ 
+    function completeTextCaptureStep(field) {
+      const el = document.getElementById('step-text-input');
+      session.inputs[field] = el ? el.value.trim() : '';
+      logEvent('input', { index: session.stepIndex + 1, field, value: session.inputs[field] });
+      advance();
+    }
+ 
+    // ---- MULTI TEXT (step 13 — sky observations) ----
+    function renderMultiText(step) {
+      const action = document.getElementById('wander-action');
+      action.innerHTML =
+        step.fields.map((f, i) =>
+          `<textarea class="field" id="mt-${i}" rows="2" placeholder="observation ${i + 1}…" style="margin-bottom:8px;">${escapeHtml(session.inputs[f] || '')}</textarea>`
+        ).join('') +
+        `<button class="btn" onclick="completeMultiText()">Done</button>`;
+    }
+ 
+    function completeMultiText() {
+      const step = currentScript()[session.stepIndex];
+      step.fields.forEach((f, i) => {
+        const el = document.getElementById('mt-' + i);
+        session.inputs[f] = el ? el.value.trim() : '';
+      });
+      logEvent('multitext', { index: session.stepIndex + 1, fields: step.fields.map(f => ({ field: f, value: session.inputs[f] })) });
+      advance();
+    }
+ 
+    // ---- ARRIVE HOME (final step) ----
+    function renderArrive(step) {
+      document.getElementById('wander-action').innerHTML = `
+        <div class="gps-readout" id="arrive-readout">— — —</div>
+        <button class="btn" id="arrive-btn" onclick="captureArrival()">I'm Home</button>`;
+    }
+ 
+    function captureArrival() {
+      const readout = document.getElementById('arrive-readout');
+      const btn = document.getElementById('arrive-btn');
+      const time = new Date().toISOString();
+      session.inputs.arrivalTime = time;
+      const done = () => { btn.disabled = false; btn.textContent = 'Finish'; btn.onclick = advance; };
+      if (!navigator.geolocation) {
+        readout.textContent = new Date(time).toLocaleTimeString() + ' · no GPS';
+        logEvent('arrive', { index: session.stepIndex + 1, time });
+        done(); return;
+      }
+      readout.textContent = 'locating…'; btn.disabled = true;
+      navigator.geolocation.getCurrentPosition(
+        pos => {
+          const lat = pos.coords.latitude.toFixed(5), lon = pos.coords.longitude.toFixed(5);
+          session.inputs.arrivalGps = { lat, lon };
+          session.path.push({ lat: +lat, lon: +lon, step: session.stepIndex + 1, tag: 'home', ts: Date.now() });
+          readout.textContent = `${new Date(time).toLocaleTimeString()} · ${lat}, ${lon}`;
+          logEvent('arrive', { index: session.stepIndex + 1, time, lat, lon });
+          saveActive(); done();
+        },
+        err => {
+          readout.textContent = new Date(time).toLocaleTimeString() + ' · GPS unavailable';
+          logEvent('arrive', { index: session.stepIndex + 1, time, error: err.message });
+          done();
+        },
+        { enableHighAccuracy: true, timeout: 10000 }
+      );
+    }
+ 
+    function renderGPS() {
+      document.getElementById('wander-action').innerHTML = `
         <div class="gps-readout" id="gps-readout">— — —</div>
         <button class="btn" id="gps-btn" onclick="captureGPS()">Capture Coordinates</button>
-        <button class="btn btn-secondary" onclick="skipGPS()">Skip</button>`;
+        <button class="btn btn-secondary btn-small" onclick="skipGPS()">Skip</button>`;
     }
-
     function captureGPS() {
       const readout = document.getElementById('gps-readout');
       const btn = document.getElementById('gps-btn');
-      if (!navigator.geolocation) {
-        readout.textContent = 'no geolocation';
-        return;
-      }
-      readout.textContent = 'locating…';
-      btn.disabled = true;
+      if (!navigator.geolocation) { readout.textContent = 'no geolocation'; return; }
+      readout.textContent = 'locating…'; btn.disabled = true;
       navigator.geolocation.getCurrentPosition(
         pos => {
-          const lat = pos.coords.latitude.toFixed(5);
-          const lon = pos.coords.longitude.toFixed(5);
+          const lat = pos.coords.latitude.toFixed(5), lon = pos.coords.longitude.toFixed(5);
           session.inputs.gps = { lat, lon };
           readout.textContent = `${lat}, ${lon}`;
           logEvent('gps', { index: session.stepIndex + 1, lat, lon });
-          btn.textContent = 'Continue';
-          btn.disabled = false;
-          btn.onclick = advance;
+          session.path.push({ lat: +lat, lon: +lon, step: session.stepIndex + 1, ts: Date.now() });
+          btn.textContent = 'Continue'; btn.disabled = false; btn.onclick = advance;
+          saveActive();
         },
         err => {
           readout.textContent = 'denied / unavailable';
-          btn.textContent = 'Continue Anyway';
-          btn.disabled = false;
-          btn.onclick = advance;
+          btn.textContent = 'Continue Anyway'; btn.disabled = false; btn.onclick = advance;
           logEvent('gps', { index: session.stepIndex + 1, error: err.message });
         },
         { enableHighAccuracy: true, timeout: 10000 }
       );
     }
-
-    function skipGPS() {
-      logEvent('gps', { index: session.stepIndex + 1, skipped: true });
-      advance();
+    function skipGPS() { logEvent('gps', { index: session.stepIndex + 1, skipped: true }); advance(); }
+ 
+    // passive breadcrumb — best effort, non-blocking
+    function captureBreadcrumb(tag) {
+      if (!navigator.geolocation) return;
+      navigator.geolocation.getCurrentPosition(
+        pos => {
+          session.path.push({
+            lat: +pos.coords.latitude.toFixed(5),
+            lon: +pos.coords.longitude.toFixed(5),
+            step: session.stepIndex + 1, tag, ts: Date.now()
+          });
+          saveActive();
+        },
+        () => {}, { enableHighAccuracy: true, timeout: 8000, maximumAge: 5000 }
+      );
     }
-
-    function advance() {
-      session.stepIndex++;
-      if (session.stepIndex >= currentScript().length) {
-        endWander();
-      } else {
-        renderStep();
+ 
+    // ---- PHOTO ----
+    function renderPhotoZone(field) {
+      const action = document.getElementById('wander-action');
+      const zone = document.createElement('div');
+      zone.className = 'photo-zone';
+      zone.id = 'photo-zone';
+      const has = session.inputs[field];
+      zone.innerHTML = `
+        <button class="btn btn-secondary btn-small" onclick="triggerPhoto('${field}')">${has ? 'Replace Photo' : '+ Add Photo'}</button>
+        <div id="photo-preview"></div>`;
+      action.appendChild(zone);
+      if (has) showPhotoPreview(field);
+    }
+ 
+    async function storePhoto(field, file) {
+      const key = session.id + ':' + field;
+      try {
+        await idbPut(key, file);
+        session.inputs[field] = { key, type: file.type, size: file.size, ts: Date.now() };
+        logEvent('photo', { index: session.stepIndex + 1, field, size: file.size });
+        saveActive();
+        showPhotoPreview(field);
+        const btn = document.querySelector('#photo-zone .btn');
+        if (btn) btn.textContent = 'Replace Photo';
+      } catch (e) {
+        alert('Could not save photo: ' + e.message);
       }
     }
-
+ 
+    function triggerPhoto(field) {
+      const input = document.getElementById('photo-input');
+      input.value = '';
+      input.onchange = () => { if (input.files[0]) storePhoto(field, input.files[0]); };
+      input.click();
+    }
+ 
+    function triggerCamera(field) {
+      const input = document.getElementById('camera-input');
+      input.value = '';
+      input.onchange = () => { if (input.files[0]) storePhoto(field, input.files[0]); };
+      input.click();
+    }
+ 
+    async function showPhotoPreview(field) {
+      const meta = session.inputs[field];
+      if (!meta) return;
+      const blob = await idbGet(meta.key);
+      const preview = document.getElementById('photo-preview');
+      if (!preview) return;
+      if (!blob) { preview.innerHTML = '<div class="photo-meta">// photo stored</div>'; return; }
+      const url = URL.createObjectURL(blob);
+      preview.innerHTML = `<img class="photo-thumb" src="${url}"><div class="photo-meta">${(meta.size/1024).toFixed(0)} KB</div>`;
+    }
+ 
+    function advance() {
+      if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
+      clearPoemTimers();
+      clearTt();
+      window.removeEventListener('deviceorientation', onOrient, true);
+      captureBreadcrumb('step');
+      session.stepIndex++;
+      if (session.stepIndex >= currentScript().length) endWander();
+      else { renderStep(); saveActive(); }
+    }
+ 
+    function goBack() {
+      if (!session || session.stepIndex === 0) return;
+      if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
+      clearPoemTimers();
+      clearTt();
+      window.removeEventListener('deviceorientation', onOrient, true);
+      const prev = session.stepIndex - 1;
+      if (stepSnaps[prev]) session = JSON.parse(stepSnaps[prev]);
+      else session.stepIndex = prev;
+      renderStep(false, true);
+      saveActive();
+    }
+ 
+    function abortWander() {
+      if (!confirm('Abort this wander? Progress so far will still be saved to the log.')) return;
+      endWander(true);
+    }
+ 
     // ============================================================
     // END + SUMMARY
     // ============================================================
-    function endWander() {
+    function endWander(aborted) {
+      if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
+      clearPoemTimers();
+      clearTt();
       session.endedAt = new Date().toISOString();
+      session.aborted = !!aborted;
       records.unshift(session);
       saveRecords();
-      renderSummary(session);
+      clearActive();
+      const finished = session;
+      session = null;
+      renderSummary(finished);
       showScreen('screen-summary');
     }
-
+ 
     function renderSummary(s) {
       const start = new Date(s.startedAt);
       const mins = s.endedAt ? Math.round((new Date(s.endedAt) - start) / 60000) : 0;
       document.getElementById('summary-sub').textContent =
-        `${start.toLocaleString()} — ${mins} min`;
-
+        `${start.toLocaleString()} — ${mins} min${s.aborted ? ' — aborted' : ''}`;
+ 
+      const wp = s.inputs.wordPair;
+      const sky = ['skyNote1', 'skyNote2', 'skyNote3'].map(f => s.inputs[f]).filter(Boolean);
+      const arrival = s.inputs.arrivalTime
+        ? new Date(s.inputs.arrivalTime).toLocaleTimeString() +
+          (s.inputs.arrivalGps ? ` · ${s.inputs.arrivalGps.lat}, ${s.inputs.arrivalGps.lon}` : '')
+        : null;
       const rows = [
         ['Practice', s.practice],
-        ['Start', s.location],
-        ['Poem', s.inputs.poemName],
+        ['Initial Dir', s.inputs.initialDirection],
+        ['Poem Title', s.inputs.poemName],
+        ['Poem Text', s.inputs.poemText],
         ['Direction', s.inputs.direction],
-        ['Tree Mood', s.inputs.treeMood],
-        ['GPS', s.inputs.gps ? `${s.inputs.gps.lat}, ${s.inputs.gps.lon}` : null]
+        ['Why Direction', s.inputs.directionReason],
+        ['Sketch Mood', s.inputs.sketchMood],
+        ['Word Pair', wp ? `${wp.words.join(' + ')} — ${wp.vowels} vowels → ${wp.result}` : null],
+        ['Home Dir', s.inputs.homeDirection],
+        ['Sky Notes', sky.length ? sky.join('  /  ') : null],
+        ['Arrival', arrival],
+        ['GPS Points', s.path && s.path.length ? `${s.path.length} captured` : null]
       ];
-
-      document.getElementById('summary-fields').innerHTML = rows.map(([k, v]) => `
+      document.getElementById('summary-fields').innerHTML = rows.map(([k,v]) => `
         <div class="summary-row">
           <div class="summary-key">${k}</div>
-          <div class="summary-val ${v ? '' : 'empty'}">${v || '—'}</div>
+          <div class="summary-val ${v ? '' : 'empty'}">${v ? String(v).replace(/</g,'&lt;') : '—'}</div>
         </div>`).join('');
-
+ 
+      document.getElementById('summary-path').innerHTML = renderPathPlot(s.path);
+ 
+      // photos
+      renderSummaryPhotos(s);
+ 
       document.getElementById('summary-log').innerHTML = s.log.map(e => {
         const t = new Date(e.at).toLocaleTimeString();
         let line = '';
         if (e.type === 'roll') line = `rolled ${e.value} → <b>${e.result}</b>`;
         else if (e.type === 'choose') line = `chose <b>${e.value}</b>`;
         else if (e.type === 'step') line = `step ${e.index}: ${e.text}`;
-        else if (e.type === 'input') line = `step ${e.index} · ${e.field} = <b>${e.value || '(blank)'}</b>`;
+        else if (e.type === 'input') line = `step ${e.index} · ${e.field} = <b>${(e.value||'(blank)').toString().slice(0,60).replace(/</g,'&lt;')}</b>`;
+        else if (e.type === 'photo') line = `step ${e.index} · photo (${(e.size/1024).toFixed(0)} KB)`;
         else if (e.type === 'timer-start') line = `timer start (${e.label}, ${e.seconds}s)`;
         else if (e.type === 'timer-end') line = `timer end (${e.label})`;
-        else if (e.type === 'direction') line = `direction = <b>${e.value}</b>`;
-        else if (e.type === 'gps') line = e.skipped ? 'gps skipped' : (e.error ? `gps error` : `gps <b>${e.lat}, ${e.lon}</b>`);
-        else if (e.type === 'abort') line = `aborted — ${e.reason}`;
+        else if (e.type === 'direction') line = `${e.field || 'direction'} = <b>${e.value}</b>${e.heading != null ? ' ('+e.heading+'°)' : ''}`;
+        else if (e.type === 'poem-escalate') line = `poem escalated → <b>${e.req} words</b> (cycle ${e.esc})`;
+        else if (e.type === 'reason-clear') line = `reason timer expired — cleared: <b>${escapeHtml((e.cleared || '').slice(0, 80)) || '(empty)'}</b>`;
+        else if (e.type === 'multitext') line = `sky notes logged (${e.fields.filter(x => x.value).length})`;
+        else if (e.type === 'arrive') line = `arrived home — ${new Date(e.time).toLocaleTimeString()}${e.lat ? ` · ${e.lat}, ${e.lon}` : ''}`;
+        else if (e.type === 'wordpair') line = `word pair <b>${e.words.join(' + ')}</b> · ${e.vowels} vowels → <b>${e.result}</b>`;
+        else if (e.type === 'wordpair-choose') line = `chose <b>${e.value}</b>`;
+        else if (e.type === 'gps') line = e.skipped ? 'gps skipped' : (e.error ? 'gps error' : `gps <b>${e.lat}, ${e.lon}</b>`);
         else line = e.type;
         return `<div class="log-entry">${t} — ${line}</div>`;
       }).join('');
     }
-
+ 
+    async function renderSummaryPhotos(s) {
+      const container = document.getElementById('summary-photos');
+      const fields = Object.keys(PHOTO_LABELS).filter(f => s.inputs[f]);
+      if (fields.length === 0) { container.innerHTML = '<div class="path-empty">// no captures</div>'; return; }
+      container.innerHTML = '';
+      for (const f of fields) {
+        const blob = await idbGet(s.inputs[f].key);
+        const div = document.createElement('div');
+        div.className = 'summary-photo';
+        if (blob) {
+          const url = URL.createObjectURL(blob);
+          div.innerHTML = `<img src="${url}"><div class="cap">${PHOTO_LABELS[f]}</div>`;
+        } else {
+          div.innerHTML = `<div class="cap">${PHOTO_LABELS[f]} — photo unavailable</div>`;
+        }
+        container.appendChild(div);
+      }
+    }
+ 
+    function renderPathPlot(path) {
+      if (!path || path.length < 2) return '<div class="path-empty">// insufficient points for a path</div>';
+      const W = 320, H = 220, PAD = 24;
+      const lats = path.map(p => p.lat), lons = path.map(p => p.lon);
+      const minLat = Math.min(...lats), maxLat = Math.max(...lats);
+      const minLon = Math.min(...lons), maxLon = Math.max(...lons);
+      const spanLat = (maxLat - minLat) || 0.0001, spanLon = (maxLon - minLon) || 0.0001;
+      const x = lon => PAD + ((lon - minLon) / spanLon) * (W - 2*PAD);
+      const y = lat => H - PAD - ((lat - minLat) / spanLat) * (H - 2*PAD); // north up
+      const pts = path.map(p => [x(p.lon), y(p.lat)]);
+      const line = pts.map((p,i) => (i===0?'M':'L') + p[0].toFixed(1) + ',' + p[1].toFixed(1)).join(' ');
+      const dots = pts.map((p,i) => `<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="${i===0?5:3.5}" fill="${i===0?'#e8e0d0':'#c8502a'}"/>`).join('');
+      return `<svg class="path-plot" viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg">
+        <path d="${line}" fill="none" stroke="#2e2e2e" stroke-width="1.5"/>
+        ${dots}
+      </svg><div class="photo-meta">${path.length} points · start = pale dot · north up</div>`;
+    }
+ 
     // ============================================================
     // RECORDS
     // ============================================================
     function openRecords() {
       const c = document.getElementById('records-container');
-      if (records.length === 0) {
-        c.innerHTML = '<div class="status-line">// no wanders recorded</div>';
-      } else {
-        c.innerHTML = records.map((r, i) => `
-          <div class="record-item" onclick="viewRecord(${i})">
-            <div class="record-date">${new Date(r.startedAt).toLocaleString()}</div>
-            <div class="record-summary"><span class="accent">${r.practice}</span> · ${r.location}${r.inputs.poemName ? ' · “' + r.inputs.poemName + '”' : ''}</div>
-          </div>`).join('');
-      }
+      if (records.length === 0) c.innerHTML = '<div class="status-line">// no wanders recorded</div>';
+      else c.innerHTML = records.map((r,i) => `
+        <div class="record-item" onclick="viewRecord(${i})">
+          <div class="record-date">${new Date(r.startedAt).toLocaleString()}</div>
+          <div class="record-summary"><span class="accent">${r.practice}</span> · ${r.inputs.initialDirection || r.location}${r.inputs.poemName ? ' · “'+r.inputs.poemName+'”' : ''}</div>
+        </div>`).join('');
       document.getElementById('records-status').textContent = '';
       showScreen('screen-records');
     }
-
-    function viewRecord(i) {
-      renderSummary(records[i]);
-      showScreen('screen-summary');
-    }
-
+    function viewRecord(i) { renderSummary(records[i]); showScreen('screen-summary'); }
+ 
     function exportRecords() {
       const status = document.getElementById('records-status');
       if (records.length === 0) { status.textContent = '// nothing to export'; return; }
-      const payload = { format: 'NLE-FIELD-LOG', version: 1, exportedAt: new Date().toISOString(), records };
+      const payload = { format: 'NLE-FIELD-LOG', version: 2, note: 'photos stored on-device, not included in this file', exportedAt: new Date().toISOString(), records };
       const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
-      a.href = url;
-      a.download = `nle-log-${new Date().toISOString().slice(0, 10)}.json`;
+      a.href = url; a.download = `nle-log-${new Date().toISOString().slice(0,10)}.json`;
       document.body.appendChild(a); a.click(); document.body.removeChild(a);
       URL.revokeObjectURL(url);
       status.textContent = `// exported ${records.length} record(s)`;
     }
+ 
+    // ============================================================
+    // INIT + RESUME
+    // ============================================================
+    (function init() {
+      const active = localStorage.getItem('nle-active');
+      if (active) {
+        try {
+          const s = JSON.parse(active);
+          if (s && !s.endedAt && s.phase === 'wander' && SCRIPTS[s.practice]) {
+            session = s;
+            showScreen('screen-wander');
+            renderStep(true);
+            return;
+          }
+        } catch (e) { /* ignore corrupt */ }
+      }
+    })();
   </script>
-
+ 
 </body>
 </html>
+ 
+Claude finished the response
