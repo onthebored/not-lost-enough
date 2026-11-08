@@ -223,7 +223,7 @@
   <div id="screen-home" class="screen active">
     <div class="app-header">
       <h1>Not Lost Enough</h1>
-      <div class="sub">Field Research Application — v0.9.1</div>
+      <div class="sub">Field Research Application — v0.9.2</div>
     </div>
     <button class="btn" onclick="beginSession()">Initiate Wander</button>
     <button class="btn btn-secondary" onclick="openRecords()">Field Log</button>
@@ -309,6 +309,7 @@
     // ============================================================
     const SCRIPTS = {
       drawing: [
+        { text: 'From home, head {{dir}} and walk somewhere that feels new or not part of daily life. Focus on nature, the city, the people, and whatever else your senses may notice.', action: 'here', button: "I'm Here" },
         { text: 'Continue walking and find a place to sit comfortably.', action: 'here' },
         { text: 'Write a poem of at least 33 words in the next 3:33.', action: 'poem', seconds: 213, minWords: 33, photoField: 'poemPhoto' },
         { text: 'Name the poem.', action: 'text', field: 'poemName', placeholder: 'poem title…', show: 'poemText', showLabel: 'Your poem' },
@@ -418,8 +419,6 @@
       logEvent('roll', { roll: 'direction', value: n, result: dir });
       document.getElementById('roll-resolved').innerHTML =
         `<div class="resolve-line"><span class="resolve-arrow">= </span><span class="resolve-val">${dir}</span></div>`;
-      document.getElementById('roll-heading').innerHTML =
-        `<div class="review-block" style="margin-top:16px;">From home, head ${dir.toLowerCase()} and walk somewhere that feels new or not part of daily life. Focus on nature, the city, the people, and whatever else your senses may notice.</div>`;
       const b = document.getElementById('roll-btn');
       b.textContent = 'Begin Wander';
       b.onclick = startWander;
@@ -461,7 +460,11 @@
     }
 
     function currentScript() { return SCRIPTS[session.practice]; }
-    function fillText(t) { return t.replace('{{poem}}', session.inputs.poemName || '…'); }
+    function fillText(t) {
+      return t
+        .replace('{{poem}}', session.inputs.poemName || '…')
+        .replace('{{dir}}', (session.inputs.initialDirection || '').toLowerCase());
+    }
     function fmtMS(total) { const s = Math.max(0, Math.floor(total)); return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0'); }
 
     function renderStep(isResume, isBack) {
