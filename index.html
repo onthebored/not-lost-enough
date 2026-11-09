@@ -17,6 +17,8 @@
       --accent: #c8502a;
       --border: #2e2e2e;
       --font: 'Menlo', monospace;
+      --cube: 110px;
+      --half: 55px;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -214,6 +216,44 @@
 
     .status-line { font-size: 0.7rem; color: var(--text-secondary); margin-top: 10px; letter-spacing: 0.04em; }
 
+    /* ---- CAD DIE ---- */
+    .die-stage { display: flex; justify-content: center; margin: 10px 0 22px; }
+    .die-bench {
+      width: 240px; height: 240px;
+      display: flex; align-items: center; justify-content: center;
+      border: 1px solid var(--border); position: relative; perspective: 900px;
+    }
+    .die-bench::before, .die-bench::after { content: ''; position: absolute; background: var(--border); }
+    .die-bench::before { left: 0; right: 0; top: 50%; height: 1px; opacity: 0.5; }
+    .die-bench::after { top: 0; bottom: 0; left: 50%; width: 1px; opacity: 0.5; }
+    .die-tick { position: absolute; font-size: 0.5rem; color: var(--text-secondary); letter-spacing: 0.1em; }
+    .die-tick.tl { top: 4px; left: 6px; }
+    .die-tick.tr { top: 4px; right: 6px; }
+    .die-tick.bl { bottom: 4px; left: 6px; }
+    .die-tick.br { bottom: 4px; right: 6px; }
+    .cube {
+      position: relative; width: var(--cube); height: var(--cube);
+      transform-style: preserve-3d;
+      transform: rotateX(-22deg) rotateY(-32deg);
+      transition: none; cursor: grab; z-index: 2;
+      touch-action: none; user-select: none; -webkit-user-select: none;
+    }
+    .cube:active { cursor: grabbing; }
+    .face {
+      position: absolute; width: var(--cube); height: var(--cube);
+      border: 1.5px solid var(--accent); background: rgba(20,20,20,0.9);
+      display: grid; grid-template-columns: repeat(3,1fr); grid-template-rows: repeat(3,1fr);
+      padding: 12px; gap: 4px; box-shadow: inset 0 0 0 1px rgba(200,80,42,0.15);
+    }
+    .cell { display: flex; align-items: center; justify-content: center; }
+    .pip { width: 60%; aspect-ratio: 1; border-radius: 50%; background: var(--text-primary); box-shadow: 0 0 4px rgba(232,224,208,0.4); }
+    .face.front  { transform: rotateY(0deg)   translateZ(var(--half)); }
+    .face.back   { transform: rotateY(180deg) translateZ(var(--half)); }
+    .face.right  { transform: rotateY(90deg)  translateZ(var(--half)); }
+    .face.left   { transform: rotateY(-90deg) translateZ(var(--half)); }
+    .face.top    { transform: rotateX(90deg)  translateZ(var(--half)); }
+    .face.bottom { transform: rotateX(-90deg) translateZ(var(--half)); }
+
     .hidden-file { display: none; }
   </style>
 </head>
@@ -223,7 +263,7 @@
   <div id="screen-home" class="screen active">
     <div class="app-header">
       <h1>Not Lost Enough</h1>
-      <div class="sub">Field Research Application — v0.9.7</div>
+      <div class="sub">Field Research Application — v0.10.0</div>
     </div>
     <button class="btn" onclick="beginSession()">Wander</button>
     <button class="btn btn-secondary" onclick="openRecords()">Field Log</button>
@@ -238,6 +278,15 @@
     </div>
     <div class="step-counter" id="roll-counter"></div>
     <label>Roll a die to discover initial direction. Input number below. </label>
+    <div class="die-stage">
+      <div class="die-bench">
+        <span class="die-tick tl">NLE·D6</span>
+        <span class="die-tick tr">RND</span>
+        <span class="die-tick bl">1–6</span>
+        <span class="die-tick br">⌀</span>
+        <div class="cube" id="die-cube"></div>
+      </div>
+    </div>
     <input class="field" type="number" id="roll-input" min="1" max="6" inputmode="numeric">
     <div id="roll-resolved"></div>
     <div id="roll-heading"></div>
@@ -374,6 +423,10 @@
     let timerInterval = null;
     let poemTimer = null, poemGrace = null, poemBlink = null;
     let ttTimer = null;
+    let dieLocked = false;
+    let dieSpinX = -22, dieSpinY = -32, dieVelX = 0, dieVelY = 0;
+    let dieRaf = null, dieCycle = null, dieCap = null;
+    let dieHolding = false, dieRolling = false, dieCandidate = 1, dieBuilt = false;
 
     function saveActive() {
       if (session) localStorage.setItem('nle-active', JSON.stringify(session));
@@ -408,17 +461,27 @@
       const b = document.getElementById('roll-btn');
       b.textContent = 'OK'; b.disabled = false; b.onclick = resolveRoll;
       document.getElementById('roll-counter').textContent = `PROMPT 1 / ${SCRIPTS[session.practice].length + 1}`;
+      dieLocked = false;
+      dieReset();
       showScreen('screen-rolls');
     }
 
+    // manual path: read the typed number
     function resolveRoll() {
       const input = document.getElementById('roll-input');
       const n = parseInt(input.value, 10);
       if (!(n >= 1 && n <= 6)) { input.focus(); return; }
-      input.disabled = true;
+      resolveDirection(n, 'input');
+    }
+
+    // shared resolution for both the typed number and the die
+    function resolveDirection(n, source) {
+      if (dieLocked) return;
+      dieLocked = true;
+      document.getElementById('roll-input').disabled = true;
       const dir = (n <= 3) ? 'WEST' : 'EAST';
       session.inputs.initialDirection = dir;
-      logEvent('roll', { roll: 'direction', value: n, result: dir });
+      logEvent('roll', { roll: 'direction', value: n, result: dir, source: source || 'input' });
       document.getElementById('roll-resolved').innerHTML =
         `<div class="resolve-line"><span class="resolve-arrow">= </span><span class="resolve-val">${dir}</span></div>`;
       const b = document.getElementById('roll-btn');
@@ -1282,6 +1345,94 @@
       URL.revokeObjectURL(url);
       status.textContent = `// exported ${records.length} record(s)`;
     }
+
+    // ============================================================
+    // CAD DIE (prompt 1)
+    // ============================================================
+    const DIE_PIPS = { 1:[4], 2:[0,8], 3:[0,4,8], 4:[0,2,6,8], 5:[0,2,4,6,8], 6:[0,2,3,5,6,8] };
+    const DIE_FACE_VALUES = { front:1, back:6, right:3, left:4, top:5, bottom:2 };
+    const DIE_SHOW = { 1:{x:0,y:0}, 6:{x:0,y:-180}, 3:{x:0,y:-90}, 4:{x:0,y:90}, 5:{x:-90,y:0}, 2:{x:90,y:0} };
+
+    function dieMod360(d) { let m = d % 360; if (m > 180) m -= 360; if (m < -180) m += 360; return m; }
+
+    function buildDie() {
+      if (dieBuilt) return;
+      const cube = document.getElementById('die-cube');
+      if (!cube) return;
+      Object.entries(DIE_FACE_VALUES).forEach(([pos, val]) => {
+        const face = document.createElement('div');
+        face.className = 'face ' + pos;
+        for (let i = 0; i < 9; i++) {
+          const cell = document.createElement('div');
+          cell.className = 'cell';
+          if (DIE_PIPS[val].includes(i)) {
+            const pip = document.createElement('div');
+            pip.className = 'pip';
+            cell.appendChild(pip);
+          }
+          face.appendChild(cell);
+        }
+        cube.appendChild(face);
+      });
+      cube.addEventListener('pointerdown', e => { e.preventDefault(); dieStart(); });
+      window.addEventListener('pointerup', () => { if (dieHolding) dieEnd(); });
+      window.addEventListener('pointercancel', () => { if (dieHolding) dieEnd(); });
+      dieBuilt = true;
+    }
+
+    function dieApply() {
+      const c = document.getElementById('die-cube');
+      if (c) c.style.transform = `rotateX(${dieSpinX}deg) rotateY(${dieSpinY}deg)`;
+    }
+
+    function dieSpin() {
+      dieSpinX += dieVelX;
+      dieSpinY += dieVelY;
+      dieApply();
+      dieRaf = requestAnimationFrame(dieSpin);
+    }
+
+    function dieReset() {
+      dieRolling = false; dieHolding = false;
+      if (dieRaf) { cancelAnimationFrame(dieRaf); dieRaf = null; }
+      if (dieCycle) { clearInterval(dieCycle); dieCycle = null; }
+      if (dieCap) { clearTimeout(dieCap); dieCap = null; }
+      dieSpinX = -22; dieSpinY = -32;
+      const c = document.getElementById('die-cube');
+      if (c) { c.style.transition = 'transform 0.5s ease'; dieApply(); }
+    }
+
+    function dieStart() {
+      if (dieRolling || dieLocked || !session) return;
+      dieRolling = true; dieHolding = true;
+      const c = document.getElementById('die-cube');
+      if (!c) return;
+      c.style.transition = 'none';
+      dieVelX = (9 + Math.random() * 6) * (Math.random() < 0.5 ? -1 : 1);
+      dieVelY = (9 + Math.random() * 6) * (Math.random() < 0.5 ? -1 : 1);
+      dieCandidate = 1 + Math.floor(Math.random() * 6);
+      dieCycle = setInterval(() => { dieCandidate = 1 + Math.floor(Math.random() * 6); }, 90);
+      dieRaf = requestAnimationFrame(dieSpin);
+      dieCap = setTimeout(dieEnd, 4000); // 4s max roll
+      document.getElementById('roll-resolved').innerHTML = '<div class="status-line">// rolling…</div>';
+    }
+
+    function dieEnd() {
+      if (!dieHolding) return;
+      dieHolding = false;
+      if (dieCycle) { clearInterval(dieCycle); dieCycle = null; }
+      if (dieCap) { clearTimeout(dieCap); dieCap = null; }
+      if (dieRaf) { cancelAnimationFrame(dieRaf); dieRaf = null; }
+      const value = dieCandidate;
+      const t = DIE_SHOW[value];
+      dieSpinX += 360 + (t.x - dieMod360(dieSpinX));
+      dieSpinY += 360 + (t.y - dieMod360(dieSpinY));
+      const c = document.getElementById('die-cube');
+      if (c) { c.style.transition = 'transform 0.7s cubic-bezier(.18,.9,.22,1)'; dieApply(); }
+      setTimeout(() => { dieRolling = false; resolveDirection(value, 'die'); }, 720);
+    }
+
+    buildDie();
 
     // ============================================================
     // INIT + RESUME
