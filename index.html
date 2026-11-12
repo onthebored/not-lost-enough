@@ -28,8 +28,23 @@
       color: var(--text-primary);
       font-family: var(--font);
       min-height: 100vh;
-      padding: 28px 20px 60px;
+      padding: 28px 20px 84px;
       -webkit-text-size-adjust: 100%;
+    }
+
+    .watermark {
+      position: fixed;
+      left: 0; right: 0; bottom: 0;
+      z-index: 50;
+      text-align: center;
+      font-family: var(--font);
+      font-size: 0.55rem;
+      letter-spacing: 0.22em;
+      text-transform: lowercase;
+      color: #5a564e;
+      background: var(--bg);
+      padding: 9px 10px calc(9px + env(safe-area-inset-bottom, 0px));
+      pointer-events: none;
     }
 
     h1 { font-size: 1.7rem; letter-spacing: 0.15em; text-transform: uppercase; }
@@ -139,6 +154,18 @@
       display: flex; align-items: center; justify-content: center;
     }
 
+    .compass-ref { margin-top: 22px; display: flex; flex-direction: column; align-items: center; }
+    .rose-wrap { position: relative; width: 200px; height: 200px; }
+    .rose-svg { width: 200px; height: 200px; display: block; }
+    #rose-rot { transition: transform 0.12s linear; transform-origin: 100px 100px; }
+    .rose-index {
+      position: absolute; top: -3px; left: 50%; transform: translateX(-50%);
+      width: 0; height: 0;
+      border-left: 7px solid transparent; border-right: 7px solid transparent;
+      border-top: 11px solid var(--text-primary); z-index: 2;
+    }
+    .rose-readout { margin-top: 12px; font-size: 0.8rem; color: var(--accent); letter-spacing: 0.08em; }
+
     .wp-display {
       display: flex; gap: 16px; justify-content: center; align-items: center;
       min-height: 72px; border: 1px solid var(--border); padding: 12px; margin-bottom: 18px;
@@ -207,6 +234,8 @@
 
     .log-entry { font-size: 0.72rem; color: var(--text-secondary); padding: 6px 0; line-height: 1.5; border-bottom: 1px solid #1c1c1c; }
     .log-entry b { color: var(--text-primary); font-weight: normal; }
+    .log-prompt { color: var(--accent); }
+    .log-prompt b { color: var(--accent); }
 
     .record-item { border: 1px solid var(--border); padding: 12px 14px; margin-bottom: 8px; cursor: pointer; }
     .record-item:active { border-color: var(--accent); }
@@ -254,7 +283,72 @@
     .face.top    { transform: rotateX(90deg)  translateZ(var(--half)); }
     .face.bottom { transform: rotateX(-90deg) translateZ(var(--half)); }
 
+    .roll-irl {
+      text-align: center;
+      font-size: 0.68rem;
+      color: var(--text-secondary);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    #roll-input {
+      width: 20%;
+      margin: 0 auto;
+      display: block;
+      text-align: center;
+    }
+
     .hidden-file { display: none; }
+
+    /* ---- PRINT / PDF: wander record, black on white ---- */
+    @page { margin: 14mm; }
+    @media print {
+      body {
+        background: #fff !important;
+        color: #000 !important;
+        padding: 0 !important;
+        min-height: 0 !important;
+      }
+      .screen { display: none !important; }
+      #screen-summary { display: block !important; }
+
+      h1, .sub, label, .summary-key, .summary-val, .log-entry,
+      .photo-meta, .path-empty, .status-line, .summary-photo .cap {
+        color: #000 !important;
+      }
+      .summary-val.empty { color: #999 !important; }
+      .log-entry b, .log-prompt, .log-prompt b { color: #000 !important; }
+      .log-prompt { font-weight: 700 !important; }
+
+      .app-header { border-bottom: 1px solid #999 !important; }
+      .divider { border-top: 1px solid #999 !important; }
+      .summary-row { border-bottom: 1px solid #ccc !important; }
+      .log-entry { border-bottom: 1px solid #eee !important; }
+
+      .review-block { background: #fff !important; border: 1px solid #ccc !important; color: #000 !important; }
+
+      .path-plot { background: #fff !important; border: 1px solid #999 !important; }
+      .path-plot path { stroke: #999 !important; }
+      .path-plot circle { fill: #000 !important; }
+
+      .summary-photo img {
+        background: #fff !important;
+        border: 1px solid #999 !important;
+        max-height: 320px !important;
+      }
+
+      .btn, .btn-secondary, .btn-abort, .abort-wrap, .btn-inline { display: none !important; }
+
+      .summary-row, .summary-photo, .log-entry { break-inside: avoid; page-break-inside: avoid; }
+
+      .watermark {
+        position: static !important;
+        background: none !important;
+        color: #000 !important;
+        padding: 0 !important;
+        margin-top: 20px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -263,7 +357,7 @@
   <div id="screen-home" class="screen active">
     <div class="app-header">
       <h1>Not Lost Enough</h1>
-      <div class="sub">Field Research Application — v0.10.0</div>
+      <div class="sub">Field Research Application — v0.12.3</div>
     </div>
     <button class="btn" onclick="beginSession()">Wander</button>
     <button class="btn btn-secondary" onclick="openRecords()">Field Log</button>
@@ -287,6 +381,7 @@
         <div class="cube" id="die-cube"></div>
       </div>
     </div>
+    <div class="roll-irl">OR ROLL IRL</div>
     <input class="field" type="number" id="roll-input" min="1" max="6" inputmode="numeric">
     <div id="roll-resolved"></div>
     <div id="roll-heading"></div>
@@ -323,6 +418,7 @@
     <label>Full Log</label>
     <div id="summary-log"></div>
     <div class="divider"></div>
+    <button class="btn btn-secondary" onclick="savePDF()">Save PDF</button>
     <button class="btn btn-secondary" onclick="showScreen('screen-home')">Return Home</button>
   </div>
 
@@ -344,6 +440,8 @@
   <input type="file" id="photo-input" class="hidden-file" accept="image/*">
   <input type="file" id="camera-input" class="hidden-file" accept="image/*" capture="environment">
 
+  <div class="watermark">© 2026 Abstract Research</div>
+
   <script>
     // ============================================================
     // STATIC TABLES
@@ -359,16 +457,16 @@
     // ============================================================
     const SCRIPTS = {
       drawing: [
-        { text: 'From home, head {{dir}} and walk somewhere that feels new or not part of daily life. Focus on nature, the city, the people, and whatever else your senses may notice.', action: 'here', button: "I'm Here" },
+        { text: 'From home, head {{dir}} and walk somewhere that feels new or not part of daily life. Focus on nature, the city, the people, and whatever else your senses may notice.', action: 'here', button: "I'm Here", compassRef: true },
         { text: 'Continue walking and find a place to sit comfortably.', action: 'here' },
-        { text: 'Write a poem of at least 33 words in the next 3:33.', action: 'poem', seconds: 213, minWords: 33, photoField: 'poemPhoto' },
+        { text: 'Write a poem of at least 33 words in the next 3:33.', action: 'poem', seconds: 213, minWords: 33 },
         { text: 'Name the poem.', action: 'text', field: 'poemName', placeholder: 'poem title…', show: 'poemText', showLabel: 'Your poem' },
         { text: "Study the sun's position, its direction, and how its light affects your surroundings — then choose a direction to follow based on these observations.", action: 'direction', field: 'direction' },
         { text: 'Explain why this direction was chosen, as detailed as you can, in exactly 7 words.', action: 'timedtext', field: 'directionReason', placeholder: 'exactly 7 words…', seconds: 33, exactWords: 7, clearOnExpire: true },
         { text: 'Head {{direction}} and search for a tree that suits the title of your poem: “{{poem}}”.', action: 'here', button: 'Found It' },
         { text: 'Take a picture of the tree and add it to the log.', action: 'capture', photoField: 'treePhoto' },
         { text: 'Sketch the tree in the next 23 minutes.', action: 'timer', seconds: 1380, label: 'sketch', button: 'Done' },
-        { text: 'Give the sketch a mood or emotion, then take a pic and add to the log.', action: 'textcapture', field: 'sketchMood', placeholder: 'mood or emotion…', photoField: 'sketchPhoto' },
+        { text: 'Identify a mood or emotion that feels emergent from the sketch, not necessarily the tree.', action: 'textcapture', field: 'sketchMood', placeholder: 'mood or emotion…', photoField: 'sketchPhoto' },
         { text: 'Choose the best word pairing.', action: 'wordpair', sourceField: 'directionReason' },
         { text: 'Which way is home?', action: 'direction', field: 'homeDirection', button: 'This Way' },
         { text: 'Head home, paying close attention to the mood of the sky, including color, clouds, birds, buildings, and how they interact. Find at least one interesting dynamic or insight and report below before reaching home.', action: 'multitext', fields: ['skyNote1', 'skyNote2', 'skyNote3'] },
@@ -441,6 +539,41 @@
 
     function logEvent(type, detail) {
       session.log.push({ at: new Date().toISOString(), type, ...detail });
+    }
+
+    // ---- AUDIO (short synthesized beep) ----
+    let audioCtx = null;
+    function initAudio() {
+      if (audioCtx) return;
+      try {
+        const AC = window.AudioContext || window.webkitAudioContext;
+        if (AC) audioCtx = new AC();
+      } catch (e) { audioCtx = null; }
+    }
+    // iOS requires a user gesture to unlock/resume audio
+    document.addEventListener('pointerdown', () => {
+      initAudio();
+      if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+    });
+
+    function beep(freq = 880, duration = 0.12, volume = 0.3) {
+      initAudio();
+      if (!audioCtx) return;
+      if (audioCtx.state === 'suspended') audioCtx.resume();
+      try {
+        const now = audioCtx.currentTime;
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'sine';
+        osc.frequency.value = freq;
+        gain.gain.setValueAtTime(0, now);
+        gain.gain.linearRampToValueAtTime(volume, now + 0.01);
+        gain.gain.linearRampToValueAtTime(0, now + duration);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start(now);
+        osc.stop(now + duration + 0.02);
+      } catch (e) { /* silent */ }
     }
 
     // ============================================================
@@ -537,7 +670,10 @@
       const script = currentScript();
       const step = script[session.stepIndex];
 
-      if (!isResume && !isBack) stepSnaps[session.stepIndex] = JSON.stringify(session);
+      if (!isResume && !isBack) {
+        stepSnaps[session.stepIndex] = JSON.stringify(session);
+        logEvent('prompt', { index: session.stepIndex + 1, promptNo: session.stepIndex + 2, text: fillText(step.text) });
+      }
 
       const backBtn = document.getElementById('wander-back');
       if (backBtn) backBtn.disabled = (session.stepIndex === 0);
@@ -579,12 +715,16 @@
         case 'poem':
           renderPoemStep(step);
           break;
-        case 'timer':
+        case 'timer': {
+          const resumeLeft = (session.timerEnd && session.timerStep === session.stepIndex)
+            ? Math.max(0, Math.round((session.timerEnd - Date.now()) / 1000))
+            : step.seconds;
           action.innerHTML = `
-            <div class="timer-display" id="timer-display">${fmtMS(step.seconds)}</div>
+            <div class="timer-display" id="timer-display">${resumeLeft > 0 ? fmtMS(resumeLeft) : 'TIME'}</div>
             <button class="btn" onclick="completeStep()">${step.button || 'Next'}</button>`;
           setTimeout(() => startTimer(step.seconds, step.label || 'timer'), 300);
           break;
+        }
         case 'direction':
           renderDirection();
           break;
@@ -605,8 +745,11 @@
           break;
       }
 
-      // optional photo attachment on any step (capture steps render their own)
-      if (step.photoField && step.action !== 'capture') renderPhotoZone(step.photoField);
+      // optional photo attachment on any step (capture/textcapture render their own)
+      if (step.photoField && step.action !== 'capture' && step.action !== 'textcapture') renderPhotoZone(step.photoField);
+
+      // optional reference compass rose
+      if (step.compassRef) renderCompassRose();
 
       window.scrollTo(0, 0);
       saveActive();
@@ -614,12 +757,12 @@
 
     // ---- ESCALATING POEM STEP ----
     function renderPoemStep(step) {
-      session._poemReq = step.minWords || 33;
+      session._poemReq = step.minWords || 30;
       session._poemEsc = 0;
       const action = document.getElementById('wander-action');
       action.innerHTML = `
         <div class="timer-display" id="timer-display">${fmtMS(step.seconds)}</div>
-        <label style="margin-top:18px;">Type the poem (or photograph it below)</label>
+        <label style="margin-top:18px;">Type the poem</label>
         <textarea class="field" id="poem-text-input" rows="6" placeholder="type here…" oninput="onPoemInput()">${session.inputs.poemText || ''}</textarea>
         <div class="photo-meta" id="poem-count">0 / ${session._poemReq} words</div>
         <button class="btn" id="poem-done" onclick="completePoemStep()" disabled>Done</button>`;
@@ -668,8 +811,10 @@
       let left = seconds;
       display.textContent = fmtMS(left);
       logEvent('timer-start', { index: session.stepIndex + 1, label: 'poem', seconds, req: session._poemReq });
+      const POEM_BEEPS = [33, 10, 3, 2, 1];
       poemTimer = setInterval(() => {
         left--;
+        if (POEM_BEEPS.includes(left)) beep();
         if (left > 0) display.textContent = fmtMS(left);
         else {
           clearInterval(poemTimer); poemTimer = null;
@@ -696,11 +841,11 @@
 
     function escalatePoem() {
       session._poemEsc = (session._poemEsc || 0) + 1;
-      session._poemReq = Math.min((session._poemReq || 33) + 10, 200);
+      session._poemReq = Math.min((session._poemReq || 30) + 9, 200);
       logEvent('poem-escalate', { index: session.stepIndex + 1, esc: session._poemEsc, req: session._poemReq });
       updatePoemCount();
       const display = document.getElementById('timer-display');
-      const newSeconds = 71 * session._poemEsc; // 1:11, 2:22, 3:33, ...
+      const newSeconds = 30 * session._poemEsc; // 0:30, 1:00, 1:30, ...
       if (!display) { startPoemTimer(newSeconds); return; }
       display.textContent = fmtMS(newSeconds);
       let visibleReturns = 0, on = true;
@@ -719,8 +864,6 @@
     }
 
     function completeStep() {
-      const step = currentScript()[session.stepIndex];
-      logEvent('step', { index: session.stepIndex + 1, text: fillText(step.text), action: step.action });
       advance();
     }
 
@@ -801,21 +944,38 @@
       advance();
     }
 
+    // deadline-based: stores a real end time so it survives the phone locking
     function startTimer(seconds, label) {
       const display = document.getElementById('timer-display');
-      if (!display) return;
-      logEvent('timer-start', { index: session.stepIndex + 1, label, seconds });
-      let left = seconds;
-      display.textContent = fmtMS(left);
+      if (!display || !session) return;
+
+      const resuming = session.timerEnd && session.timerStep === session.stepIndex;
+      if (!resuming) {
+        session.timerEnd = Date.now() + seconds * 1000;
+        session.timerStep = session.stepIndex;
+        session._timerBuzzed = false;
+        logEvent('timer-start', { index: session.stepIndex + 1, label, seconds });
+        saveActive();
+      }
+
       if (timerInterval) clearInterval(timerInterval);
-      timerInterval = setInterval(() => {
-        left--;
-        display.textContent = left > 0 ? fmtMS(left) : 'TIME';
-        if (left <= 0) {
-          clearInterval(timerInterval); timerInterval = null;
+      tickTimer();
+      timerInterval = setInterval(tickTimer, 1000);
+    }
+
+    function tickTimer() {
+      const display = document.getElementById('timer-display');
+      if (!display || !session || !session.timerEnd) return;
+      const left = Math.round((session.timerEnd - Date.now()) / 1000);
+      display.textContent = left > 0 ? fmtMS(left) : 'TIME';
+      if (left <= 0) {
+        if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
+        if (!session._timerBuzzed) {
+          session._timerBuzzed = true;
           if (navigator.vibrate) navigator.vibrate(400);
+          saveActive();
         }
-      }, 1000);
+      }
     }
 
     function cardinalFromHeading(deg) {
@@ -898,6 +1058,76 @@
       logEvent('direction', { index: session.stepIndex + 1, field: session._dirField, value: session._pendingDir, source: 'manual' });
       session._pendingDir = null;
       advance();
+    }
+
+    // ---- REFERENCE COMPASS ROSE (prompt 2) ----
+    function roseSVG() {
+      const cx = 100, cy = 100;
+      let ticks = '';
+      for (let a = 0; a < 360; a += 15) {
+        const major = (a % 90 === 0);
+        const rad = (a - 90) * Math.PI / 180;
+        const r1 = 92, r2 = major ? 74 : 84;
+        const x1 = cx + r1 * Math.cos(rad), y1 = cy + r1 * Math.sin(rad);
+        const x2 = cx + r2 * Math.cos(rad), y2 = cy + r2 * Math.sin(rad);
+        ticks += `<line x1="${x1.toFixed(1)}" y1="${y1.toFixed(1)}" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}" stroke="${major ? '#c8502a' : '#8a8478'}" stroke-width="${major ? 2 : 1}"/>`;
+      }
+      let labels = '';
+      [['N',0],['E',90],['S',180],['W',270]].forEach(([L, a]) => {
+        const rad = (a - 90) * Math.PI / 180, lr = 58;
+        const x = cx + lr * Math.cos(rad), y = cy + lr * Math.sin(rad);
+        labels += `<text x="${x.toFixed(1)}" y="${y.toFixed(1)}" fill="${L === 'N' ? '#c8502a' : '#e8e0d0'}" font-size="16" font-family="Menlo,monospace" text-anchor="middle" dominant-baseline="central">${L}</text>`;
+      });
+      const needle = `<polygon points="100,22 95,48 105,48" fill="#c8502a"/>`;
+      return `<circle cx="100" cy="100" r="92" fill="none" stroke="#2e2e2e" stroke-width="1"/>${ticks}${labels}${needle}`;
+    }
+
+    function renderCompassRose() {
+      const action = document.getElementById('wander-action');
+      const wrap = document.createElement('div');
+      wrap.className = 'compass-ref';
+      wrap.innerHTML = `
+        <div class="rose-wrap">
+          <div class="rose-index"></div>
+          <svg class="rose-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+            <g id="rose-rot" style="transform-origin:100px 100px;">${roseSVG()}</g>
+          </svg>
+        </div>
+        <div class="rose-readout" id="rose-readout">compass idle</div>
+        <button class="btn btn-secondary btn-small" id="rose-enable" onclick="enableCompassRef()">Enable Compass</button>`;
+      action.appendChild(wrap);
+    }
+
+    function failRef(msg) { const r = document.getElementById('rose-readout'); if (r) r.textContent = '// ' + msg; }
+
+    function onCompassRef(e) {
+      let heading = null;
+      if (typeof e.webkitCompassHeading === 'number') heading = e.webkitCompassHeading;
+      else if (typeof e.alpha === 'number') heading = (360 - e.alpha) % 360;
+      if (heading == null || isNaN(heading)) return;
+      const rot = document.getElementById('rose-rot');
+      if (rot) rot.style.transform = `rotate(${-heading}deg)`;
+      const r = document.getElementById('rose-readout');
+      if (r) r.textContent = `FACING ${cardinalFromHeading(heading)} · ${Math.round(heading)}°`;
+    }
+
+    function enableCompassRef() {
+      const start = () => {
+        window.addEventListener('deviceorientation', onCompassRef, true);
+        const r = document.getElementById('rose-readout');
+        if (r) r.textContent = 'calibrating… (wave in a figure-8)';
+        const b = document.getElementById('rose-enable');
+        if (b) b.style.display = 'none';
+      };
+      if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
+        DeviceOrientationEvent.requestPermission()
+          .then(res => res === 'granted' ? start() : failRef('compass permission denied'))
+          .catch(() => failRef('compass unavailable'));
+      } else if (typeof DeviceOrientationEvent !== 'undefined') {
+        start();
+      } else {
+        failRef('no compass on this device');
+      }
     }
 
     // ---- WORD PAIRING ----
@@ -1001,8 +1231,7 @@
       const action = document.getElementById('wander-action');
       action.innerHTML = `
         <textarea class="field" id="step-text-input" rows="3" placeholder="${step.placeholder || ''}">${escapeHtml(session.inputs[step.field] || '')}</textarea>
-        <button class="btn btn-secondary btn-small" onclick="triggerCamera('${step.photoField}')">Open Camera</button>
-        <button class="btn btn-secondary btn-small" onclick="triggerPhoto('${step.photoField}')">Choose from Library</button>
+        <button class="btn btn-secondary btn-small" onclick="triggerPhoto('${step.photoField}')">${session.inputs[step.photoField] ? 'Replace Photo' : '+ Add Photo'}</button>
         <div id="photo-preview"></div>
         <button class="btn" onclick="completeTextCaptureStep('${step.field}')">Done</button>`;
       if (session.inputs[step.photoField]) showPhotoPreview(step.photoField);
@@ -1175,9 +1404,11 @@
 
     function advance() {
       if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
+      if (session) { session.timerEnd = null; session.timerStep = null; session._timerBuzzed = false; }
       clearPoemTimers();
       clearTt();
       window.removeEventListener('deviceorientation', onOrient, true);
+      window.removeEventListener('deviceorientation', onCompassRef, true);
       captureBreadcrumb('step');
       session.stepIndex++;
       if (session.stepIndex >= currentScript().length) endWander();
@@ -1190,9 +1421,11 @@
       clearPoemTimers();
       clearTt();
       window.removeEventListener('deviceorientation', onOrient, true);
+      window.removeEventListener('deviceorientation', onCompassRef, true);
       const prev = session.stepIndex - 1;
       if (stepSnaps[prev]) session = JSON.parse(stepSnaps[prev]);
       else session.stepIndex = prev;
+      session.timerEnd = null; session.timerStep = null; session._timerBuzzed = false;
       renderStep(false, true);
       saveActive();
     }
@@ -1209,6 +1442,7 @@
       if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
       clearPoemTimers();
       clearTt();
+      window.removeEventListener('deviceorientation', onCompassRef, true);
       session.endedAt = new Date().toISOString();
       session.aborted = !!aborted;
       records.unshift(session);
@@ -1220,7 +1454,23 @@
       showScreen('screen-summary');
     }
 
+    let summaryRecord = null;
+
+    // print the wander record (iOS: print sheet → Save to Files)
+    async function savePDF() {
+      if (summaryRecord) {
+        try { await renderSummaryPhotos(summaryRecord); } catch (e) { /* print without photos */ }
+      }
+      const prevTitle = document.title;
+      if (summaryRecord) {
+        document.title = 'NLE Wander Record — ' + new Date(summaryRecord.startedAt).toLocaleDateString();
+      }
+      window.print();
+      setTimeout(() => { document.title = prevTitle; }, 1500);
+    }
+
     function renderSummary(s) {
+      summaryRecord = s;
       const start = new Date(s.startedAt);
       const mins = s.endedAt ? Math.round((new Date(s.endedAt) - start) / 60000) : 0;
       document.getElementById('summary-sub').textContent =
@@ -1260,11 +1510,12 @@
       document.getElementById('summary-log').innerHTML = s.log.map(e => {
         const t = new Date(e.at).toLocaleTimeString();
         let line = '';
-        if (e.type === 'roll') line = `rolled ${e.value} → <b>${e.result}</b>`;
+        if (e.type === 'prompt') line = `PROMPT ${e.promptNo}: ${escapeHtml(e.text)}`;
+        else if (e.type === 'roll') line = `rolled ${e.value} → <b>${e.result}</b>`;
         else if (e.type === 'choose') line = `chose <b>${e.value}</b>`;
-        else if (e.type === 'step') line = `step ${e.index}: ${e.text}`;
-        else if (e.type === 'input') line = `step ${e.index} · ${e.field} = <b>${(e.value||'(blank)').toString().slice(0,60).replace(/</g,'&lt;')}</b>`;
-        else if (e.type === 'photo') line = `step ${e.index} · photo (${(e.size/1024).toFixed(0)} KB)`;
+        else if (e.type === 'step') line = `prompt ${e.index + 1}: ${e.text}`;
+        else if (e.type === 'input') line = `prompt ${e.index + 1} · ${e.field} = <b>${(e.value||'(blank)').toString().slice(0,60).replace(/</g,'&lt;')}</b>`;
+        else if (e.type === 'photo') line = `prompt ${e.index + 1} · photo (${(e.size/1024).toFixed(0)} KB)`;
         else if (e.type === 'timer-start') line = `timer start (${e.label}, ${e.seconds}s)`;
         else if (e.type === 'timer-end') line = `timer end (${e.label})`;
         else if (e.type === 'direction') line = `${e.field || 'direction'} = <b>${e.value}</b>${e.heading != null ? ' ('+e.heading+'°)' : ''}`;
@@ -1276,7 +1527,8 @@
         else if (e.type === 'wordpair-choose') line = `chose <b>${e.value}</b>`;
         else if (e.type === 'gps') line = e.skipped ? 'gps skipped' : (e.error ? 'gps error' : `gps <b>${e.lat}, ${e.lon}</b>`);
         else line = e.type;
-        return `<div class="log-entry">${t} — ${line}</div>`;
+        const cls = (e.type === 'prompt' || e.type === 'roll') ? 'log-entry log-prompt' : 'log-entry';
+        return `<div class="${cls}">${t} — ${line}</div>`;
       }).join('');
     }
 
@@ -1433,6 +1685,9 @@
     }
 
     buildDie();
+
+    // when the phone wakes, recompute the running timer from the clock immediately
+    document.addEventListener('visibilitychange', () => { if (!document.hidden) tickTimer(); });
 
     // ============================================================
     // INIT + RESUME
